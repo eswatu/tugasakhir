@@ -1,0 +1,10 @@
+{
+    "database" : {
+        "host": "localhost",
+        "user": "root",
+        "port": 3306,
+        "password": "Nathania2019",
+        "database": "aspen"
+    },
+    "secret":"123455a0sa210s3a21wqa4f6sad547j9ythj5g"
+}
