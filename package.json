@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@joi/date": "^2.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
@@ -26,5 +27,4 @@
   "devDependencies": {
     "nodemon": "^2.0.15"
   }
-  
 }

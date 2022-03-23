@@ -17,7 +17,7 @@ async function initialize() {
 
     //init model dan tambah ke obyek db
     db.User = require('../Users/user.model')(sequelize);
-
+    db.Act = require('../Acts/act.model')(sequelize);
     //sync model dengan database
     await sequelize.sync();
 }
