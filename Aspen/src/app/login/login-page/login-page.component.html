@@ -1,0 +1,29 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="20" fxLayout="column" ></div>
+    <div fxFlex="40" fxLayout="column" >
+        <div fxLayout="row" fxFlexOrder="1">
+            <mat-card-title fxFlex>Laman Login Pengguna</mat-card-title>
+        </div>
+        <div fxLayout="row" fxFlexOrder="2" fxLayout="column">
+            <mat-form-field appearance="fill" fxFlex="50">
+                <mat-label>Username</mat-label>
+                <input matInput #input placeholder="Ex. someone" >
+            </mat-form-field>
+            <mat-form-field appearance="fill" fxFlex="50">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'Password' : 'text'" placeholder="Ex. Nougat">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFlexOrder="3">
+                <button mat-raised-button fxFlex="50">Masuk</button>
+                <button mat-raised-button fxFlex="50">Hapus</button>
+        </div>
+
+    </div>
+    <div fxFlex="20" fxLayout="column" ></div>
+</div>
+
+
