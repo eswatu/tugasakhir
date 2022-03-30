@@ -8,6 +8,7 @@ function model(sequelize) {
         date        : { type: DataTypes.DATE, allowNull: false },
         actId       : { type: DataTypes.INTEGER, allowNull: false },
         actVolume   : { type: DataTypes.INTEGER, allowNull: false },
+        //besok tambahin file upload
     };
     const options = {
         defaultScope: {

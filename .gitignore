@@ -1,2 +1,4 @@
-client/node_modules/
+Aspen/node_modules/
+Aspen/.angular/
+Aspen/.vscode/
 server/node_modules/
