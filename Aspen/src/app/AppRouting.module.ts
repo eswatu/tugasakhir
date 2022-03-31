@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './login/login-page/login-page.component';
 
 const routes: Routes = [
-  {path:'login', component: LoginPageComponent, pathMatch: 'full'}
+  { path: 'login', component: LoginPageComponent, pathMatch: 'full' },
+  {path:'angkakredit', loadChildren:() => import('./credit-point/credit-point.module').then(m => m.CreditPointModule)}
 ];
 
 @NgModule({

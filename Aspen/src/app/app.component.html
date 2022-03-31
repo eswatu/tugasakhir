@@ -1,14 +1,24 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
+<mat-toolbar color="primary" fxLayout="row">
+  <button mat-button fxFlex>
+    <mat-icon>vpn_lock</mat-icon>
+    Aspen
   </button>
-  <span>My App</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
+  <button  mat-button fxFlex>
+    <mat-icon>dashboard</mat-icon>
+    Dashboard
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+  <button  mat-button fxFlex [routerLink]="['/angkakredit']">
+    <mat-icon>business_center</mat-icon>
+    Angka Kredit
+  </button>
+
+  <button  mat-button fxFlex>
+    <mat-icon>badge</mat-icon>
+    Profil
+  </button>
+  <button mat-button fxFlex>
+    <mat-icon>logout</mat-icon>
+    LogOut
   </button>
 </mat-toolbar>
 <router-outlet></router-outlet>
