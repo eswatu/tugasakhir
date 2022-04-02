@@ -13,6 +13,7 @@ app.use(cors());
 //api routes
 app.use('/users', require('./Users/users.controller'));
 app.use('/acts', require('./Acts/acts.controller'));
+app.use('/butir', require('./permen/butir.controller'));
 
 //global error handler
 app.use(errorHandler);
@@ -20,3 +21,4 @@ app.use(errorHandler);
 //start server
 const port = process.env.Node_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 app.listen(port, () => console.log('Server is listening on port ' + port));
+

@@ -17,7 +17,7 @@ function model(sequelize) {
         }, scopes: {
             //include hash dalam scope ini
             withPasswordHash: { attributes: {}, }
-        }
+        },
     };
     return sequelize.define('User', attributes, options);
 }

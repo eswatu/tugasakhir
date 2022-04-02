@@ -1,4 +1,6 @@
+import { User } from "./user";
+
 export interface creditPoint { 
     id: number;
-    userId: number;
+    user: User;
 }
