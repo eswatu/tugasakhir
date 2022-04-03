@@ -17,13 +17,11 @@ async function initialize() {
 
     //init model dan tambah ke obyek db
     db.User = require('../Users/user.model')(sequelize);
-    db.Act = require('../Acts/act.model')(sequelize);
     //ini database permen
     db.Aktivitas     = require('../permen/aktivitas.model')(sequelize);
     db.SubUnsur      = require('../permen/subUnsur.model')(sequelize);
     db.Butir         = require('../permen/butir.model')(sequelize);
 
-    
     //relasi
     db.Butir.belongsTo(db.SubUnsur);
     db.Butir.belongsTo(db.Aktivitas);

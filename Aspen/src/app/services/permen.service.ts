@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BaseService, ApiResult } from "./base.service";
 import { Observable } from "rxjs";
-import { creditPoint } from "../model/credit-point";
+import { butir } from "../model/permen";
 import { inject } from '@angular/core/testing';
 import { identifierName } from '@angular/compiler';
 
@@ -10,7 +10,7 @@ import { identifierName } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
-export class CreditPointServiceService extends BaseService {
+export class PermenService extends BaseService {
   constructor(
     http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
@@ -24,30 +24,22 @@ export class CreditPointServiceService extends BaseService {
     sortorder: string,
     filterColumn: string,
     filterQuery: string): Observable<ApiResult> {
-    var url = this.baseUrl + 'api/Acts';
-    var params = new HttpParams()
-      .set("pageIndex", pageIndex.toString())
-      .set("pageSize", pageSize.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortOrder", sortorder);
-    if (filterQuery) { 
-      params = params
-        .set("filterColumn", filterColumn)
-        .set("filterQuery", filterQuery);
-    }
-    return this.http.get<ApiResult>(url, { params });
+    var url = this.baseUrl + 'api/Butir';
+
+    return this.http.get<ApiResult>(url, { );
   }
+  getList<
 
   get<creditPoint>(id: number): Observable<creditPoint> {
-    var url = this.baseUrl + "api/Acts" + id;
+    var url = this.baseUrl + "api/Butir" + id;
     return this.http.get<creditPoint>(url);
   }
   put<creditPoint>(item: any): Observable<creditPoint> {
-    var url = this.baseUrl + "api/Acts" + item.id;
+    var url = this.baseUrl + "api/Butir" + item.id;
     return this.http.put<creditPoint>(url, item);
   }
   post<creditPoint>(item: creditPoint): Observable<creditPoint> {
-    var url = this.baseUrl + "api/Acts";
+    var url = this.baseUrl + "api/Butir";
     return this.http.post<creditPoint>(url, item);
   }
 
