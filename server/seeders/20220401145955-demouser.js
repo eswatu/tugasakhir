@@ -93,11 +93,12 @@ module.exports = {
     const aktD = await db.Aktivitas.findOne({ where: { kodeAkt: "D" } });
     const aktE = await db.Aktivitas.findOne({ where: { kodeAkt: "E" } });
     const aktF = await db.Aktivitas.findOne({ where: { kodeAkt: "F" } });
+
     await queryInterface.bulkInsert('Butir',[
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Bendaharawan",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Bendaharawan",
         tkButir: "-",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.03,
@@ -160,7 +161,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar non Pengusaha Kena Pajak",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar non Pengusaha Kena Pajak",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.06,
@@ -169,7 +170,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar Pengusaha Kena Pajak",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar Pengusaha Kena Pajak",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.06,
@@ -178,7 +179,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan monitoring  pelaksanaan kegiatan Penyuluhan langsung secara aktif",
+        namaButir: "Melaksanakan monitoring  pelaksanaan kegiatan Penyuluhan langsung secara aktif",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Monitoring",
         jmlPoin: 0.06,
@@ -205,7 +206,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi Asing tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi Asing tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.03,
@@ -214,7 +215,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi terdaftar Pengusaha Kena Pajak tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi terdaftar Pengusaha Kena Pajak tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.03,
@@ -223,7 +224,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar Pengusaha Kena Pajak",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar Pengusaha Kena Pajak",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.03,
@@ -268,7 +269,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan langsung secara aktif kepadaWajib Pajak Orang Pribadi penentu penerimaan/prominen \n(subjek penentu penerimaan/high influence subject )",
+        namaButir: "Menyusun materi Penyuluhan langsung secara aktif kepadaWajib Pajak Orang Pribadi penentu penerimaan/prominen \n(subjek penentu penerimaan/high influence subject )",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.1,
@@ -277,7 +278,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan langsung secara aktif kepadaWajib Pajak Badan Khusus (Bentuk Usaha Tetap/Joint\nVenture/Joint Operation /dan sebagainya)",
+        namaButir: "Menyusun materi Penyuluhan langsung secara aktif kepadaWajib Pajak Badan Khusus (Bentuk Usaha Tetap/Joint\nVenture/Joint Operation /dan sebagainya)",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.1,
@@ -295,7 +296,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi penentu penerimaan/prominen (subjek penentu penerimaan/high influence subject ) tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi penentu penerimaan/prominen (subjek penentu penerimaan/high influence subject ) tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.06,
@@ -367,7 +368,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Calon Wajib Pajak Orang Pribadi tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Calon Wajib Pajak Orang Pribadi tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.008,
@@ -376,7 +377,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi baru tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi baru tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.008,
@@ -385,7 +386,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi terdaftar non Pengusaha Kena Pajak tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Orang Pribadi terdaftar non Pengusaha Kena Pajak tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.008,
@@ -394,7 +395,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Calon Wajib Pajak Badan tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Calon Wajib Pajak Badan tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.012,
@@ -403,7 +404,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan baru tingkat 3",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan baru tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.012,
@@ -412,7 +413,7 @@ module.exports = {
       {
         SubUnsurId: subA.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar non Pengusaha Kena Pajak",
+        namaButir: "Melaksanakan pemberian informasi secara langsung kepada Wajib Pajak Badan terdaftar non Pengusaha Kena Pajak",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.012,
@@ -421,7 +422,7 @@ module.exports = {
       {
         SubUnsurId: subB.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan piket kegiatan Penyuluhan langsung secara pasif",
+        namaButir: "Melaksanakan piket kegiatan Penyuluhan langsung secara pasif",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Piket",
         jmlPoin: 0.06,
@@ -430,7 +431,7 @@ module.exports = {
       {
         SubUnsurId: subB.id,
         AktivitaId: aktE.id,
-        namaButir: "memberikan konsultasi/bimbingan teknis secara langsung",
+        namaButir: "Memberikan konsultasi/bimbingan teknis secara langsung",
         tkButir: "Tingkat II",
         hasilKerja: "Berita Acara Konsultasi",
         jmlPoin: 0.02,
@@ -439,7 +440,7 @@ module.exports = {
       {
         SubUnsurId: subB.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan monitoring  pelaksanaan kegiatan Penyuluhan langsung secara pasif",
+        namaButir: "Melaksanakan monitoring  pelaksanaan kegiatan Penyuluhan langsung secara pasif",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Monitoring",
         jmlPoin: 0.06,
@@ -448,7 +449,7 @@ module.exports = {
       {
         SubUnsurId: subB.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan piket kegiatan Penyuluhan langsung secara pasif",
+        namaButir: "Melaksanakan piket kegiatan Penyuluhan langsung secara pasif",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Piket",
         jmlPoin: 0.016,
@@ -457,7 +458,7 @@ module.exports = {
       {
         SubUnsurId: subB.id,
         AktivitaId: aktE.id,
-        namaButir: "memberikan konsultasi/bimbingan teknis secara langsung",
+        namaButir: "Memberikan konsultasi/bimbingan teknis secara langsung",
         tkButir: "Tingkat III",
         hasilKerja: "Berita Acara Konsultasi",
         jmlPoin: 0.004,
@@ -484,7 +485,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan tidak langsung satu arah melalui audio tingkat 3",
+        namaButir: "Menyusun materi Penyuluhan tidak langsung satu arah melalui audio tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.075,
@@ -493,7 +494,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan tidak langsung satu arah melalui audio dan/atau visual tingkat 3",
+        namaButir: "Menyusun materi Penyuluhan tidak langsung satu arah melalui audio dan/atau visual tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.12,
@@ -502,7 +503,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan kegiatan Penyuluhan tidak langsung satu arah dalam bentuk audio tingkat 3",
+        namaButir: "Melaksanakan kegiatan Penyuluhan tidak langsung satu arah dalam bentuk audio tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Berita Acara Penyuluhan",
         jmlPoin: 0.12,
@@ -511,7 +512,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan kegiatan Penyuluhan tidak langsung satu arah dalam bentuk audio dan/atau visual tingkat 3",
+        namaButir: "Melaksanakan kegiatan Penyuluhan tidak langsung satu arah dalam bentuk audio dan/atau visual tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Berita Acara Penyuluhan",
         jmlPoin: 0.24,
@@ -538,7 +539,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktD.id,
-        namaButir: "melaksanakan review terhadap materi Penyuluhan tidak langsung tingkat 3",
+        namaButir: "Melaksanakan review terhadap materi Penyuluhan tidak langsung tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Lembar Persetujuan",
         jmlPoin: 0.04,
@@ -547,7 +548,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktC.id,
-        namaButir: "menyusun rencana kerja kegiatan Penyuluhan tidak langsung dua arah per kegiatan (session plan )",
+        namaButir: "Menyusun rencana kerja kegiatan Penyuluhan tidak langsung dua arah per kegiatan (session plan )",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Session Plan",
         jmlPoin: 0.06,
@@ -556,7 +557,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktC.id,
-        namaButir: "melaksanakan pemantauan persiapan kegiatan Penyuluhan tidak langsung dua arah",
+        namaButir: "Melaksanakan pemantauan persiapan kegiatan Penyuluhan tidak langsung dua arah",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Pemantauan Persiapan",
         jmlPoin: 0.04,
@@ -565,7 +566,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan kegiatan Penyuluhan tidak langsung dua arah dalam bentuk audio tingkat 3",
+        namaButir: "Melaksanakan kegiatan Penyuluhan tidak langsung dua arah dalam bentuk audio tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Berita Acara Penyuluhan",
         jmlPoin: 0.06,
@@ -574,7 +575,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan kegiatan Penyuluhan tidak langsung dua arah dalam bentuk audio dan/atau visual tingkat 3",
+        namaButir: "Melaksanakan kegiatan Penyuluhan tidak langsung dua arah dalam bentuk audio dan/atau visual tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Berita Acara Penyuluhan",
         jmlPoin: 0.12,
@@ -583,7 +584,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktC.id,
-        namaButir: "menyusun rencana kerja kegiatan Penyuluhan tidak langsung dua arah per kegiatan (session plan )",
+        namaButir: "Menyusun rencana kerja kegiatan Penyuluhan tidak langsung dua arah per kegiatan (session plan )",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Session Plan",
         jmlPoin: 0.06,
@@ -592,7 +593,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktC.id,
-        namaButir: "melaksanakan pemantauan persiapan kegiatan Penyuluhan tidak langsung dua arah",
+        namaButir: "Melaksanakan pemantauan persiapan kegiatan Penyuluhan tidak langsung dua arah",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pemantauan Persiapan",
         jmlPoin: 0.04,
@@ -601,7 +602,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan review terhadap materi Penyuluhan tidak langsung dua arah tingkat 3",
+        namaButir: "Melaksanakan review terhadap materi Penyuluhan tidak langsung dua arah tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Lembar Persetujuan",
         jmlPoin: 0.04,
@@ -610,7 +611,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan tidak langsung dua arah melalui audio tingkat 3",
+        namaButir: "Menyusun materi Penyuluhan tidak langsung dua arah melalui audio tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.032,
@@ -619,7 +620,7 @@ module.exports = {
       {
         SubUnsurId: subD.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi Penyuluhan tidak langsung dua arah melalui audio dan/atau visual tingkat 3",
+        namaButir: "Menyusun materi Penyuluhan tidak langsung dua arah melalui audio dan/atau visual tingkat 3",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.048,
@@ -628,7 +629,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "menyusun rencana kerja kegiatan Penyuluhan periodik (outbound)",
+        namaButir: "Menyusun rencana kerja kegiatan Penyuluhan periodik (outbound)",
         tkButir: "-",
         hasilKerja: "Laporan Rencana Kerja",
         jmlPoin: 0.025,
@@ -637,7 +638,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "menyusun materi survei melalui media",
+        namaButir: "Menyusun materi survei melalui media",
         tkButir: "-",
         hasilKerja: "Materi Survei",
         jmlPoin: 0.0267,
@@ -646,7 +647,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "menyusun materi Penyuluhan perpajakan",
+        namaButir: "Menyusun materi Penyuluhan perpajakan",
         tkButir: "-",
         hasilKerja: "Materi Penyuluhan",
         jmlPoin: 0.04,
@@ -655,7 +656,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "menyusun panduan komunikasi dan panduan kegiatan penjaminan kualitas layanan",
+        namaButir: "Menyusun panduan komunikasi dan panduan kegiatan penjaminan kualitas layanan",
         tkButir: "-",
         hasilKerja: "Laporan Internalisasi bahan panduan",
         jmlPoin: 0.03,
@@ -664,7 +665,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "menganalisis dan menyusun konsep jawaban yang ditanyakan oleh Penyuluh Pajak atas pertanyaan Wajib Pajak dan/atau masyarakat terkait informasi umum perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan",
+        namaButir: "Menganalisis dan menyusun konsep jawaban yang ditanyakan oleh Penyuluh Pajak atas pertanyaan Wajib Pajak dan/atau masyarakat terkait informasi umum perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan",
         tkButir: "-",
         hasilKerja: "Daftar Konsep Jawabanm",
         jmlPoin: 0.0011,
@@ -673,7 +674,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "melaksanakan inventarisasi dan mendokumentasikan pertanyaan Penyuluh Pajak di aplikasi sistem informasi contact center",
+        namaButir: "Melaksanakan inventarisasi dan mendokumentasikan pertanyaan Penyuluh Pajak di aplikasi sistem informasi contact center",
         tkButir: "-",
         hasilKerja: "Laporan Internalisasi bahan panduan",
         jmlPoin: 0.0009,
@@ -682,7 +683,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menelaah dan melaksanakan penyesuaian jadwal pemberian dan penyampaian layanan",
+        namaButir: "Menelaah dan melaksanakan penyesuaian jadwal pemberian dan penyampaian layanan",
         tkButir: "-",
         hasilKerja: "Laporan Penyesuaian Jadwal",
         jmlPoin: 0.0117,
@@ -691,7 +692,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan,  dan/ataupetunjuk penggunaan aplikasi perpajakan melalui media selain telepon",
+        namaButir: "Melaksanakan pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan,  dan/ataupetunjuk penggunaan aplikasi perpajakan melalui media selain telepon",
         tkButir: "-",
         hasilKerja: "Laporan Pelaksanaan kegiatan",
         jmlPoin: 0.0023,
@@ -700,7 +701,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menganalisis dan menindaklanjuti pengaduan Wajib Pajak dan/atau masyarakat yang disampaikan",
+        namaButir: "Menganalisis dan menindaklanjuti pengaduan Wajib Pajak dan/atau masyarakat yang disampaikan",
         tkButir: "-",
         hasilKerja: "Laporan Hasil Analisa Pengaduan",
         jmlPoin: 0.0004,
@@ -709,7 +710,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan konfirmasi awal atas pengaduan dan/atau eskalasi Wajib Pajak dan/atau masyarakat yang disampaikan",
+        namaButir: "Melaksanakan konfirmasi awal atas pengaduan dan/atau eskalasi Wajib Pajak dan/atau masyarakat yang disampaikan",
         tkButir: "-",
         hasilKerja: "Rekaman Media",
         jmlPoin: 0.0078,
@@ -718,7 +719,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan analisis dan mendokumentasikan pengaduan Wajib Pajak dan/atau masyarakat ke dalam sistem informasi pengaduan",
+        namaButir: "Melaksanakan analisis dan mendokumentasikan pengaduan Wajib Pajak dan/atau masyarakat ke dalam sistem informasi pengaduan",
         tkButir: "-",
         hasilKerja: "Dokumentasi Sistem Informasi Pengaduan",
         jmlPoin: 0.001,
@@ -727,7 +728,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan asistensi Penyuluh Pajak yang baru bergabung di contact center  (tandem)",
+        namaButir: "Melaksanakan asistensi Penyuluh Pajak yang baru bergabung di contact center  (tandem)",
         tkButir: "-",
         hasilKerja: "Laporan Pelaksanaan Asistensi",
         jmlPoin: 0.01,
@@ -736,7 +737,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melakukan pengolahan data panggilan keluar kepada Wajib Pajak dan/atau masyarakat (outbound )",
+        namaButir: "Melakukan pengolahan data panggilan keluar kepada Wajib Pajak dan/atau masyarakat (outbound )",
         tkButir: "-",
         hasilKerja: "Laporan Pengolahan data panggilan keluar",
         jmlPoin: 0.0125,
@@ -745,7 +746,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian konfirmasi lanjutan  hasil tindak lanjut pengelolaan pengaduan di bidang perpajakan",
+        namaButir: "Melaksanakan penyampaian konfirmasi lanjutan  hasil tindak lanjut pengelolaan pengaduan di bidang perpajakan",
         tkButir: "-",
         hasilKerja: "Rekaman Media",
         jmlPoin: 0.0085,
@@ -754,7 +755,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menindaklanjuti pertanyaan Wajib Pajak dan/atau masyarakat terkait informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan yang belum terjawab (eskalasi) ke direktorat terkait",
+        namaButir: "Menindaklanjuti pertanyaan Wajib Pajak dan/atau masyarakat terkait informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan yang belum terjawab (eskalasi) ke direktorat terkait",
         tkButir: "-",
         hasilKerja: "surat",
         jmlPoin: 0.0725,
@@ -763,7 +764,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian jawaban atas pertanyaan Wajib Pajak dan/atau masyarakat yang belum terjawab (eskalasi)",
+        namaButir: "Melaksanakan penyampaian jawaban atas pertanyaan Wajib Pajak dan/atau masyarakat yang belum terjawab (eskalasi)",
         tkButir: "-",
         hasilKerja: "laporan",
         jmlPoin: 0.0054,
@@ -772,7 +773,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pendampingan Penyuluh Pajak dalam rangka pemberian/penyampaian layanan",
+        namaButir: "Melaksanakan pendampingan Penyuluh Pajak dalam rangka pemberian/penyampaian layanan",
         tkButir: "-",
         hasilKerja: "laporan pendampingan",
         jmlPoin: 0.01,
@@ -781,7 +782,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan proses pembahasan bersama (kalibrasi) di internal seksi",
+        namaButir: "Melaksanakan proses pembahasan bersama (kalibrasi) di internal seksi",
         tkButir: "-",
         hasilKerja: "berita acara pembahasan",
         jmlPoin: 0.0147,
@@ -790,7 +791,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penilaian kualitas layanan informasi dan pengaduan",
+        namaButir: "Melaksanakan penilaian kualitas layanan informasi dan pengaduan",
         tkButir: "-",
         hasilKerja: "laporan hasil penilaian",
         jmlPoin: 0.0157,
@@ -799,7 +800,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menganalisis hasil penilaian kualitas pemberian/penyampaian layanan secara periodik",
+        namaButir: "Menganalisis hasil penilaian kualitas pemberian/penyampaian layanan secara periodik",
         tkButir: "-",
         hasilKerja: "laporan hasil penilaian periodik",
         jmlPoin: 0.006,
@@ -808,7 +809,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan inventarisasi dan menganalisis hasil eskalasi secara periodik",
+        namaButir: "Melaksanakan inventarisasi dan menganalisis hasil eskalasi secara periodik",
         tkButir: "-",
         hasilKerja: "laporan hasil eskalasi periodik",
         jmlPoin: 0.0725,
@@ -817,7 +818,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan inventarisasi dan menganalisis tindakan pengaduan yang telah diselesaikan secara periodik",
+        namaButir: "Melaksanakan inventarisasi dan menganalisis tindakan pengaduan yang telah diselesaikan secara periodik",
         tkButir: "-",
         hasilKerja: "laporan hasil analisis pengaduan periodik",
         jmlPoin: 0.0242,
@@ -826,7 +827,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan analisis dan memberikan persetujuan atau penolakan atas pengajuan keberatan hasil penilaian kualitas layanan",
+        namaButir: "Melaksanakan analisis dan memberikan persetujuan atau penolakan atas pengajuan keberatan hasil penilaian kualitas layanan",
         tkButir: "-",
         hasilKerja: "rekomendasi teknis",
         jmlPoin: 0.0128,
@@ -835,7 +836,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan evaluasi atas layanan panggilan masuk ataupanggilan keluar melalui media telepon dan nontelepon",
+        namaButir: "Melaksanakan evaluasi atas layanan panggilan masuk ataupanggilan keluar melalui media telepon dan nontelepon",
         tkButir: "-",
         hasilKerja: "laporan evaluasi kinerja tim operasional",
         jmlPoin: 0.0394,
@@ -844,7 +845,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktA.id,
-        namaButir: "melakukan review materi Penyuluhan perpajakan",
+        namaButir: "Melakukan review materi Penyuluhan perpajakan",
         tkButir: "-",
         hasilKerja: "Laporan Review",
         jmlPoin: 0.02,
@@ -853,7 +854,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menyusun konsep usulan  pengembangan aplikasi pusat interaksi (contact center ) dalam rangka menunjang kegiatan pelayanan dengan pihak internal dan/atau eksternal",
+        namaButir: "Menyusun konsep usulan  pengembangan aplikasi pusat interaksi (contact center ) dalam rangka menunjang kegiatan pelayanan dengan pihak internal dan/atau eksternal",
         tkButir: "-",
         hasilKerja: "surat usulan",
         jmlPoin: 0.044,
@@ -862,7 +863,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "menganalisis dan menyusun daftar pertanyaan ke unit kerja atas permasalahan pemberian layanan",
+        namaButir: "Menganalisis dan menyusun daftar pertanyaan ke unit kerja atas permasalahan pemberian layanan",
         tkButir: "-",
         hasilKerja: "surat/nota dinas penyampaian daftar pertanyaan",
         jmlPoin: 0.02,
@@ -871,7 +872,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan  evaluasi atas layanan bagian pengaduan/penjaminan kualitas",
+        namaButir: "Melaksanakan  evaluasi atas layanan bagian pengaduan/penjaminan kualitas",
         tkButir: "-",
         hasilKerja: "laporan evaluasi kinerja tim pengaduan/penjaminan kualitas",
         jmlPoin: 0.03,
@@ -880,7 +881,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktF.id,
-        namaButir: "melaksanakan pemantauan langsung (live monitoring ) atas pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan, permintaan transaksi perpajakan,dan/atau petunjuk penggunaan aplikasi perpajakan yang disampaikan melalui media",
+        namaButir: "Melaksanakan pemantauan langsung (live monitoring ) atas pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan, permintaan transaksi perpajakan,dan/atau petunjuk penggunaan aplikasi perpajakan yang disampaikan melalui media",
         tkButir: "-",
         hasilKerja: "laporan pemantauan langsung",
         jmlPoin: 0.0207,
@@ -889,7 +890,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan jadwal interaksi (online )",
+        namaButir: "Melaksanakan jadwal interaksi (online )",
         tkButir: "-",
         hasilKerja: "Laporan piket Interaksi",
         jmlPoin: 0.004,
@@ -898,7 +899,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan koordinasi dengan pihak internal dan eksternal dalam rangka pelaksanaan operasional pusat interaksi (contact center )",
+        namaButir: "Melaksanakan koordinasi dengan pihak internal dan eksternal dalam rangka pelaksanaan operasional pusat interaksi (contact center )",
         tkButir: "-",
         hasilKerja: "laporan koordinasi",
         jmlPoin: 0.0081,
@@ -907,7 +908,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktF.id,
-        namaButir: "menyusun tanggapan teknis atas hasil penilaian kualitas layanan",
+        namaButir: "Menyusun tanggapan teknis atas hasil penilaian kualitas layanan",
         tkButir: "-",
         hasilKerja: "tanggapan dalam aplikasi",
         jmlPoin: 0.0051,
@@ -916,7 +917,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan survei melalui media",
+        namaButir: "Melaksanakan survei melalui media",
         tkButir: "-",
         hasilKerja: "Rekaman Media",
         jmlPoin: 0.0003,
@@ -925,7 +926,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "mendokumentasikan pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan, permintaan transaksi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media ke dalam aplikasi",
+        namaButir: "Mendokumentasikan pemberian dan/atau penyampaian informasi perpajakan, penerimaan pengaduan, permintaan transaksi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media ke dalam aplikasi",
         tkButir: "-",
         hasilKerja: "Dokumentasi Aplikasi CRM",
         jmlPoin: 0.0002,
@@ -934,7 +935,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melakukan sosialisasi ketentuan/aplikasi perpajakan",
+        namaButir: "Melakukan sosialisasi ketentuan/aplikasi perpajakan",
         tkButir: "Narasumber",
         hasilKerja: "Jam Pelatihan",
         jmlPoin: 0.01,
@@ -943,7 +944,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melakukan sosialisasi ketentuan/aplikasi perpajakan",
+        namaButir: "Melakukan sosialisasi ketentuan/aplikasi perpajakan",
         tkButir: "Peserta",
         hasilKerja: "Jam Pelatihan",
         jmlPoin: 0.0047,
@@ -952,7 +953,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktB.id,
-        namaButir: "melaksanakan penyelesaian administrasi perpajakan",
+        namaButir: "Melaksanakan penyelesaian administrasi perpajakan",
         tkButir: "Tingkat I",
         hasilKerja: "laporan penelitian permohonan perpajakan",
         jmlPoin: 0.04,
@@ -961,7 +962,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
+        namaButir: "Melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
         tkButir: "Tingkat I",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0042,
@@ -970,7 +971,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
+        namaButir: "Melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
         tkButir: "Tingkat I",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0017,
@@ -979,7 +980,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian pengetahuan (transfer of knowledge ) kepada fungsional lain",
+        namaButir: "Melaksanakan penyampaian pengetahuan (transfer of knowledge ) kepada fungsional lain",
         tkButir: "Tingkat I",
         hasilKerja: "Laporan Hasil Pelaksanaan Penyampaian Pengetahuan",
         jmlPoin: 0.0106,
@@ -988,7 +989,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
+        namaButir: "Melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0021,
@@ -997,7 +998,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
+        namaButir: "Melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0008,
@@ -1006,7 +1007,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktB.id,
-        namaButir: "melaksanakan penyelesaian administrasi perpajakan",
+        namaButir: "Melaksanakan penyelesaian administrasi perpajakan",
         tkButir: "Tingkat II",
         hasilKerja: "laporan penelitian permohonan perpajakan",
         jmlPoin: 0.015,
@@ -1015,7 +1016,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian pengetahuan (transfer of knowledge ) kepada fungsional lain",
+        namaButir: "Melaksanakan penyampaian pengetahuan (transfer of knowledge ) kepada fungsional lain",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Hasil Pelaksanaan Penyampaian Pengetahuan",
         jmlPoin: 0.0041,
@@ -1024,7 +1025,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
+        namaButir: "Melaksanakan pemberian informasi perpajakan perpajakan, penerimaan pengaduan dan/atau pemberian petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan permintaan masyarakat/Wajib Pajak (inbound)",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0007,
@@ -1033,7 +1034,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktE.id,
-        namaButir: "melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
+        namaButir: "Melaksanakan penyampaian informasi perpajakan dan/atau petunjuk penggunaan aplikasi perpajakan melalui media telepon berdasarkan kebutuhan organisasi (outbound )",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Rekaman Media",
         jmlPoin: 0.0003,
@@ -1042,7 +1043,7 @@ module.exports = {
       {
         SubUnsurId: subE.id,
         AktivitaId: aktB.id,
-        namaButir: "melaksanakan penyelesaian administrasi perpajakan",
+        namaButir: "Melaksanakan penyelesaian administrasi perpajakan",
         tkButir: "Tingkat III",
         hasilKerja: "laporan penelitian permohonan perpajakan",
         jmlPoin: 0.0007,
@@ -1051,7 +1052,7 @@ module.exports = {
       {
         SubUnsurId: subF.id,
         AktivitaId: aktC.id,
-        namaButir: "melakukan pemantauan persiapan kegiatan dalam rangka pelatihan pihak ketiga",
+        namaButir: "Melakukan pemantauan persiapan kegiatan dalam rangka pelatihan pihak ketiga",
         tkButir: "Tingkat II",
         hasilKerja: "Laporan Pemantauan Persiapan",
         jmlPoin: 0.06,
@@ -1060,7 +1061,7 @@ module.exports = {
       {
         SubUnsurId: subF.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi uji awal (pre test ) dan uji akhir (post test ) dalam rangka pelatihan pihak ketiga",
+        namaButir: "Menyusun materi uji awal (pre test ) dan uji akhir (post test ) dalam rangka pelatihan pihak ketiga",
         tkButir: "Tingkat II",
         hasilKerja: "Materi Soal",
         jmlPoin: 0.13,
@@ -1069,7 +1070,7 @@ module.exports = {
       {
         SubUnsurId: subF.id,
         AktivitaId: aktC.id,
-        namaButir: "melakukan pemantauan persiapan kegiatan dalam rangka pelatihan pihak ketiga",
+        namaButir: "Melakukan pemantauan persiapan kegiatan dalam rangka pelatihan pihak ketiga",
         tkButir: "Tingkat III",
         hasilKerja: "Laporan Pemantauan Persiapan",
         jmlPoin: 0.06,
@@ -1078,7 +1079,7 @@ module.exports = {
       {
         SubUnsurId: subF.id,
         AktivitaId: aktD.id,
-        namaButir: "menyusun materi uji awal (pre test ) dan uji akhir (post test ) dalam rangka pelatihan pihak ketiga",
+        namaButir: "Menyusun materi uji awal (pre test ) dan uji akhir (post test ) dalam rangka pelatihan pihak ketiga",
         tkButir: "Tingkat III",
         hasilKerja: "Materi Soal",
         jmlPoin: 0.13,

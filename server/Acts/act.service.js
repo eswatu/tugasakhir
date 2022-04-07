@@ -1,6 +1,4 @@
 const config = require('../config.json');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const db = require('../_helpers/db');
 
 
@@ -14,8 +12,15 @@ module.exports = {
 };
 
 
-async function getAll() {
-    return await db.Act.findAll();
+async function getAll(req) {
+    var pageIndex = req.pageIndex;
+    var pageSize = req.pageSize;
+    var sortColumn = req.sortColumn;
+    var sortOrder = req.sortOrder;
+    var filterColumn = req.filterColumn;
+    var filterQuery = req.filterQuery;
+    var model = db.Act;
+    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
 }
 
 async function getById(id) {
@@ -29,26 +34,35 @@ async function createAct(params) {
     // validate
     if (await db.Act.findOne({
         where: {
-            actId: params.actId,
-            date: params.date,
+            userId : params.userId,
+            butirId: params.butirId,
+            butirVolume: params.butirVolume,
             actVolume: params.actVolume
         }
     })) {
         throw 'Act itu "' + params.id + '" sudah terdaftar';
     }
-   
     // save Act
-    await db.Act.create(params);
+    await db.Act.create({
+        userId : params.userId,
+        butirId: params.butirId,
+        butirVolume: params.butirVolume,
+        isCalculated: false,
+        calculatedDate: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }).then(us => { 
+        console.log("act " + us + "berhasil dibuat");
+    });
 }
 
 async function updateAct(id, params) {
     const act = await getActById(id);
-
+    params.updatedAt = new Date();
     // copy params to user and save
     Object.assign(act, params);
     await act.save();
-
-    return omitHash(act.get())
+    return act;
 }
 
 async function _delete(id) {
@@ -57,19 +71,58 @@ async function _delete(id) {
 }
 
 // helper functions
-
 async function getActById(id) {
-    const act = await db.Act.findByPk(id);
+    const act = await db.Act.findByPk(id, {
+        include: [db.User, db.Butir]
+    });
     if (!act) throw 'Aktivitas tidak ditemukan';
     return act;
 }
 async function getActByDate(ds,de) {
-    const act = await db.Act.findAll({ where: { date: q >= ds & q <= de}});
+    const act = await db.Act.findAll({ where: { createdAt: q >= ds & q <= de}});
     if (!act) throw 'Aktivitas tidak ditemukan';
     return act;
 }
 
-function omitHash(act) { 
-    const { hash, ...userWithoutHash } = act;
-    return userWithoutHash;
+
+async function paginate(model, pageIndex, pageSize, sortColumn = 'id', sortOrder , filterColumn, filterQuery)
+{
+    const page = parseInt(pageIndex) || 1;
+    const take = parseInt(pageSize) || 8;
+    const skip = (page - 1) * take;
+    let options = {};
+    
+    if (sortOrder.toUpperCase() == 'ASC') {
+        options['order'] = [sortColumn];
+    } else if (sortOrder.toUpperCase() == 'DESC') { 
+        options['order'] = [sortColumn, 'DESC'];
+    }
+
+    if (filterQuery.length > 0 && filterQuery != undefined) {
+        options = { filterColumn: filterQuery };
+    }
+
+    const { count, rows } = await model.findAndCountAll({
+        include: [db.User, db.Butir],
+        subQuery: false,
+        offset: skip,
+        limit: take,
+        order: [sortColumn ]
+    });
+    const totalPages = Math.ceil(count / take);
+    const HasPreviousPage = page > 0 ? true : false;
+    const HasNextPage = page == (totalPages - 1) ? false : true;
+    return {
+        data: rows,
+        pageIndex: page,
+        pageSize: take,
+        totalCount: count,
+        totalPages: totalPages,
+        hasPreviousPage: HasPreviousPage,
+        hasNextPage: HasNextPage,
+        sortColumn: sortColumn,
+        sortOrder: sortOrder,
+        filterColumn: filterColumn,
+        filterQuery: filterQuery
+    };
 }

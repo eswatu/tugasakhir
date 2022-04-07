@@ -11,7 +11,7 @@ export abstract class BaseService {
         pageIndex: number,
         pageSize: number,
         sortColumn: string,
-        sortorder: string,
+        sortorder: 'asc' | 'desc',
         filterColumn: string,
         filterQuery: string): Observable<ApiResult>;
     

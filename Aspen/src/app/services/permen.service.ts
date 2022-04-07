@@ -2,10 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BaseService, ApiResult } from "./base.service";
 import { Observable } from "rxjs";
-import { butir } from "../model/permen";
-import { inject } from '@angular/core/testing';
-import { identifierName } from '@angular/compiler';
-
 
 @Injectable({
   providedIn: 'root'
@@ -21,26 +17,40 @@ export class PermenService extends BaseService {
     pageIndex: number,
     pageSize: number,
     sortColumn: string,
-    sortorder: string,
+    sortOrder: 'asc' | 'desc' | '',
     filterColumn: string,
     filterQuery: string): Observable<ApiResult> {
-    var url = this.baseUrl + 'api/Butir';
-
-    return this.http.get<ApiResult>(url, { );
+    var url = this.baseUrl + 'Butir';
+    var params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("sortColumn", sortColumn)
+      .set("sortOrder", sortOrder);
+    if (filterQuery) { 
+      params = params
+        .set("filterColumn", filterColumn)
+        .set("filterQuery", filterQuery);
+    }
+    return this.http.get<ApiResult>(url, { params } );
   }
-  getList<
 
-  get<creditPoint>(id: number): Observable<creditPoint> {
+  getByLevel<butir>(level: number): Observable<butir[]> {
+    var url = this.baseUrl + "Butir/forLevel/" + level;
+    return this.http.get<butir[]>(url);
+  }
+  
+//nbawah belum dicek
+  get<butir>(id: number): Observable<butir> {
     var url = this.baseUrl + "api/Butir" + id;
-    return this.http.get<creditPoint>(url);
+    return this.http.get<butir>(url);
   }
-  put<creditPoint>(item: any): Observable<creditPoint> {
+  put<butir>(item: any): Observable<butir> {
     var url = this.baseUrl + "api/Butir" + item.id;
-    return this.http.put<creditPoint>(url, item);
+    return this.http.put<butir>(url, item);
   }
-  post<creditPoint>(item: creditPoint): Observable<creditPoint> {
+  post<butir>(item: butir): Observable<butir> {
     var url = this.baseUrl + "api/Butir";
-    return this.http.post<creditPoint>(url, item);
+    return this.http.post<butir>(url, item);
   }
 
 }

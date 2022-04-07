@@ -1,1 +1,63 @@
-<H1>ok this is works!</H1>
+<p *ngIf="!butirs"><em>Loading...</em></p>
+
+<div class="commands text-right" *ngIf="butirs">
+  <button type="button"
+          [routerLink]="['/butir']"
+          class="btn btn-success">
+      Add a new Butir
+  </button>
+</div>
+
+<!-- <mat-form-field [hidden]="!butirs">
+    <input matInput (keyup)="onFilterTextChanged($event.target.value)"
+        placeholder="Filter by name (or part of it)...">
+</mat-form-field> -->
+
+<table mat-table [dataSource]="butirs" class="table-striped mat-elevation-z8" [hidden]="!butirs"
+    matSort (matSortChange)="loadData()"
+    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let butir"> {{butir.id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="namaButir">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name Butir</th>
+    <td mat-cell *matCellDef="let butir">
+      <a [routerLink]="['/butir', butir.id]">{{butir.namaButir}}</a>
+    </td>
+  </ng-container>
+
+  <!-- Lat Column -->
+  <ng-container matColumnDef="tkButir">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tingkat</th>
+    <td mat-cell *matCellDef="let butir"> {{butir.tkButir}} </td>
+  </ng-container>
+
+  <!-- Lon Column -->
+  <ng-container matColumnDef="jmlPoin">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Jumlah Angkre</th>
+    <td mat-cell *matCellDef="let butir"> {{butir.jmlPoin}} </td>
+  </ng-container>
+
+  <!-- CountryName Column -->
+  <ng-container matColumnDef="levelReq">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Jenjang</th>
+    <td mat-cell *matCellDef="let butir">
+      <a [routerLink]="['/butir', butir.id]">{{butir.levelReq}}</a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+﻿
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!butirs"
+    (page)="getData($event)"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons></mat-paginator>

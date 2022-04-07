@@ -8,9 +8,9 @@ const authorize = require('../_middleware/authorize');
 //routes
 router.post('/create', createSchema, create);
 router.get('/', getAll);
-router.get('/:id', authorize(), getById);
-router.put('/:id', authorize(), updateSchema, update);
-router.delete('/:id',authorize(), _delete);
+router.get('/:id', getById);
+router.put('/:id', updateSchema, update);
+router.delete('/:id',_delete);
 
 module.exports = router;
 
@@ -32,7 +32,7 @@ function create(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    actService.getAll()
+    actService.getAll(req)
         .then(acts => res.json(acts))
         .catch(next);
 }

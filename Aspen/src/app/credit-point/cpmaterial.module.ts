@@ -7,6 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDividerModule } from "@angular/material/divider";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from '@angular/material/sort';
+import { MatTreeModule } from "@angular/material/tree";
 
 
 const modules = [MatButtonModule,
@@ -16,7 +18,9 @@ const modules = [MatButtonModule,
   FlexLayoutModule,
   MatDividerModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatSortModule,
+  MatTreeModule
   ];
 
 @NgModule({

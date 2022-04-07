@@ -4,7 +4,9 @@ const Joi = require('joi');
 const butirService = require('./butir.service');
 const authorize = require('../_middleware/authorize');
 //routes
-router.get('/',getAll);
+router.get('/', getAll);
+router.get('/forLevel/:level', getByLevel);
+
 router.get('/:id',authorize(), getById);
 
 module.exports = router;
@@ -21,6 +23,10 @@ function getById(req, res, next) {
         .then(butir => res.json(butir))
         .catch(next);
 }
-
+function getByLevel(req, res, next) {
+    butirService.getByLevel(req.params.id)
+        .then(butir => res.json(butir))
+        .catch(next);
+}
 
 //schema

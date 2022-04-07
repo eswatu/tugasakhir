@@ -1,8 +1,13 @@
 const config = require('../config.json');
+const { Sequelize } = require('../models');
 const db = require('../_helpers/db');
+const paginate = require('../_helpers/pagination');
+const Op = Sequelize.Op;
+const SubUnsur = require('./subUnsur.model');
 
 module.exports = {
     getAll,
+    getByLevel,
     getById,
 };
 
@@ -14,7 +19,39 @@ async function getAll(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Butir;
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn = "", filterQuery = "");
+}
+/*level
+terampil                  = 1
+mahir                     = 2
+terampil + mahir          = 3
+penyelia                  = 4
+penyelia + mahir          = 6
+terampil, mahir, penyelia = 7
+ */
+async function getByLevel(level) {
+    level = parseInt(level);
+    const availJob = [];
+    if (level == 1) {
+        availJob = [1, 2, 3, 7];
+    } else if (level == 2) {
+        availJob = [1, 2, 3, 4, 6, 7]
+    } else if (level == 4) { 
+        availJob = [2,3,4,6,7]
+    }
+    let result =  await db.Butir.findAll(
+        {
+            include: [{all:true}],
+            where: {
+                "levelReq": {
+                [Op.or]: availJob
+            } },
+            order: [['SubUnsurId','ASC'],['AktivitaId', 'ASC']]
+        }
+    );
+    result = groupItemBy(result, "SubUnsur.namaSubUnsur");
+    //result.forEach(value => groupItemBy(value,"Aktivita.namaAkt"));
+    return result;
 }
 
 async function getById(id) {
@@ -29,44 +66,27 @@ async function getButir(id) {
     return butir;
 }
 
-async function paginate(model, pageIndex, pageSize, sortColumn = 'id', sortOrder , filterColumn, filterQuery)
-{
-    const page = parseInt(pageIndex) || 1;
-    const take = parseInt(pageSize) || 8;
-    const skip = (page - 1) * take;
-    let options = {};
-    
-    if (sortOrder.toUpperCase() == 'ASC') {
-        options['order'] = [sortColumn];
-    } else if (sortOrder.toUpperCase() == 'DESC') { 
-        options['order'] = [sortColumn, 'DESC'];
+function groupSubItemBy(array, {property}) {
+    var group = {};
+    for (var i = 0; i < array.length; i++) {
+      if (!group[array[i][{property}]]) {
+        group[array[i][{property}]] = [];
+      }
+      group[array[i][{property}]].push(array[i]);
     }
-
-    if (filterQuery.length > 0 && filterQuery != undefined) {
-        options = { filterColumn: filterQuery };
+    return group;
+  }
+function groupItemBy(array, property) {
+    var hash = {},
+        props = property.split('.');
+    for (var i = 0; i < array.length; i++) {
+        var key = props.reduce(function(acc, prop) {
+            return acc && acc[prop];
+        }, array[i]);
+        if (!hash[key]) hash[key] = [];
+        hash[key].push(array[i]);
     }
-
-    const { count, rows } = await model.findAndCountAll({
-        include: [db.Aktivitas, db.SubUnsur],
-        subQuery: false,
-        offset: skip,
-        limit: take,
-        order: [sortColumn ]
-    });
-    const totalPages = Math.ceil(count / take);
-    const HasPreviousPage = page > 0 ? true : false;
-    const HasNextPage = page == (totalPages - 1) ? false : true;
-    return {
-        data: rows,
-        pageIndex: page,
-        pageSize: take,
-        totalCount: count,
-        totalPages: totalPages,
-        hasPreviousPage: HasPreviousPage,
-        hasNextPage: HasNextPage,
-        sortColumn: sortColumn,
-        sortOrder: sortOrder,
-        filterColumn: filterColumn,
-        filterQuery: filterQuery
-    };
+    return hash;
 }
+
+

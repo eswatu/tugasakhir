@@ -4,15 +4,19 @@ import { CreditPointTableComponent } from './credit-point-table/credit-point-tab
 import { CreditPointRoutingModule } from './credit-point-routing.module';
 import { CreditPointFormComponent } from './credit-point-form/credit-point-form.component';
 import { cpMaterialModule } from './cpmaterial.module';
+import { HttpClientModule } from "@angular/common/http";
+import { ButirTreeComponent } from './butir-tree/butir-tree.component';
 
 
 @NgModule({
   declarations: [
     CreditPointTableComponent,
-    CreditPointFormComponent
+    CreditPointFormComponent,
+    ButirTreeComponent
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     CreditPointRoutingModule,
     cpMaterialModule
   ]

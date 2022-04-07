@@ -20,13 +20,19 @@ async function initialize() {
     //ini database permen
     db.Aktivitas     = require('../permen/aktivitas.model')(sequelize);
     db.SubUnsur      = require('../permen/subUnsur.model')(sequelize);
-    db.Butir         = require('../permen/butir.model')(sequelize);
+    db.Butir = require('../permen/butir.model')(sequelize);
+    
+    //ini database untuk Kerja
+    db.Act = require('../Acts/act.model')(sequelize);
 
-    //relasi
+    //relasi khusus
     db.Butir.belongsTo(db.SubUnsur);
     db.Butir.belongsTo(db.Aktivitas);
     db.SubUnsur.hasMany(db.Butir);
     db.Aktivitas.hasMany(db.Butir);
+    //relasi
+    db.Act.belongsTo(db.User);
+    db.Act.belongsTo(db.Butir);
     //sync model dengan database
-    await sequelize.sync({alter:true});
+    await sequelize.sync({});
 }

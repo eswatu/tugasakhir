@@ -1,55 +1,43 @@
-module.exports = async function paginate(
-    db, pageIndex, pageSize,
-    sortColumn, sortOrder,
-    filterColumn, filterQuery)
+module.exports = async function paginate(model, pageIndex, pageSize, sortColumn = 'id', sortOrder = "ASC" , filterColumn, filterQuery)
 {
-    let PageIndex = pageIndex ?? 1;
-    let PageSize = pageSize ?? 10;
-    let SortColumn = sortColumn ? sortColumn : 'id';
-    let SortOrder = sortOrder == 'ASC' ? 'ASC' : 'DESC';
-    let FilterColumn = filterColumn;
-    let FilterQuery = filterQuery;
-    let result;
-    let totalPages;
-    let totalCount;
+    const page = parseInt(pageIndex) || 0;
+    const take = parseInt(pageSize) || 8;
+    const skip = page  * take;
+    let options = {};
+    if (sortOrder.length < 1) { 
+        sortOrder = "ASC";
+    }
+    if (sortOrder.toUpperCase() == 'ASC') {
+        options = { order: [[sortColumn, 'ASC']] }
+    } else if (sortOrder.toUpperCase() == 'DESC') {
+        options = { order: [[sortColumn, 'DESC']] }
+    }
 
-    if (FilterQuery) {
-        result = await db.findAllAndCount({
-            where: {
-                FilterColumn: FilterQuery
-            },
-            order: [SortColumn, SortOrder],
-            limit: PageSize,
-            offset: PageIndex * PageSize,
-            include: [Aktivitas]
-        }).then(result => { 
-            totalPages = result.count;
-        });
-    } else {
-        result = await db.findAll({
-            order: [SortColumn, sortOrder],
-            limit: PageSize,
-            offset: PageIndex * PageSize
-        }).then(result => { 
-            totalPages = result.count;
-        })
-    };
-    let HasPreviousPage = PageIndex > 0 ? true : false;
-    let HasNextPage = PageIndex == (totalPages - 1) ? false : true;
+    if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
+        options = { filterColumn: filterQuery };
+    }
 
-    totalPages = Math.ceil(totalCount / PageSize);
-    
+    const { count, rows } = await model.findAndCountAll({
+        include: {all: true},
+        subQuery: false,
+        offset: skip,
+        limit: take,
+        order: [[sortColumn, sortOrder.toUpperCase()]]
+    });
+    const totalPages = Math.ceil(count / take);
+    const HasPreviousPage = page > 0 ? true : false;
+    const HasNextPage = page == (totalPages - 1) ? false : true;
     return {
-        data: result,
-        pageIndex: pageIndex,
-        pageSize: PageSize,
-        totalCount: totalCount,
+        data: rows,
+        pageIndex: page,
+        pageSize: take,
+        totalCount: count,
         totalPages: totalPages,
         hasPreviousPage: HasPreviousPage,
         hasNextPage: HasNextPage,
-        sortColumn: SortColumn,
-        sortOrder: SortOrder,
-        filterColumn: FilterColumn,
-        filterQuery: FilterQuery
+        sortColumn: sortColumn,
+        sortOrder: sortOrder,
+        filterColumn: filterColumn,
+        filterQuery: filterQuery
     };
 }

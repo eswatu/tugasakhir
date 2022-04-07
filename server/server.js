@@ -12,7 +12,7 @@ app.use(cors());
 
 //api routes
 app.use('/users', require('./Users/users.controller'));
-app.use('/acts', require('./Acts/acts.controller'));
+app.use('/acts', require('./Acts/act.controller'));
 app.use('/butir', require('./permen/butir.controller'));
 
 //global error handler
