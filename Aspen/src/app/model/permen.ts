@@ -13,7 +13,7 @@ export interface subUnsur {
 }
 
 
-export interface butir { 
+export interface butirFull { 
     id: number;
     namaButir: string;
     tkButir: string;
@@ -23,4 +23,17 @@ export interface butir {
     subUnsur: subUnsur;
     aktivitas: aktivitas;
 }
-
+export interface butirLess {
+    id: number;
+    namaButir: string;
+    tkButir: string;
+    hasilKerja: string;
+    jmlPoin: number;
+    levelReq: number;
+    subUnsurId: number;
+    aktivitaId: number;
+}
+export interface treeNode {
+    name: string;
+    children?: treeNode[];
+}

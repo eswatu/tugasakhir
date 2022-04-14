@@ -1,5 +1,6 @@
+import { CdkTreeNode } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
-import { butir, subUnsur } from '@env/model/permen';
+import { butirLess, subUnsur, aktivitas, treeNode } from '@env/model/permen';
 import { PermenService } from '@env/services/permen.service';
 
 @Component({
@@ -10,7 +11,10 @@ import { PermenService } from '@env/services/permen.service';
 export class ButirTreeComponent implements OnInit {
 
   defaultLevel = 1;
-  butirs: {butir: any};
+  butirs;
+  dfSubUnsur;
+  dfAktivita;
+  dataTree: treeNode[] ;
 
   constructor(private permernServ: PermenService) { }
 
@@ -20,30 +24,32 @@ export class ButirTreeComponent implements OnInit {
   loadData(forlvl: number = this.defaultLevel) { 
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
-        this.butirs = res as [butir];
-        let result = this.collectSubUnsurName(JSON.parse(res));
-        console.log(result);
-    });
-  }
-  groupSubItemBy(array, property) {
-    var group = {};
-    for (var i = 0; i < array.length; i++) {
-      if (!group[array[i][property]]) {
-        group[array[i][property]] = [];
-      }
-      group[array[i][property]].push(array[i]);
-    }
-    return group;
+        let split = this.groupItemBy(res, 'SubUnsur.namaSubUnsur');
+        split.forEach(function (key, value) {
+          let node: treeNode = {
+            name: this.key,
+            children : this.value
+          };
+          this.dataTree.push(node);
+        });
+        console.log(this.dataTree);
+    }, err => console.error(err));
   }
 
-  collectSubUnsurName(arr:[butir]) {
-    let result = [];
-    for (let i =0; i < 5; i++){
-      let subs = arr[i].subUnsur;
-      console.log(subs);
+  groupItemBy(array, property) {
+    var hash = {},
+        props = property.split('.');
+    for (var i = 0; i < array.length; i++) {
+        var key = props.reduce(function(acc, prop) {
+            return acc && acc[prop];
+        }, array[i]);
+        if (!hash[key]) hash[key] = [];
+        hash[key].push(array[i]);
     }
-    return result;
-  }
+    return hash;
+}
+
+
   
 
 }

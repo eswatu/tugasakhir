@@ -6,7 +6,8 @@ const authorize = require('../_middleware/authorize');
 //routes
 router.get('/', getAll);
 router.get('/forLevel/:level', getByLevel);
-
+router.get('/SUBName/:id', getSubNById);
+router.get('/AKName/:id', getAktNameId);
 router.get('/:id',authorize(), getById);
 
 module.exports = router;
@@ -26,6 +27,16 @@ function getById(req, res, next) {
 function getByLevel(req, res, next) {
     butirService.getByLevel(req.params.id)
         .then(butir => res.json(butir))
+        .catch(next);
+}
+function getSubNById(req, res, next) {
+    butirService.getSubNById(req.params.id)
+        .then(su => res.json(su))
+        .catch(next);
+}
+function getAktNameId(req, res, next) {
+    butirService.getAktNameById(req.params.id)
+        .then(akt => res.json(akt))
         .catch(next);
 }
 

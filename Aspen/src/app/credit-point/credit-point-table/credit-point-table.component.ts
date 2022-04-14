@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from "@angular/material/sort";
-import { butir } from '@env/model/permen';
+import { butirFull } from '@env/model/permen';
 import { ApiResult } from '@env/services/base.service';
 import { PermenService } from "@env/services/permen.service";
 
@@ -14,7 +14,7 @@ import { PermenService } from "@env/services/permen.service";
 
 export class CreditPointTableComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'namaButir', 'tkButir', 'jmlPoin', 'levelReq'];
-  public butirs: MatTableDataSource<butir>;
+  public butirs: MatTableDataSource<butirFull>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -51,14 +51,14 @@ export class CreditPointTableComponent implements OnInit {
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
     //use service
-    this.permenService.getData<ApiResult<butir>>(
+    this.permenService.getData<ApiResult<butirFull>>(
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.butirs = new MatTableDataSource<butir>(result.data);
+        this.butirs = new MatTableDataSource<butirFull>(result.data);
       }, error => console.error(error));
   }
 
