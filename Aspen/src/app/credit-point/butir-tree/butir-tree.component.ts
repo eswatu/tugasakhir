@@ -1,7 +1,8 @@
-import { CdkTreeNode } from '@angular/cdk/tree';
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { Component, OnInit } from '@angular/core';
-import { butirLess, subUnsur, aktivitas, treeNode } from '@env/model/permen';
 import { PermenService } from '@env/services/permen.service';
+import { treeNode } from '@env/model/permen';
 
 @Component({
   selector: 'app-butir-tree',
@@ -9,13 +10,31 @@ import { PermenService } from '@env/services/permen.service';
   styleUrls: ['./butir-tree.component.css']
 })
 export class ButirTreeComponent implements OnInit {
+  private _transformer = (node: treeNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+    };
+  };
 
-  defaultLevel = 1;
-  butirs;
-  dfSubUnsur;
-  dfAktivita;
-  dataTree: treeNode[] ;
-
+  treeControl = new FlatTreeControl<FlateNode>(
+    (node) => node.level,
+    (node) => node.expandable
+  );
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    (node) => node.level,
+    (node) => node.expandable,
+    (node) => node.children
+  );
+  
+  dataSource = new MatTreeFlatDataSource(
+    this.treeControl, this.treeFlattener);
+     
+  hasChild = (_: number, 
+    node: FlateNode) => node.expandable;
+    defaultLevel = 1;
   constructor(private permernServ: PermenService) { }
 
   ngOnInit(): void {
@@ -24,20 +43,19 @@ export class ButirTreeComponent implements OnInit {
   loadData(forlvl: number = this.defaultLevel) { 
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
+        //split subunsur
         let split = this.groupItemBy(res, 'SubUnsur.namaSubUnsur');
-        for (let i in split) {
-          if (split.hasOwnProperty(i)) {
-            let splot = this.groupItemBy( split[i], 'Aktivita.namaAkt');
-            for (var x in splot) {
-              let splat = {name: '', children: ''}
-              if (splot.hasOwnProperty(x)) {
-                splat = {name:x, children:splot[x]};
-              }
-//
-            }
+        //split aktivitas
+        for (let item in split) {
+          if (split.hasOwnProperty(item)) {
+            //reformat aktivitas
+            split[item] = Object.entries(this.groupItemBy(split[item], 'Aktivita.namaAkt')).map((item) => ({name: item[0], children: item[1]}) as treeNode);
           }
         }
-        console.log(split);
+        //reformat subunsur
+        this.dataSource.data = Object.entries(split).map((item) => ({name: item[0], children: item[1]}) as treeNode);
+        //split.forEach((children) => this.groupItemBy(children['children'], 'Aktivita.namaAkt').map((entry) => ({name: entry[0], children: entry[1]})));
+        console.log(this.dataSource);
     }, err => console.error(err));
   }
 
@@ -54,7 +72,10 @@ export class ButirTreeComponent implements OnInit {
     return hash;
 }
 
+}
 
-  
-
+interface FlateNode {
+  expandable: boolean;
+  name: string;
+  level: number;
 }
