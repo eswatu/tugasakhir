@@ -25,14 +25,19 @@ export class ButirTreeComponent implements OnInit {
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
         let split = this.groupItemBy(res, 'SubUnsur.namaSubUnsur');
-        split.forEach(function (key, value) {
-          let node: treeNode = {
-            name: this.key,
-            children : this.value
-          };
-          this.dataTree.push(node);
-        });
-        console.log(this.dataTree);
+        for (let i in split) {
+          if (split.hasOwnProperty(i)) {
+            let splot = this.groupItemBy( split[i], 'Aktivita.namaAkt');
+            for (var x in splot) {
+              let splat = {name: '', children: ''}
+              if (splot.hasOwnProperty(x)) {
+                splat = {name:x, children:splot[x]};
+              }
+//
+            }
+          }
+        }
+        console.log(split);
     }, err => console.error(err));
   }
 
