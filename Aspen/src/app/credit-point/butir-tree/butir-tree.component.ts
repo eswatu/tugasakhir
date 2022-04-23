@@ -9,6 +9,8 @@ import { treeNode } from '@env/model/permen';
   templateUrl: './butir-tree.component.html',
   styleUrls: ['./butir-tree.component.css']
 })
+
+
 export class ButirTreeComponent implements OnInit {
   private _transformer = (node: treeNode, level: number) => {
     return {
@@ -49,13 +51,21 @@ export class ButirTreeComponent implements OnInit {
         for (let item in split) {
           if (split.hasOwnProperty(item)) {
             //reformat aktivitas
-            split[item] = Object.entries(this.groupItemBy(split[item], 'Aktivita.namaAkt')).map((item) => ({name: item[0], children: item[1]}) as treeNode);
+            let splot = this.groupItemBy(split[item], 'Aktivita.namaAkt');
+            //.map((item) => ({name: item[0], children: item[1]}));
+            for (let dtil in splot) {
+              if (splot.hasOwnProperty(dtil)) {
+                splot[dtil] = splot[dtil].map((dt) => ({name: dt.namaButir, children: null}));
+              }
+            }
+            split[item] = Object.entries(splot).map((item) => ({name: item[0], children: item[1]}));;
           }
+          
         }
         //reformat subunsur
         this.dataSource.data = Object.entries(split).map((item) => ({name: item[0], children: item[1]}) as treeNode);
         //split.forEach((children) => this.groupItemBy(children['children'], 'Aktivita.namaAkt').map((entry) => ({name: entry[0], children: entry[1]})));
-        console.log(this.dataSource);
+        console.log(this.dataSource.data);
     }, err => console.error(err));
   }
 
