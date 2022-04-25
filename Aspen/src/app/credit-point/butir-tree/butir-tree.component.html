@@ -1,25 +1,23 @@
-<mat-tree [dataSource]="dataSource"
-		[treeControl]="treeControl">
-	<mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-		
-		<!-- Adding disabled property to button
-			so as to give padding to nodes -->
-		<button mat-icon-button disabled></button>
-			{{node.name}}
-	</mat-tree-node>
-	
-	<!-- Tree node template for expandable nodes -->
-	<mat-tree-node
-		*matTreeNodeDef="let node;when: hasChild"
-		matTreeNodePadding>
-		<button mat-icon-button matTreeNodeToggle
-			[attr.aria-label]=
-			"'Toggle ' + node.name">
-			<mat-icon class="mat-icon-rtl-mirror">
-				{{treeControl.isExpanded(node) ?
-					'expand_more' : 'chevron_right'}}
-			</mat-icon>
-		</button>
-			{{node.name}}
-	</mat-tree-node>
-</mat-tree>
+<mat-button-toggle-group [formControl]="selectedTreeNodeControl">
+	<mat-tree [dataSource]="dataSource"
+			[treeControl]="treeControl">
+
+		<!-- Tree node template for expandable nodes -->
+		<mat-tree-node
+			*matTreeNodeDef="let node;when: hasChild"
+			matTreeNodePadding>
+			<mat-button-toggle mat-icon-button matTreeNodeToggle
+				[attr.aria-label]=
+				"'Toggle ' + node.name">
+				<mat-icon class="mat-icon-rtl-mirror" >
+					{{treeControl.isExpanded(node) ?
+						'expand_more' : 'chevron_right'}}
+				</mat-icon>
+				{{node.name}}
+			</mat-button-toggle>
+		</mat-tree-node>
+	</mat-tree>
+</mat-button-toggle-group>
+<p>
+	Selected Node is : {{selectedTreeNodeControl.value}}
+</p>

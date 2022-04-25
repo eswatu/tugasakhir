@@ -6,6 +6,7 @@ import { CreditPointFormComponent } from './credit-point-form/credit-point-form.
 import { cpMaterialModule } from './cpmaterial.module';
 import { HttpClientModule } from "@angular/common/http";
 import { ButirTreeComponent } from './butir-tree/butir-tree.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,8 @@ import { ButirTreeComponent } from './butir-tree/butir-tree.component';
     CommonModule,
     HttpClientModule,
     CreditPointRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     cpMaterialModule
   ]
 })

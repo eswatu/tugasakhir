@@ -3,6 +3,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { Component, OnInit } from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
 import { treeNode } from '@env/model/permen';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-butir-tree',
@@ -33,7 +34,8 @@ export class ButirTreeComponent implements OnInit {
   
   dataSource = new MatTreeFlatDataSource(
     this.treeControl, this.treeFlattener);
-     
+  selectedTreeNodeControl = new FormControl();
+  
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
     defaultLevel = 1;

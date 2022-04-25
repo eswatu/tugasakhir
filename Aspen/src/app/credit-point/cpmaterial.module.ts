@@ -9,9 +9,12 @@ import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from '@angular/material/sort';
 import { MatTreeModule } from "@angular/material/tree";
+import {MatButtonToggleModule} from '@angular/material/button-toggle'
 
 
-const modules = [MatButtonModule,
+const modules = [
+  MatButtonModule,
+  MatButtonToggleModule,
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
