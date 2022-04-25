@@ -7,7 +7,8 @@ function model(sequelize) {
         butirVolume: { type: DataTypes.INTEGER, allowNull: false },
         //bawah ini untuk server
         isCalculated: { type: DataTypes.BOOLEAN, allowNull: false },
-        calculatedDate: {type: DataTypes.DATE, allowNull: true}
+        calculatedDate: {type: DataTypes.DATE, allowNull: true},
+        actDate: {type:DataTypes.DATE, allowNull: false}
         //besok tambahin file upload
     };
     return sequelize.define('Act', attributes);

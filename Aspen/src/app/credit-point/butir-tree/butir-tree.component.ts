@@ -2,11 +2,13 @@ import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { Component, OnInit } from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
-import { treeNode } from '@env/model/permen';
+import { butirFull, treeNode } from '@env/model/permen';
 import { FormControl } from '@angular/forms';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
-  selector: 'app-butir-tree',
+  selector: 'cp-butir-tree',
   templateUrl: './butir-tree.component.html',
   styleUrls: ['./butir-tree.component.css']
 })
@@ -20,6 +22,8 @@ export class ButirTreeComponent implements OnInit {
       level: level,
     };
   };
+
+  @Output() selectedButir = new EventEmitter<butirFull>();
 
   treeControl = new FlatTreeControl<FlateNode>(
     (node) => node.level,
@@ -39,14 +43,17 @@ export class ButirTreeComponent implements OnInit {
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
     defaultLevel = 1;
-  constructor(private permernServ: PermenService) { }
-
+    constructor(private permernServ: PermenService) { }
+    
+  availButir;
   ngOnInit(): void {
     this.loadData();
   }
   loadData(forlvl: number = this.defaultLevel) { 
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
+        this.availButir = res;
+        console.log(this.availButir);
         //split subunsur
         let split = this.groupItemBy(res, 'SubUnsur.namaSubUnsur');
         //split aktivitas
@@ -57,7 +64,7 @@ export class ButirTreeComponent implements OnInit {
             //.map((item) => ({name: item[0], children: item[1]}));
             for (let dtil in splot) {
               if (splot.hasOwnProperty(dtil)) {
-                splot[dtil] = splot[dtil].map((dt) => ({name: dt.namaButir, children: null}));
+                splot[dtil] = splot[dtil].map((dt) => ({name: dt.namaButir, children: null, id: dt.id}));
               }
             }
             split[item] = Object.entries(splot).map((item) => ({name: item[0], children: item[1]}));;
@@ -82,6 +89,14 @@ export class ButirTreeComponent implements OnInit {
         hash[key].push(array[i]);
     }
     return hash;
+}
+setButir(id:number) {
+  console.log(id);
+  let butirOut = this.availButir.find(item => item.id == id);
+  if (butirOut) {
+   this.selectedButir.emit(butirOut);
+   console.log(butirOut);
+  }
 }
 
 }

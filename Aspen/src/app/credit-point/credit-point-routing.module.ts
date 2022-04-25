@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
-import { ButirTreeComponent } from './butir-tree/butir-tree.component';
+import { CreditPointFormComponent } from './credit-point-form/credit-point-form.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 //import { CreditPointTableComponent } from "./credit-point-table/credit-point-table.component";
 
 
 const routes: Routes = [
-  {path:'', component: ButirTreeComponent}
+  {path:'', component: CreditPointFormComponent}
 ]
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes),FlexLayoutModule],
   exports: [RouterModule]
 })
 export class CreditPointRoutingModule { }

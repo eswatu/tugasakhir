@@ -3,16 +3,13 @@
 			[treeControl]="treeControl">
 
 		<!-- Tree node template for expandable nodes -->
-		<mat-tree-node
-			*matTreeNodeDef="let node;when: hasChild"
-			matTreeNodePadding>
+		<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
 			<mat-button-toggle mat-icon-button matTreeNodeToggle
-				[attr.aria-label]=
-				"'Toggle ' + node.name">
-				<mat-icon class="mat-icon-rtl-mirror" >
+				[attr.aria-label]="'Toggle ' + node.name" (click)="setButir(node.id)">
+				<!-- <mat-icon class="mat-icon-rtl-mirror" >
 					{{treeControl.isExpanded(node) ?
 						'expand_more' : 'chevron_right'}}
-				</mat-icon>
+				</mat-icon> -->
 				{{node.name}}
 			</mat-button-toggle>
 		</mat-tree-node>
