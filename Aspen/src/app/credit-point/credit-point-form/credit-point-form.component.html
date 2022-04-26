@@ -1,56 +1,61 @@
-<div fxLayout='row' fxLayoutgap="20px">
-    <div fxLayout="column">
+<div fxLayout='row' fxLayout.xs="column" fxLayoutgap="20px">
+    <div fxFlex="50">
         <cp-butir-tree (selectedButir)="changeButir($event)"></cp-butir-tree>
     </div>
-    <div fxLayout="column">
-        <form [formGroup]="formInput">
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Nama Kegiatan</mat-label>
-                <input formControlName="subUnsur" id="subUnsur" matInput placeholder="Nama Butir Kegiatan">
+    <div fxFlex="50">
+        <form [formGroup]="formInput" >
+            <mat-form-field fxLayout="column">
+                <mat-label>Sub Unsur</mat-label>
+                <input formControlName="subUnsur" id="subUnsur" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxLayout="row">
-                <mat-label>Nama Kegiatan</mat-label>
-                <input formControlName="namaAkt" id="namaAkt" matInput placeholder="Nama Butir Kegiatan">
+            <mat-form-field fxLayout="column">
+                <mat-label>Aktivitas</mat-label>
+                <input formControlName="namaAkt" id="namaAkt" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field fxLayout="column">
                 <mat-label>Nama Kegiatan</mat-label>
-                <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan">
+                <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field fxLayout="column">
                 <mat-label>Tingkat Kegiatan</mat-label>
-                <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat">
+                <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
         
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field fxLayout="column">
                 <mat-label>Jumlah Poin</mat-label>
-                <input formControlName="jmlPoin" id="jmlPoin" matInput placeholder="Jumlah kredit">
+                <input formControlName="jmlPoin" id="jmlPoin" matInput placeholder="Jumlah kredit" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field fxLayout="column">
                 <mat-label>Hasil Pekerjaan</mat-label>
-                <input matInput formControlName="hasilKerja" id="hasilKerja" placeholder="Bukti pelaksanaan pekerjaan">
+                <input matInput formControlName="hasilKerja" id="hasilKerja" placeholder="Bukti pelaksanaan pekerjaan" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
                 
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field appearance="outline" fxLayout="column">
                 <mat-label>Jumlah Kegiatan</mat-label>
-                <input matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah Bukti Pekerjaan">
+                <input type="number" matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah Bukti Pekerjaan">
                 <mat-hint>Diisi jumlah dokumen</mat-hint>
             </mat-form-field>
             
-            <mat-form-field appearance="outline" fxLayout="row">
+            <mat-form-field fxLayout="column">
                 <mat-label>Jenjang</mat-label>
-                <input matInput  formControlName="levelReq" id="levelReq" placeholder="Kegiatan" >
+                <input matInput  formControlName="levelReq" id="levelReq" placeholder="Kegiatan" [readonly]="true">
                 <mat-hint>Otomatis</mat-hint>
             </mat-form-field>
 
+            <button type="submit" mat-raised-button color="primary" 
+            [disabled]="formInput.invalid"
+            class="btn btn-success">Simpan</button>
+            <button type="cancel" mat-raised-button color="warn"
+            class="btn btn-success">Batal</button>
         </form>
     </div>
 </div>

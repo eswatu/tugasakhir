@@ -20,8 +20,8 @@ export interface butirFull {
     hasilKerja: string;
     jmlPoin: number;
     levelReq: number;
-    subUnsur: subUnsur;
-    aktivitas: aktivita;
+    SubUnsur: subUnsur;
+    Aktivita: aktivita;
 }
 
 export interface treeNode {
