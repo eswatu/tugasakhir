@@ -10,18 +10,44 @@ import { butirFull } from '@env/model/permen';
 export class CreditPointFormComponent implements OnInit {
   butirIn: butirFull;
 
-  formInput = new FormGroup({
-    butirId : new FormControl(''),
-    butirVolume: new FormControl(''),
-    userId: new FormControl('') 
-  });
+  formInput : FormGroup;
+  
   constructor() { }
 
   ngOnInit(): void {
+    //init form
+  this.formInput = new FormGroup({
+    //otomatis
+    subUnsur: new FormControl(''),
+    namaAkt: new FormControl(''),
+    namaButir: new FormControl(''),
+    tkButir: new FormControl(''),
+    levelReq: new FormControl(''),
+    jmlPoin: new FormControl(''),
+    hasilKerja: new FormControl(''),
+    userId: new FormControl(''),
+
+    butirVolume: new FormControl('')
+  });
+
   }
 
   changeButir(item: butirFull){
-    console.log(item);
     this.butirIn = item;
+    this.formInput.patchValue(this.butirIn);
+    this.formInput.get('subUnsur').setValue(this.butirIn.subUnsur.namaSubUnsur);
+    this.formInput.get('namaAkt').setValue(this.butirIn.aktivitas.namaAkt);
+
   }
 }
+
+/*
+id: number;
+namaButir: string;
+tkButir: string;
+hasilKerja: string;
+jmlPoin: number;
+levelReq: number;
+subUnsur: subUnsur;
+aktivitas: aktivitas;
+*/

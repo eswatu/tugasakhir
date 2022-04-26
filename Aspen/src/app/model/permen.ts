@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export interface aktivitas { 
+export interface aktivita { 
     id: number;
     kodeAkt: string;
     namaAkt: string;
@@ -21,22 +21,13 @@ export interface butirFull {
     jmlPoin: number;
     levelReq: number;
     subUnsur: subUnsur;
-    aktivitas: aktivitas;
+    aktivitas: aktivita;
 }
-export interface butirLess {
-    id: number;
-    namaButir: string;
-    tkButir: string;
-    hasilKerja: string;
-    jmlPoin: number;
-    levelReq: number;
-    subUnsurId: number;
-    aktivitaId: number;
-}
+
 export interface treeNode {
     name: string;
     children?: treeNode[];
-
+    id?: number;
 }
 
 

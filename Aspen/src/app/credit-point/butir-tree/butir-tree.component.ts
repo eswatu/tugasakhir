@@ -15,11 +15,13 @@ import { Output, EventEmitter } from '@angular/core';
 
 
 export class ButirTreeComponent implements OnInit {
+
   private _transformer = (node: treeNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       level: level,
+      id: node.id
     };
   };
 
@@ -29,21 +31,22 @@ export class ButirTreeComponent implements OnInit {
     (node) => node.level,
     (node) => node.expandable
   );
+
   treeFlattener = new MatTreeFlattener(
     this._transformer,
     (node) => node.level,
     (node) => node.expandable,
-    (node) => node.children
+    (node) => node.children,
   );
   
   dataSource = new MatTreeFlatDataSource(
     this.treeControl, this.treeFlattener);
-  selectedTreeNodeControl = new FormControl();
   
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
     defaultLevel = 1;
-    constructor(private permernServ: PermenService) { }
+  
+  constructor(private permernServ: PermenService) { }
     
   availButir;
   ngOnInit(): void {
@@ -53,7 +56,6 @@ export class ButirTreeComponent implements OnInit {
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
         this.availButir = res;
-        console.log(this.availButir);
         //split subunsur
         let split = this.groupItemBy(res, 'SubUnsur.namaSubUnsur');
         //split aktivitas
@@ -91,11 +93,11 @@ export class ButirTreeComponent implements OnInit {
     return hash;
 }
 setButir(id:number) {
-  console.log(id);
-  let butirOut = this.availButir.find(item => item.id == id);
-  if (butirOut) {
-   this.selectedButir.emit(butirOut);
-   console.log(butirOut);
+  if (id) {
+      let butirOut = this.availButir.find(item => item.id == id);
+      if (butirOut) {
+            this.selectedButir.emit(butirOut as butirFull);
+      }
   }
 }
 
@@ -105,4 +107,5 @@ interface FlateNode {
   expandable: boolean;
   name: string;
   level: number;
+  id: number;
 }
