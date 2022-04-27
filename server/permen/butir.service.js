@@ -3,7 +3,6 @@ const { Sequelize } = require('../models');
 const db = require('../_helpers/db');
 const paginate = require('../_helpers/pagination');
 const Op = Sequelize.Op;
-const SubUnsur = require('./subUnsur.model');
 
 module.exports = {
     getAll,

@@ -3,7 +3,6 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import { Component, OnInit } from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
 import { butirFull, treeNode } from '@env/model/permen';
-import { FormControl } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
 
 

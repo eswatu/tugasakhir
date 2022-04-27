@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from "@angular/material/sort";
 import { butirFull } from '@env/model/permen';
 import { ApiResult } from '@env/services/base.service';
-import { PermenService } from "@env/services/permen.service";
+import { ActService } from '@env/services/act.service';
 
 @Component({
   selector: 'app-credit-point-table',
@@ -29,7 +29,7 @@ export class CreditPointTableComponent implements OnInit {
 
   //  filterTextChanged: Subject<string> = new Subject<string>();
   constructor(
-    private permenService: PermenService) {
+    private actService: ActService) {
   }
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class CreditPointTableComponent implements OnInit {
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
     //use service
-    this.permenService.getData<ApiResult<butirFull>>(
+    this.actService.getData<ApiResult<butirFull>>(
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
@@ -59,6 +59,7 @@ export class CreditPointTableComponent implements OnInit {
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
         this.butirs = new MatTableDataSource<butirFull>(result.data);
+        console.log(result.data);
       }, error => console.error(error));
   }
 

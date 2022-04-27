@@ -1,5 +1,7 @@
 const config = require('../config.json');
+const {Sequelize} = require('../models');
 const db = require('../_helpers/db');
+const paginate = require('../_helpers/pagination');
 
 
 module.exports = {
@@ -37,23 +39,30 @@ async function createAct(params) {
             userId : params.userId,
             butirId: params.butirId,
             butirVolume: params.butirVolume,
-            actVolume: params.actVolume
+            actDate: params.actDate,
         }
     })) {
         throw 'Act itu "' + params.id + '" sudah terdaftar';
     }
+    let result;
     // save Act
     await db.Act.create({
+        //required
         userId : params.userId,
         butirId: params.butirId,
         butirVolume: params.butirVolume,
+        actDate: params.actDate,
+        actNote: params.actNote,
+        //auto
         isCalculated: false,
         calculatedDate: null,
         createdAt: new Date(),
         updatedAt: new Date()
-    }).then(us => { 
+    }).then(us => {
+        result = us; 
         console.log("act " + us + "berhasil dibuat");
     });
+    return result;
 }
 
 async function updateAct(id, params) {
@@ -84,45 +93,3 @@ async function getActByDate(ds,de) {
     return act;
 }
 
-
-async function paginate(model, pageIndex, pageSize, sortColumn = 'id', sortOrder , filterColumn, filterQuery)
-{
-    const page = parseInt(pageIndex) || 1;
-    const take = parseInt(pageSize) || 8;
-    const skip = (page - 1) * take;
-    let options = {};
-    
-    if (sortOrder.toUpperCase() == 'ASC') {
-        options['order'] = [sortColumn];
-    } else if (sortOrder.toUpperCase() == 'DESC') { 
-        options['order'] = [sortColumn, 'DESC'];
-    }
-
-    if (filterQuery.length > 0 && filterQuery != undefined) {
-        options = { filterColumn: filterQuery };
-    }
-
-    const { count, rows } = await model.findAndCountAll({
-        include: [db.User, db.Butir],
-        subQuery: false,
-        offset: skip,
-        limit: take,
-        order: [sortColumn ]
-    });
-    const totalPages = Math.ceil(count / take);
-    const HasPreviousPage = page > 0 ? true : false;
-    const HasNextPage = page == (totalPages - 1) ? false : true;
-    return {
-        data: rows,
-        pageIndex: page,
-        pageSize: take,
-        totalCount: count,
-        totalPages: totalPages,
-        hasPreviousPage: HasPreviousPage,
-        hasNextPage: HasNextPage,
-        sortColumn: sortColumn,
-        sortOrder: sortOrder,
-        filterColumn: filterColumn,
-        filterQuery: filterQuery
-    };
-}

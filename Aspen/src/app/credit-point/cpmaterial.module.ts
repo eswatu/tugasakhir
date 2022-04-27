@@ -9,10 +9,14 @@ import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from '@angular/material/sort';
 import { MatTreeModule } from "@angular/material/tree";
-import {MatButtonToggleModule} from '@angular/material/button-toggle'
+import { MatButtonToggleModule} from '@angular/material/button-toggle'
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 const modules = [
+  MatNativeDateModule,
+  MatDatepickerModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatIconModule,

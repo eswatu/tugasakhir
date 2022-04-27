@@ -6,7 +6,7 @@ const actService = require('./act.service');
 const authorize = require('../_middleware/authorize');
 
 //routes
-router.post('/create', createSchema, create);
+router.post('/', createSchema, create);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', updateSchema, update);
@@ -19,15 +19,15 @@ module.exports = router;
 function createSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),
-        date     : Joi.date().format(["DD/MM/YYYY","DD-MM-YY"]).required(),
-        actId    : Joi.number().required(),
-        actVolume: Joi.number().required(),
+        butirId : Joi.number().required(),
+        actDate     : Joi.date().required(),
+        butirVolume: Joi.number().required(),
     });
     validateRequest(req, next, schema);
 }
 function create(req, res, next) { 
     actService.createAct(req.body)
-        .then(() => res.json({ message: "Sukses Input Act baru" }))
+        .then(() => res.json({ message: "Sukses Input Kegiatan" }))
         .catch(next);
 }
 
@@ -46,7 +46,7 @@ function getById(req, res, next) {
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),
-        date     : Joi.date().format(["DD/MM/YYYY","DD-MM-YY"]).required(),
+        date     : Joi.date().required(),
         actId    : Joi.number().required(),
         actVolume: Joi.number().required(),
     });
@@ -78,3 +78,6 @@ function pagingResult(pageIndex = 1, pageSize = 10, totalCount, sortColumn, sort
     
 }
 
+/*
+.format(["DD/MM/YYYY","DD-MM-YY"])
+*/

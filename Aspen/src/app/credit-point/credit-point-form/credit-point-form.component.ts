@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { butirFull, subUnsur, aktivita } from '@env/model/permen';
+import { Router } from '@angular/router';
+import { act } from '@env/model/acts';
+import { butirFull} from '@env/model/permen';
+import { ActService } from '@env/services/act.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-credit-point-form',
@@ -11,7 +15,8 @@ export class CreditPointFormComponent implements OnInit {
   butirIn: butirFull;
   formInput : FormGroup;
   jenjang: string;  
-  constructor() { }
+  constructor(private actService: ActService,
+    private router: Router) { }
 
   ngOnInit(): void {
     //init form
@@ -26,9 +31,29 @@ export class CreditPointFormComponent implements OnInit {
     hasilKerja: new FormControl(''),
     userId: new FormControl(''),
 
-    butirVolume: new FormControl('')
+    actDate: new FormControl({value: new Date()}),
+    butirVolume: new FormControl(''),
+    actNote: new FormControl('')
   });
+  }
+  onSubmit(){
+    var job = <act>{};
+    job.butirId = this.butirIn.id;
+    job.butirVolume = this.formInput.get('butirVolume').value;
+    //replace ya
+    job.userId = 1;
+    job.actDate = this.formInput.get('actDate').value;
+    job.actNote = this.formInput.get('actNote').value;
+    console.log(job);
 
+    this.actService.post<act>(job).subscribe(
+      result => {
+        if (result) {
+          Swal.fire(result.message);
+          this.formInput.reset();
+        }
+      }, error => console.error(error));
+  
   }
 
   changeButir(item: butirFull){
@@ -39,8 +64,11 @@ export class CreditPointFormComponent implements OnInit {
     this.formInput.get('subUnsur').setValue(this.butirIn.SubUnsur.namaSubUnsur);
     this.formInput.get('namaAkt').setValue(this.butirIn.Aktivita.namaAkt);
     this.formInput.get('levelReq').setValue(this.jenjang);
-
   }
+  clearForm(){
+    this.formInput.reset();
+  }
+
   setJenjang(level:number){
     switch (level) {
       case 1:

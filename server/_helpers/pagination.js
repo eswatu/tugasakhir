@@ -12,9 +12,10 @@ module.exports = async function paginate(model, pageIndex, pageSize, sortColumn 
     } else if (sortOrder.toUpperCase() == 'DESC') {
         options = { order: [[sortColumn, 'DESC']] }
     }
-
-    if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
-        options = { filterColumn: filterQuery };
+    if (filterQuery && filterColumn) {
+        if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
+            options = { filterColumn: filterQuery };
+        }
     }
 
     const { count, rows } = await model.findAndCountAll({

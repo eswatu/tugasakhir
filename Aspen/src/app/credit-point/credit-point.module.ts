@@ -7,6 +7,8 @@ import { cpMaterialModule } from './cpmaterial.module';
 import { HttpClientModule } from "@angular/common/http";
 import { ButirTreeComponent } from './butir-tree/butir-tree.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CreditPointRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    cpMaterialModule
+    cpMaterialModule,
+    SweetAlert2Module
   ]
 })
 export class CreditPointModule { }
