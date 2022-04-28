@@ -38,7 +38,7 @@ function getAll(req, res, next) {
 }
 
 function getById(req, res, next) {
-    actService.getById(req,params.id)
+    actService.getById(req.params.id)
         .then(act => res.json(act))
         .catch(next);
 }
@@ -63,19 +63,6 @@ function _delete(req, res, next) {
     actService.delete(req.params.id)
         .then(() => res.json({ message: 'act terhapus' }))
         .catch(next);
-}
-
-//schema
-function pagingResult(pageIndex = 1, pageSize = 10, totalCount, sortColumn, sortOrder, filterColumn, filterQuery) { 
-    //hitung jumlah halaman
-    let totalPages = Math.ceil(totalCount / pageSize);
-    //halaman tidak lebih dari range
-    if (pageIndex < 1) {
-        pageIndex = 1;
-    } else if (pageIndex > totalPages) { 
-        pageIndex = totalPages;
-    }
-    
 }
 
 /*

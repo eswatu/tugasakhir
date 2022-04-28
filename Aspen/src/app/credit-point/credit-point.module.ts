@@ -8,6 +8,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { ButirTreeComponent } from './butir-tree/butir-tree.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DatePipe } from '@angular/common';
+import { CreditPointDialogComponent } from './credit-point-dialog/credit-point-dialog.component';
+
 
 
 
@@ -15,7 +18,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   declarations: [
     CreditPointTableComponent,
     CreditPointFormComponent,
-    ButirTreeComponent
+    ButirTreeComponent,
+    CreditPointDialogComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     cpMaterialModule,
     SweetAlert2Module
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class CreditPointModule { }

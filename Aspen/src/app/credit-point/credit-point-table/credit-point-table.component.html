@@ -1,63 +1,75 @@
-<p *ngIf="!butirs"><em>Loading...</em></p>
+<p *ngIf="!jobs"><em>Loading...</em></p>
 
-<div class="commands text-right" *ngIf="butirs">
-  <button type="button"
-          [routerLink]="['/butir']"
-          class="btn btn-success">
-      Add a new Butir
+<div class="commands text-right" *ngIf="jobs">
+  <button mat-raised-button color="primary" (click)="openForm(null)">
+      Tambah Baru
   </button>
 </div>
 
-<!-- <mat-form-field [hidden]="!butirs">
+<!-- <mat-form-field [hidden]="!jobs">
     <input matInput (keyup)="onFilterTextChanged($event.target.value)"
         placeholder="Filter by name (or part of it)...">
 </mat-form-field> -->
 
-<table mat-table [dataSource]="butirs" class="table-striped mat-elevation-z8" [hidden]="!butirs"
+<table mat-table [dataSource]="jobs" class="table-striped mat-elevation-z8" [hidden]="!jobs"
     matSort (matSortChange)="loadData()"
     matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-    <td mat-cell *matCellDef="let butir"> {{butir.id}} </td>
+    <td mat-cell *matCellDef="let job"> {{job.id}} </td>
   </ng-container>
 
-  <!-- Name Column -->
+  <!-- Kegiatan Column -->
   <ng-container matColumnDef="namaButir">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name Butir</th>
-    <td mat-cell *matCellDef="let butir">
-      <a [routerLink]="['/butir', butir.id]">{{butir.namaButir}}</a>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Kegiatan</th>
+    <td mat-cell *matCellDef="let job" matTooltip="Hasil: {{job.butir.hasilKerja}}  -  Tingkat: {{job.butir.tkButir}}">
+      {{job.butir.namaButir}}
     </td>
   </ng-container>
 
   <!-- Lat Column -->
-  <ng-container matColumnDef="tkButir">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tingkat</th>
-    <td mat-cell *matCellDef="let butir"> {{butir.tkButir}} </td>
+  <ng-container matColumnDef="actDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Kegiatan</th>
+    <td mat-cell *matCellDef="let job">{{job.actDate | date:'dd-MM-yyyy'}} </td>
   </ng-container>
 
   <!-- Lon Column -->
   <ng-container matColumnDef="jmlPoin">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Jumlah Angkre</th>
-    <td mat-cell *matCellDef="let butir"> {{butir.jmlPoin}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai</th>
+    <td mat-cell *matCellDef="let job" > {{job.butir.jmlPoin}} </td>
   </ng-container>
 
   <!-- CountryName Column -->
-  <ng-container matColumnDef="levelReq">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Jenjang</th>
-    <td mat-cell *matCellDef="let butir">
-      <a [routerLink]="['/butir', butir.id]">{{butir.levelReq}}</a>
+  <ng-container matColumnDef="butirVolume">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Volume Kegiatan</th>
+    <td mat-cell *matCellDef="let job" style="text-align:center">{{job.butirVolume}}
     </td>
   </ng-container>
 
+    <!-- CountryName Column -->
+    <ng-container matColumnDef="actNote">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
+      <td mat-cell *matCellDef="let job" style="text-align:center">{{job.actNote ?? '-'}}
+      </td>
+    </ng-container>
+
+    <!-- CountryName Column -->
+    <ng-container matColumnDef="aksi">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Opsi</th>
+      <td mat-cell *matCellDef="let job" style="text-align:center" (click)="openForm(job)">
+        <button mat-raised-button [disabled]="job.isCalculated">Ubah Data</button>
+      </td>
+    </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
 </table>
-﻿
 <!-- Pagination directive -->
-<mat-paginator [hidden]="!butirs"
+<mat-paginator [hidden]="!jobs"
     (page)="getData($event)"
     [pageSize]="10"
     [pageSizeOptions]="[10, 20, 50]"
     showFirstLastButtons></mat-paginator>
+﻿

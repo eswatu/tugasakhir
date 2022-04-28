@@ -1,9 +1,10 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
 import { butirFull, treeNode } from '@env/model/permen';
 import { Output, EventEmitter } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { Output, EventEmitter } from '@angular/core';
 
 
 export class ButirTreeComponent implements OnInit {
-
+ 
   private _transformer = (node: treeNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -23,8 +24,9 @@ export class ButirTreeComponent implements OnInit {
       id: node.id
     };
   };
-
+  @Input() butirId;
   @Output() selectedButir = new EventEmitter<butirFull>();
+  selectedNode = new SelectionModel<FlateNode>(true);
 
   treeControl = new FlatTreeControl<FlateNode>(
     (node) => node.level,
@@ -37,20 +39,22 @@ export class ButirTreeComponent implements OnInit {
     (node) => node.expandable,
     (node) => node.children,
   );
-  
-  dataSource = new MatTreeFlatDataSource(
-    this.treeControl, this.treeFlattener);
-  
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
     defaultLevel = 1;
   
-  constructor(private permernServ: PermenService) { }
+  constructor(private permernServ: PermenService) {
+
+  }
     
   availButir;
+
   ngOnInit(): void {
     this.loadData();
   }
+
   loadData(forlvl: number = this.defaultLevel) { 
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
@@ -70,12 +74,11 @@ export class ButirTreeComponent implements OnInit {
             }
             split[item] = Object.entries(splot).map((item) => ({name: item[0], children: item[1]}));;
           }
-          
         }
         //reformat subunsur
         this.dataSource.data = Object.entries(split).map((item) => ({name: item[0], children: item[1]}) as treeNode);
         //split.forEach((children) => this.groupItemBy(children['children'], 'Aktivita.namaAkt').map((entry) => ({name: entry[0], children: entry[1]})));
-        console.log(this.dataSource.data);
+        //console.log(this.dataSource.data);
     }, err => console.error(err));
   }
 
@@ -91,11 +94,16 @@ export class ButirTreeComponent implements OnInit {
     }
     return hash;
 }
+toggleSelect(node: FlateNode){
+  console.log(this.treeControl);
+  this.selectedNode.toggle(node);
+}
+
 setButir(id:number) {
   if (id) {
       let butirOut = this.availButir.find(item => item.id == id);
       if (butirOut) {
-            this.selectedButir.emit(butirOut as butirFull);
+          this.selectedButir.emit(butirOut as butirFull);
       }
   }
 }

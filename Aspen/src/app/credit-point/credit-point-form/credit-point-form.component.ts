@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { MatStepper } from '@angular/material/stepper';
 import { act } from '@env/model/acts';
 import { butirFull} from '@env/model/permen';
 import { ActService } from '@env/services/act.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-credit-point-form',
+  selector: 'credit-point-form',
   templateUrl: './credit-point-form.component.html',
   styleUrls: ['./credit-point-form.component.css']
 })
+
 export class CreditPointFormComponent implements OnInit {
   butirIn: butirFull;
+  jenjang: string;
+  id;
+  job;
   formInput : FormGroup;
-  jenjang: string;  
-  constructor(private actService: ActService,
-    private router: Router) { }
+
+  constructor(private actService: ActService){   }
 
   ngOnInit(): void {
     //init form
@@ -35,6 +38,18 @@ export class CreditPointFormComponent implements OnInit {
     butirVolume: new FormControl(''),
     actNote: new FormControl('')
   });
+
+  if (this.id) {
+    this.actService.get<act>(this.id).subscribe(result => {
+      this.job = result;
+      this.formInput.patchValue({
+        actDate: result.actDate,
+        butirVolume: result.butirVolume,
+        actNote: result.actNote
+      });
+    }, error => console.error(error));
+  }
+
   }
   onSubmit(){
     var job = <act>{};
@@ -53,22 +68,8 @@ export class CreditPointFormComponent implements OnInit {
           this.formInput.reset();
         }
       }, error => console.error(error));
-  
-  }
 
-  changeButir(item: butirFull){
-    this.butirIn = item;
-    this.formInput.patchValue(this.butirIn);
-    this.setJenjang(item.levelReq);
-    console.log(this.butirIn);
-    this.formInput.get('subUnsur').setValue(this.butirIn.SubUnsur.namaSubUnsur);
-    this.formInput.get('namaAkt').setValue(this.butirIn.Aktivita.namaAkt);
-    this.formInput.get('levelReq').setValue(this.jenjang);
   }
-  clearForm(){
-    this.formInput.reset();
-  }
-
   setJenjang(level:number){
     switch (level) {
       case 1:
@@ -95,12 +96,3 @@ export class CreditPointFormComponent implements OnInit {
   }
 
 }
-
-/*level
-terampil                  = 1
-mahir                     = 2
-terampil + mahir          = 3
-penyelia                  = 4
-penyelia + mahir          = 6
-terampil, mahir, penyelia = 7
- */

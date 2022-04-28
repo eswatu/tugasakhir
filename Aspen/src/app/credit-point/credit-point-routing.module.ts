@@ -8,9 +8,7 @@ import { CreditPointTableComponent } from './credit-point-table/credit-point-tab
 
 
 const routes: Routes = [
-  {path:'', component: CreditPointTableComponent},
-  {path:'form', component: CreditPointFormComponent},
-  
+  {path:'', component: CreditPointTableComponent}  
 ]
 @NgModule({
   imports: [RouterModule.forChild(routes),FlexLayoutModule],

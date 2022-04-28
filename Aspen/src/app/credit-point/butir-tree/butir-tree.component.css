@@ -1,0 +1,5 @@
+.button {
+    white-space: pre-wrap !important;
+    word-wrap: break-word;
+    max-width: 400px;
+}

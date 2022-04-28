@@ -2,9 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from "@angular/material/sort";
-import { butirFull } from '@env/model/permen';
 import { ApiResult } from '@env/services/base.service';
 import { ActService } from '@env/services/act.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
+import { act } from '@env/model/acts';
+import { butirFull } from '@env/model/permen';
+import { CreditPointDialogComponent } from '../credit-point-dialog/credit-point-dialog.component';
 
 @Component({
   selector: 'app-credit-point-table',
@@ -13,8 +17,8 @@ import { ActService } from '@env/services/act.service';
 })
 
 export class CreditPointTableComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'namaButir', 'tkButir', 'jmlPoin', 'levelReq'];
-  public butirs: MatTableDataSource<butirFull>;
+  public displayedColumns: string[] = ['id', 'namaButir', 'actDate', 'jmlPoin', 'butirVolume', 'actNote', 'aksi'];
+  public jobs: MatTableDataSource<act>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -29,7 +33,8 @@ export class CreditPointTableComponent implements OnInit {
 
   //  filterTextChanged: Subject<string> = new Subject<string>();
   constructor(
-    private actService: ActService) {
+    private actService: ActService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -51,16 +56,27 @@ export class CreditPointTableComponent implements OnInit {
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
     //use service
-    this.actService.getData<ApiResult<butirFull>>(
+    this.actService.getData<ApiResult<act>>(
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.butirs = new MatTableDataSource<butirFull>(result.data);
-        console.log(result.data);
+        this.jobs = new MatTableDataSource<act>(result.data);
       }, error => console.error(error));
+  }
+  openForm(acts:act){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    if (acts) {
+      dialogConfig.data = {  actId: acts.id, butirId: acts.butir.id };
+    }
+    const dialogRef = this.dialog.open(CreditPointDialogComponent, dialogConfig);
+    //dialogRef.afterClosed().subscribe(result )
   }
 
   

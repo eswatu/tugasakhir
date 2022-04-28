@@ -30,9 +30,12 @@ async function initialize() {
     db.Butir.belongsTo(db.Aktivitas);
     db.SubUnsur.hasMany(db.Butir);
     db.Aktivitas.hasMany(db.Butir);
-    //relasi
-    db.Act.belongsTo(db.User);
-    db.Act.belongsTo(db.Butir);
+
+    //relasi untuk act
+    db.Act.belongsTo(db.User, {foreignKey: "UserId", as: "user"});
+    db.Act.belongsTo(db.Butir, {foreignKey: "ButirId", as: "butir"});
+    db.User.hasMany(db.Act);
+    db.Butir.hasMany(db.Act);
     //sync model dengan database
     await sequelize.sync({});
 }

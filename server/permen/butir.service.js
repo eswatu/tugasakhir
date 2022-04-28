@@ -20,7 +20,7 @@ async function getAll(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Butir;
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn = "", filterQuery = "");
+    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 /*level
 terampil                  = 1
@@ -87,27 +87,5 @@ async function getAkName(id) {
     return akt;
 }
 
-function groupSubItemBy(array, {property}) {
-    var group = {};
-    for (var i = 0; i < array.length; i++) {
-      if (!group[array[i][{property}]]) {
-        group[array[i][{property}]] = [];
-      }
-      group[array[i][{property}]].push(array[i]);
-    }
-    return group;
-  }
-function groupItemBy(array, property) {
-    var hash = {},
-        props = property.split('.');
-    for (var i = 0; i < array.length; i++) {
-        var key = props.reduce(function(acc, prop) {
-            return acc && acc[prop];
-        }, array[i]);
-        if (!hash[key]) hash[key] = [];
-        hash[key].push(array[i]);
-    }
-    return hash;
-}
 
 

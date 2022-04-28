@@ -1,0 +1,8 @@
+<mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="selectButir">
+        <cp-butir-tree (selectedButir)="changeButir($event)" [butirId]="kodeButir"></cp-butir-tree>
+    </mat-step>
+    <mat-step [stepControl]="formInput">
+        <credit-point-form></credit-point-form>
+    </mat-step>
+</mat-stepper>

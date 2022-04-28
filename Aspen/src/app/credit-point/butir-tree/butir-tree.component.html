@@ -1,10 +1,9 @@
-<mat-button-toggle-group >
+<mat-button-toggle-group [value]="butirId">
 	<mat-tree [dataSource]="dataSource"
 			[treeControl]="treeControl">
-
 		<!-- Tree node template for expandable nodes -->
-		<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-			<mat-button-toggle (click)="setButir(node.id)" matTreeNodeToggle value="data" >
+		<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding class="mat-tree-node">
+			<mat-button-toggle mat-stroked-button matTreeNodeToggle value="node.id">
 					{{node.name}}
 			</mat-button-toggle>
 		</mat-tree-node>

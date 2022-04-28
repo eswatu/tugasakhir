@@ -36,8 +36,8 @@ async function createAct(params) {
     // validate
     if (await db.Act.findOne({
         where: {
-            userId : params.userId,
-            butirId: params.butirId,
+            UserId : params.userId,
+            ButirId: params.butirId,
             butirVolume: params.butirVolume,
             actDate: params.actDate,
         }
@@ -48,8 +48,8 @@ async function createAct(params) {
     // save Act
     await db.Act.create({
         //required
-        userId : params.userId,
-        butirId: params.butirId,
+        UserId : params.userId,
+        ButirId: params.butirId,
         butirVolume: params.butirVolume,
         actDate: params.actDate,
         actNote: params.actNote,
@@ -82,7 +82,7 @@ async function _delete(id) {
 // helper functions
 async function getActById(id) {
     const act = await db.Act.findByPk(id, {
-        include: [db.User, db.Butir]
+        include: [{all: true}]
     });
     if (!act) throw 'Aktivitas tidak ditemukan';
     return act;

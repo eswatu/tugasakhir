@@ -1,6 +1,10 @@
+import { butirFull } from "./permen";
+import { User } from "./user";
+
 export interface act {
     id: number;
     butirId:number;
+    butir: butirFull;
     butirVolume: number;
     actNote: string;
     userId:number;

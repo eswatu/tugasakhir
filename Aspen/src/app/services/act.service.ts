@@ -8,6 +8,7 @@ import { BaseService } from './base.service';
   providedIn: 'root'
 })
 export class ActService extends BaseService {
+
   getData<ApiResult>(
     pageIndex: number, pageSize: number,
     sortColumn: string, sortOrder: 'asc' | 'desc' | '',
@@ -26,7 +27,7 @@ export class ActService extends BaseService {
     return this.http.get<ApiResult>(url, {params});
   }
   get<act>(id: number): Observable<act> {
-    var url = this.baseUrl + "api/Acts" + id;
+    var url = this.baseUrl + "api/Acts/" + id;
     return this.http.get<act>(url);
   }
   put<act>(item: any): Observable<act> {

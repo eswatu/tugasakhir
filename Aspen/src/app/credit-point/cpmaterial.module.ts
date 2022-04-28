@@ -12,9 +12,15 @@ import { MatTreeModule } from "@angular/material/tree";
 import { MatButtonToggleModule} from '@angular/material/button-toggle'
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 const modules = [
+  MatTooltipModule,
+  MatStepperModule,
+  MatDialogModule,
   MatNativeDateModule,
   MatDatepickerModule,
   MatButtonModule,
