@@ -5,9 +5,7 @@
         </ng-template>
     </mat-step>
     <mat-step [stepControl]="formInput" label="Form input">
-        <ng-template matStepContent>
-            <div fxLayout='row' fxLayout.xs="column" fxLayoutgap="20px">
-                <form [formGroup]="formInput" >
+                <form [formGroup]="formInput" fxLayout='row' fxLayout.xs="column" fxLayoutgap="20px">
                     <mat-form-field fxLayout="column">
                         <mat-label>Nama Kegiatan</mat-label>
                         <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
@@ -65,8 +63,6 @@
                         <button type="cancel" mat-raised-button fxFlex="10" color="warn" (click)="doneForm()">Batal</button>
                     </div>
                 </form>
-            </div>
-        </ng-template>
-    </mat-step>
+        </mat-step>
 </mat-stepper>
 

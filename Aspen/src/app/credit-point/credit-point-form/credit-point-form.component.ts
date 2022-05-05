@@ -13,15 +13,20 @@ import Swal from 'sweetalert2';
 })
 
 export class CreditPointFormComponent implements OnInit, OnChanges {
-  
+  @ViewChild('stepper') private stepper: MatStepper;
+
   jenjang: string;
   id;
   job;
+  butirDariTree: butirFull;
+  //stepper
   formInput : FormGroup;
-
+  selectButir: FormControl;
+  isLinear= true;
+  
   @Input() butirInput: butirFull;
-  @Output() done = new EventEmitter<boolean>(); 
-   
+  @Output() done = new EventEmitter<boolean>();
+      
   constructor(private actService: ActService){   }
   
   ngOnChanges(changes: SimpleChanges) {
@@ -58,6 +63,17 @@ export class CreditPointFormComponent implements OnInit, OnChanges {
 
   }
   console.log(this.butirInput);
+  }
+  changeButir(butirIn: butirFull){
+    this.butirDariTree = butirIn;
+    console.log(this.butirDariTree);
+    this.goNext(this.stepper);
+  }
+  goBack(stepper: MatStepper){
+    stepper.previous();
+  }
+  goNext(stepper: MatStepper){
+    stepper.next();
   }
   onSubmit(){
     var job = <act>{};

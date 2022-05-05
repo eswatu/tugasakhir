@@ -27,9 +27,6 @@ export class ButirTreeComponent implements OnInit {
 
   @Input() butirId;
   @Output() selectedButir = new EventEmitter<butirFull>();
-  ngOnchanges(change: SimpleChanges){
-
-  }
 
   selectedNode = new SelectionModel<FlateNode>(true);
 

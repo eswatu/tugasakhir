@@ -9,7 +9,6 @@ import { ButirTreeComponent } from './butir-tree/butir-tree.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DatePipe } from '@angular/common';
-import { CreditPointDialogComponent } from './credit-point-dialog/credit-point-dialog.component';
 
 
 
@@ -19,7 +18,6 @@ import { CreditPointDialogComponent } from './credit-point-dialog/credit-point-d
     CreditPointTableComponent,
     CreditPointFormComponent,
     ButirTreeComponent,
-    CreditPointDialogComponent
   ],
   imports: [
     CommonModule,
