@@ -8,7 +8,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
 import { act } from '@env/model/acts';
 import { butirFull } from '@env/model/permen';
-import { CreditPointDialogComponent } from '../credit-point-dialog/credit-point-dialog.component';
 
 @Component({
   selector: 'app-credit-point-table',
@@ -75,7 +74,7 @@ export class CreditPointTableComponent implements OnInit {
     if (acts) {
       dialogConfig.data = {  actId: acts.id, butirId: acts.butir.id };
     }
-    const dialogRef = this.dialog.open(CreditPointDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
     //dialogRef.afterClosed().subscribe(result )
   }
 

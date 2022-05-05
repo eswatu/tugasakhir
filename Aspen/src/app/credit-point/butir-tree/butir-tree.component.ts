@@ -1,6 +1,6 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
 import { butirFull, treeNode } from '@env/model/permen';
 import { Output, EventEmitter } from '@angular/core';
@@ -24,8 +24,13 @@ export class ButirTreeComponent implements OnInit {
       id: node.id
     };
   };
+
   @Input() butirId;
   @Output() selectedButir = new EventEmitter<butirFull>();
+  ngOnchanges(change: SimpleChanges){
+
+  }
+
   selectedNode = new SelectionModel<FlateNode>(true);
 
   treeControl = new FlatTreeControl<FlateNode>(
@@ -46,7 +51,7 @@ export class ButirTreeComponent implements OnInit {
     defaultLevel = 1;
   
   constructor(private permernServ: PermenService) {
-
+    
   }
     
   availButir;
@@ -95,7 +100,6 @@ export class ButirTreeComponent implements OnInit {
     return hash;
 }
 toggleSelect(node: FlateNode){
-  console.log(this.treeControl);
   this.selectedNode.toggle(node);
 }
 
@@ -103,11 +107,13 @@ setButir(id:number) {
   if (id) {
       let butirOut = this.availButir.find(item => item.id == id);
       if (butirOut) {
-          this.selectedButir.emit(butirOut as butirFull);
+          console.log('butir tree: id '+ id + 'dan butir berisi ' + JSON.stringify(butirOut));
+          this.selectedButir.emit(butirOut);
       }
   }
 }
 
+//eof
 }
 
 interface FlateNode {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { act } from '@env/model/acts';
@@ -12,21 +12,26 @@ import Swal from 'sweetalert2';
   styleUrls: ['./credit-point-form.component.css']
 })
 
-export class CreditPointFormComponent implements OnInit {
-  butirIn: butirFull;
+export class CreditPointFormComponent implements OnInit, OnChanges {
+  
   jenjang: string;
   id;
   job;
   formInput : FormGroup;
 
+  @Input() butirInput: butirFull;
+  @Output() done = new EventEmitter<boolean>(); 
+   
   constructor(private actService: ActService){   }
+  
+  ngOnChanges(changes: SimpleChanges) {
+    //console.log(changes);    
+  }
 
   ngOnInit(): void {
     //init form
   this.formInput = new FormGroup({
     //otomatis
-    subUnsur: new FormControl(''),
-    namaAkt: new FormControl(''),
     namaButir: new FormControl(''),
     tkButir: new FormControl(''),
     levelReq: new FormControl(''),
@@ -48,12 +53,15 @@ export class CreditPointFormComponent implements OnInit {
         actNote: result.actNote
       });
     }, error => console.error(error));
-  }
+  } else {
+    this.formInput.patchValue(this.butirInput);
 
+  }
+  console.log(this.butirInput);
   }
   onSubmit(){
     var job = <act>{};
-    job.butirId = this.butirIn.id;
+    job.butirId = this.butirInput.id;
     job.butirVolume = this.formInput.get('butirVolume').value;
     //replace ya
     job.userId = 1;
@@ -66,6 +74,7 @@ export class CreditPointFormComponent implements OnInit {
         if (result) {
           Swal.fire(result.message);
           this.formInput.reset();
+          this.doneForm();
         }
       }, error => console.error(error));
 
@@ -94,5 +103,9 @@ export class CreditPointFormComponent implements OnInit {
         break;
     }
   }
-
+  doneForm(){
+    this.done.emit(true);
+  }
 }
+
+
