@@ -1,5 +1,5 @@
 import { butirFull } from "./permen";
-import { User } from "./user";
+import { user } from "./user";
 
 export interface act {
     id: number;

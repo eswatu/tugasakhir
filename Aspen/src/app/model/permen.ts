@@ -1,5 +1,3 @@
-import { User } from "./user";
-
 export interface aktivita { 
     id: number;
     kodeAkt: string;

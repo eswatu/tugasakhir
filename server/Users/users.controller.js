@@ -10,8 +10,8 @@ router.post('/authenticate', authenticationSchema, authenticate);
 router.post('/register', registerSchema, register);
 router.get('/', getAll);
 router.get('/current', authorize(), getCurrent);
-router.get('/:id', authorize(), getById);
-router.put('/:id', authorize(), updateSchema, update);
+router.get('/:id', getById);
+router.put('/:id', updateSchema, update);
 router.delete('/:id',authorize(), _delete);
 
 module.exports = router;

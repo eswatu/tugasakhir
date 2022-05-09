@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileRoutingModule } from './profile-routing.module';
-import { UserdetailComponent } from './userdetail.component';
+import { UserdetailComponent } from './userdetail/userdetail.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
@@ -11,7 +12,8 @@ import { UserdetailComponent } from './userdetail.component';
   ],
   imports: [
     CommonModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    SweetAlert2Module
   ]
 })
 export class ProfileModule { }

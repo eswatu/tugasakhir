@@ -1,1 +1,30 @@
-<p>userdetail works!</p>
+<div row>
+    <div fxLayout="column">
+        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fkeroro.fandom.com%2Fwiki%2FKeroro&psig=AOvVaw1Sd_hEaj7DgzJ21hupIj5e&ust=1652169508657000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLiIoJj50fcCFQAAAAAdAAAAABAU" />
+    </div>
+    <div fxLayout="column">
+        <div fxLayout="row">
+            <div fxLayout="column">Username</div>
+            <div fxLayout="column">:</div>
+            <div fxLayout="column">{{userInfo.username}}</div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxLayout="column">Nama</div>
+            <div fxLayout="column">:</div>
+            <div fxLayout="column">{{userInfo.name}}</div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxLayout="column">Jenjang</div>
+            <div fxLayout="column">:</div>
+            <div fxLayout="column">{{ userInfo.level }}</div>
+        </div>
+
+        <div fxLayout="row">
+            <div fxLayout="column">Role</div>
+            <div fxLayout="column">:</div>
+            <div fxLayout="column">{{userInfo.role}}</div>
+        </div>
+    </div>
+</div>

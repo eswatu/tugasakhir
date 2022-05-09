@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { act } from '@env/model/acts';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 
