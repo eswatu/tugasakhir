@@ -1,68 +1,70 @@
-<mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="selectButir" label="Pilih Kegiatan">
+<mat-horizontal-stepper [linear]="isLinear" #stepper labelPosition="bottom">
+    <mat-step [stepControl]="stepOne" label="Pilih Kegiatan" [completed]="isThisStepDone">
         <ng-template matStepContent>
             <cp-butir-tree (selectedButir)="changeButir($event)" [butirId]="kodeButir"  #stepOne></cp-butir-tree>
         </ng-template>
     </mat-step>
-    <mat-step [stepControl]="formInput" label="Form input">
-                <form [formGroup]="formInput" fxLayout='row' fxLayout.xs="column" fxLayoutgap="20px">
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Nama Kegiatan</mat-label>
-                        <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
-                        <mat-hint>Otomatis</mat-hint>
-                    </mat-form-field>
-            
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Tingkat Kegiatan</mat-label>
-                        <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true">
-                        <mat-hint>Otomatis</mat-hint>
-                    </mat-form-field>
+    <mat-step [stepControl]="formInput" label="Form input" #stepTwo>
+        <div fxLayout='row' fxLayout.xs="column" fxLayoutgap="10px">
+            <form [formGroup]="formInput" >
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Nama Kegiatan</mat-label>
+                            <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
+                            <mat-hint>Otomatis</mat-hint>
+                        </mat-form-field>
                 
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Jumlah Poin</mat-label>
-                        <input formControlName="jmlPoin" id="jmlPoin" matInput placeholder="Jumlah kredit" [readonly]="true">
-                        <mat-hint>Otomatis</mat-hint>
-                    </mat-form-field>
-            
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Hasil Pekerjaan</mat-label>
-                        <input matInput formControlName="hasilKerja" id="hasilKerja" placeholder="Bukti pelaksanaan pekerjaan" [readonly]="true">
-                        <mat-hint>Otomatis</mat-hint>
-                    </mat-form-field>
-            
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Jenjang</mat-label>
-                        <input matInput  formControlName="levelReq" id="levelReq" placeholder="Kegiatan" [readonly]="true">
-                        <mat-hint>Otomatis</mat-hint>
-                    </mat-form-field>
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Tingkat Kegiatan</mat-label>
+                            <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true">
+                            <mat-hint>Otomatis</mat-hint>
+                        </mat-form-field>
+                    
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Jumlah Poin</mat-label>
+                            <input formControlName="jmlPoin" id="jmlPoin" matInput placeholder="Jumlah kredit" [readonly]="true">
+                            <mat-hint>Otomatis</mat-hint>
+                        </mat-form-field>
+                
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Hasil Pekerjaan</mat-label>
+                            <input matInput formControlName="hasilKerja" id="hasilKerja" placeholder="Bukti pelaksanaan pekerjaan" [readonly]="true">
+                            <mat-hint>Otomatis</mat-hint>
+                        </mat-form-field>
+                
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Jenjang</mat-label>
+                            <input matInput  formControlName="levelReq" id="levelReq" placeholder="Kegiatan" [readonly]="true">
+                            <mat-hint>Otomatis</mat-hint>
+                        </mat-form-field>
+                            
+                        <mat-form-field appearance="outline" fxLayout="column">
+                            <mat-label>Jumlah Kegiatan</mat-label>
+                            <input type="number" matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah Bukti Pekerjaan">
+                            <mat-hint>Diisi jumlah dokumen</mat-hint>
+                        </mat-form-field>
+                
+                        <mat-form-field appearance="fill" fxLayout="column">
+                            <mat-label>Tanggal Pelaksanaan Kegiatan</mat-label>
+                            <input formControlName="actDate" id="actDate" matInput [matDatepicker]="picker">
+                            <mat-hint>Tanggal pelaksanaan Kegiatan (dd/MM/yyyy)</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field fxLayout="column">
+                            <mat-label>Catatan</mat-label>
+                            <input matInput  formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan" >
+                            <mat-hint>Contoh: Pekerjaan kemarin</mat-hint>
+                        </mat-form-field>
+                
+                        <div fxLayoutGap="12px">
+                            <button type="submit" mat-raised-button color="primary" 
+                            [disabled]="formInput.invalid" fxFlex="20"
+                            class="btn btn-success" (click)="onSubmit()">Simpan</button>
                         
-                    <mat-form-field appearance="outline" fxLayout="column">
-                        <mat-label>Jumlah Kegiatan</mat-label>
-                        <input type="number" matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah Bukti Pekerjaan">
-                        <mat-hint>Diisi jumlah dokumen</mat-hint>
-                    </mat-form-field>
-            
-                    <mat-form-field appearance="fill" fxLayout="column">
-                        <mat-label>Tanggal Pelaksanaan Kegiatan</mat-label>
-                        <input formControlName="actDate" id="actDate" matInput [matDatepicker]="picker">
-                        <mat-hint>Tanggal pelaksanaan Kegiatan (dd/MM/yyyy)</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field fxLayout="column">
-                        <mat-label>Catatan</mat-label>
-                        <input matInput  formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan" >
-                        <mat-hint>Contoh: Pekerjaan kemarin</mat-hint>
-                    </mat-form-field>
-            
-                    <div fxLayoutGap="12px">
-                        <button type="submit" mat-raised-button color="primary" 
-                        [disabled]="formInput.invalid" fxFlex="20"
-                        class="btn btn-success" (click)="onSubmit()">Simpan</button>
-                   
-                        <button type="cancel" mat-raised-button fxFlex="10" color="warn" (click)="doneForm()">Batal</button>
-                    </div>
+                            <button type="cancel" mat-raised-button fxFlex="10" color="warn"(click)='closeDialog()' >Batal</button>
+                        </div>
                 </form>
+            </div>        
         </mat-step>
-</mat-stepper>
+</mat-horizontal-stepper>
 

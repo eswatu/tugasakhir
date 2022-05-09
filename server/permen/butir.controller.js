@@ -8,7 +8,7 @@ router.get('/', getAll);
 router.get('/forLevel/:level', getByLevel);
 router.get('/SUBName/:id', getSubNById);
 router.get('/AKName/:id', getAktNameId);
-router.get('/:id',authorize(), getById);
+router.get('/:id', getById);
 
 module.exports = router;
 

@@ -17,8 +17,8 @@ import { DatePipe } from '@angular/common';
   declarations: [
     CreditPointTableComponent,
     CreditPointFormComponent,
-    ButirTreeComponent,
-  ],
+    ButirTreeComponent
+    ],
   imports: [
     CommonModule,
     HttpClientModule,

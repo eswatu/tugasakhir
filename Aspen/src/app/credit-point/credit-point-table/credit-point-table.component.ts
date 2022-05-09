@@ -75,7 +75,7 @@ export class CreditPointTableComponent implements OnInit {
       dialogConfig.data = {  actId: acts.id, butirId: acts.butir.id };
     }
     const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
-    //dialogRef.afterClosed().subscribe(result )
+    dialogRef.afterClosed().subscribe(() => this.loadData() );
   }
 
   
