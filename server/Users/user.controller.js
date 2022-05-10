@@ -8,6 +8,7 @@ const authorize = require('../_middleware/authorize');
 //routes
 router.post('/authenticate', authenticationSchema, authenticate);
 router.post('/register', registerSchema, register);
+router.post('/postavatar', postavatar.single('avatar'));
 router.get('/', getAll);
 router.get('/current', authorize(), getCurrent);
 router.get('/:id', authorize(), getById);
@@ -84,3 +85,14 @@ function _delete(req, res, next) {
 }
 
 //schema
+//! Use of Multer
+//set storage engine
+let storage = multer.memoryStorage();
+
+//init upload
+let upload = multer({storage : storage});
+
+function postavatar(req,res,next){
+    
+
+ };

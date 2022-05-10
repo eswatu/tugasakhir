@@ -1,7 +1,8 @@
 const fs = require("fs");
-const db = require("../models");
-const Image = db.images;
-const uploadFiles = async (req, res) => {
+const db = require("../Users");
+const Image = db.avatar;
+
+module.exports = async function uploadFiles(req, res) {
   try {
     console.log(req.file);
     if (req.file == undefined) {
@@ -24,7 +25,4 @@ const uploadFiles = async (req, res) => {
     console.log(error);
     return res.send(`Error when trying upload images: ${error}`);
   }
-};
-module.exports = {
-  uploadFiles,
-};
+}

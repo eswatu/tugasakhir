@@ -1,11 +1,35 @@
 <div fxLayout="row" fxLayoutAlign="center">
     <div fxLayout="column">
         <img src="/assets/keroro.jpg" />
-        <form enctype="multipart/form-data" formControlName="avatar">
-            <input name="avatar" accept="image/*" type="file" id="avatar">
-            <button type="submit" mat-button color="primary">Simpan</button>
-        </form>
+        <mat-toolbar *ngIf="currentFile" class="progress-bar">
+            <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
+            <span class="progress">{{ progress }}%</span>
+          </mat-toolbar>
+          <mat-form-field>
+            <div>
+              <mat-toolbar>
+                <input matInput [value]="fileName" />
+                <button
+                  mat-flat-button
+                  color="primary"
+                  [disabled]="!currentFile"
+                  (click)="upload()"
+                >
+                  Upload
+                </button>
+              </mat-toolbar>
+              <input
+                type="file"
+                id="fileInput"
+                (change)="selectFile($event)"
+                name="fileInput"
+              />
+            </div>
+          </mat-form-field>
     </div>
+    <div *ngIf="message" class="message">
+        {{ message }}
+      </div>
     <div fxLayout="column">
         <form [formGroup]="form">
             <mat-form-field fxLayout="column" appearance="fill">

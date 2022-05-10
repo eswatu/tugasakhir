@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
@@ -39,8 +39,16 @@ export class UserService extends BaseService {
   post<user>(item: user): Observable<user> {
     return this.http.post<user>(this.url, item);
   }
-  
-  updateAvatar<user>(item:any): Observable<user> {
-    return this.http.post<user>(this.url + '/avatar/' + item.id, item)
+  uploadAva(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.url}/upload`, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req);
+  }
+  getFiles(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/files`);
   }
 }
