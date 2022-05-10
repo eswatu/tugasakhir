@@ -37,5 +37,5 @@ async function initialize() {
     db.User.hasMany(db.Act);
     db.Butir.hasMany(db.Act);
     //sync model dengan database
-    await sequelize.sync({});
+    await sequelize.sync({alter: true});
 }

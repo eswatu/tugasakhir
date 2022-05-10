@@ -39,4 +39,8 @@ export class UserService extends BaseService {
   post<user>(item: user): Observable<user> {
     return this.http.post<user>(this.url, item);
   }
+  
+  updateAvatar<user>(item:any): Observable<user> {
+    return this.http.post<user>(this.url + '/avatar/' + item.id, item)
+  }
 }

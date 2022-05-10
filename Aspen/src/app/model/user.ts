@@ -5,4 +5,5 @@ export interface user {
     role: string;
     level: string;
     password: string;
+    avatar: Blob;
 }

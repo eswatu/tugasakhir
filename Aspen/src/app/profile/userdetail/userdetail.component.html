@@ -1,30 +1,33 @@
-<div row>
+<div fxLayout="row" fxLayoutAlign="center">
     <div fxLayout="column">
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fkeroro.fandom.com%2Fwiki%2FKeroro&psig=AOvVaw1Sd_hEaj7DgzJ21hupIj5e&ust=1652169508657000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCLiIoJj50fcCFQAAAAAdAAAAABAU" />
+        <img src="/assets/keroro.jpg" />
+        <form enctype="multipart/form-data" formControlName="avatar">
+            <input name="avatar" accept="image/*" type="file" id="avatar">
+            <button type="submit" mat-button color="primary">Simpan</button>
+        </form>
     </div>
     <div fxLayout="column">
-        <div fxLayout="row">
-            <div fxLayout="column">Username</div>
-            <div fxLayout="column">:</div>
-            <div fxLayout="column">{{userInfo.username}}</div>
-        </div>
-
-        <div fxLayout="row">
-            <div fxLayout="column">Nama</div>
-            <div fxLayout="column">:</div>
-            <div fxLayout="column">{{userInfo.name}}</div>
-        </div>
-
-        <div fxLayout="row">
-            <div fxLayout="column">Jenjang</div>
-            <div fxLayout="column">:</div>
-            <div fxLayout="column">{{ userInfo.level }}</div>
-        </div>
-
-        <div fxLayout="row">
-            <div fxLayout="column">Role</div>
-            <div fxLayout="column">:</div>
-            <div fxLayout="column">{{userInfo.role}}</div>
-        </div>
+        <form [formGroup]="form">
+            <mat-form-field fxLayout="column" appearance="fill">
+                <mat-label>Username</mat-label>
+                <input formControlName="username" id="username" matInput disabled>
+                <mat-hint>Username</mat-hint>
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-hint>Nama</mat-hint>
+                <input formControlName="name" id="name" matInput disabled>
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-hint>Jenjang</mat-hint>
+                <input formControlName="level" id="level" matInput disabled>
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-hint>Kewenangan</mat-hint>
+                <input formControlName="role" id="role" matInput disabled>
+            </mat-form-field>
+        </form>
     </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-button-toggle mat-raised-button (click)="toggleEdit()">{{ toggleButtonValue}}</mat-button-toggle>
 </div>
