@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //api routes
-app.use('/api/user', require('./Users/users.controller'));
+app.use('/api/user', require('./Users/user.controller'));
 app.use('/api/acts', require('./Acts/act.controller'));
 app.use('/api/butir', require('./permen/butir.controller'));
 

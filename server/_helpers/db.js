@@ -17,6 +17,7 @@ async function initialize() {
 
     //init model dan tambah ke obyek db
     db.User = require('../Users/user.model')(sequelize);
+    db.Avatar = require('../Users/avatar.model')(sequelize);
     //ini database permen
     db.Aktivitas     = require('../permen/aktivitas.model')(sequelize);
     db.SubUnsur      = require('../permen/subUnsur.model')(sequelize);
@@ -24,7 +25,8 @@ async function initialize() {
     
     //ini database untuk Kerja
     db.Act = require('../Acts/act.model')(sequelize);
-
+    //relasi user dan avatar
+    db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId", as :"avatar"});
     //relasi khusus
     db.Butir.belongsTo(db.SubUnsur);
     db.Butir.belongsTo(db.Aktivitas);
