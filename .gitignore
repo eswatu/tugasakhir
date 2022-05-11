@@ -2,4 +2,5 @@ Aspen/node_modules/
 Aspen/.angular/
 Aspen/.vscode/
 server/node_modules/
+server/Users../
 node_modules/*
