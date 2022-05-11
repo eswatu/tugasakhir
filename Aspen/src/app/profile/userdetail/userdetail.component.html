@@ -4,28 +4,13 @@
         <mat-toolbar *ngIf="currentFile" class="progress-bar">
             <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
             <span class="progress">{{ progress }}%</span>
-          </mat-toolbar>
-          <mat-form-field>
-            <div>
-              <mat-toolbar>
-                <input matInput [value]="fileName" />
-                <button
-                  mat-flat-button
-                  color="primary"
-                  [disabled]="!currentFile"
-                  (click)="upload()"
-                >
-                  Upload
-                </button>
-              </mat-toolbar>
-              <input
-                type="file"
-                id="fileInput"
-                (change)="selectFile($event)"
-                name="fileInput"
-              />
-            </div>
-          </mat-form-field>
+        </mat-toolbar>
+        <mat-toolbar>
+            <input type="file" (change)="selectFile($event)" name="avatar" />
+            <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
+                Upload
+            </button>
+        </mat-toolbar>
     </div>
     <div *ngIf="message" class="message">
         {{ message }}
@@ -34,20 +19,20 @@
         <form [formGroup]="form">
             <mat-form-field fxLayout="column" appearance="fill">
                 <mat-label>Username</mat-label>
-                <input formControlName="username" id="username" matInput disabled>
+                <input formControlName="username" id="username" matInput>
                 <mat-hint>Username</mat-hint>
             </mat-form-field>
             <mat-form-field fxLayout="row">
                 <mat-hint>Nama</mat-hint>
-                <input formControlName="name" id="name" matInput disabled>
+                <input formControlName="name" id="name" matInput>
             </mat-form-field>
             <mat-form-field fxLayout="row">
                 <mat-hint>Jenjang</mat-hint>
-                <input formControlName="level" id="level" matInput disabled>
+                <input formControlName="level" id="level" matInput>
             </mat-form-field>
             <mat-form-field fxLayout="row">
                 <mat-hint>Kewenangan</mat-hint>
-                <input formControlName="role" id="role" matInput disabled>
+                <input formControlName="role" id="role" matInput>
             </mat-form-field>
         </form>
     </div>

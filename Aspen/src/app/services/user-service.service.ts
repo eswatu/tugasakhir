@@ -8,10 +8,12 @@ import { BaseService } from './base.service';
 })
 export class UserService extends BaseService {
   url;
+  urlava;
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
     super(http, baseUrl);
     this.url = baseUrl + 'api/user/';
+    this.urlava = baseUrl + 'api/avatar/post/';
   }  
   getData<ApiResult>(pageIndex: number, pageSize: number,
     sortColumn: string, sortorder: 'asc' | 'desc',
@@ -41,8 +43,8 @@ export class UserService extends BaseService {
   }
   uploadAva(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', file);
-    const req = new HttpRequest('POST', `${this.url}/upload`, formData, {
+    formData.append('avatar', file);
+    const req = new HttpRequest('POST', this.urlava, formData, {
       reportProgress: true,
       responseType: 'json'
     });
