@@ -46,7 +46,7 @@ export class UserService extends BaseService {
     formData.append('avatar', file);
     const req = new HttpRequest('POST', this.urlava, formData, {
       reportProgress: true,
-      responseType: 'json'
+      responseType: 'text'
     });
     return this.http.request(req);
   }

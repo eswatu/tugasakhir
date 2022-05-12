@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./_middleware/error-handler');
 
 const userService = require('./Users/user.service');
+global.__basedir = __dirname;
 
 //parse app/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

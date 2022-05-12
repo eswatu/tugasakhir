@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 const config = require('../config.json');
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = db = {};
 
@@ -16,12 +16,12 @@ async function initialize() {
     const sequelize = new Sequelize(database, user, password, { dialect: 'mysql' });
 
     //init model dan tambah ke obyek db
-    db.User = require('../Users/user.model')(sequelize);
-    db.Avatar = require('../Users/avatar.model')(sequelize);
+    db.User          = require('../Users/user.model')(sequelize);
+    db.Avatar        = require('../Users/avatar.model')(sequelize, DataTypes);
     //ini database permen
     db.Aktivitas     = require('../permen/aktivitas.model')(sequelize);
     db.SubUnsur      = require('../permen/subUnsur.model')(sequelize);
-    db.Butir = require('../permen/butir.model')(sequelize);
+    db.Butir         = require('../permen/butir.model')(sequelize);
     
     //ini database untuk Kerja
     db.Act = require('../Acts/act.model')(sequelize);

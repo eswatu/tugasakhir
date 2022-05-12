@@ -83,4 +83,3 @@ export class UserdetailComponent implements OnInit {
     }
   }
 }
-//https://www.bezkoder.com/angular-material-12-file-upload/

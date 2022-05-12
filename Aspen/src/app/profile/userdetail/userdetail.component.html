@@ -6,10 +6,10 @@
             <span class="progress">{{ progress }}%</span>
         </mat-toolbar>
         <mat-toolbar>
-            <input type="file" (change)="selectFile($event)" name="avatar" />
-            <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
-                Upload
-            </button>
+                <input type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
+                <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
+                    Upload
+                </button>
         </mat-toolbar>
     </div>
     <div *ngIf="message" class="message">
