@@ -1,3 +1,5 @@
+import { NumberValueAccessor } from "@angular/forms";
+
 export interface user { 
     id: number;
     username:string;
@@ -5,5 +7,12 @@ export interface user {
     role: string;
     level: string;
     password: string;
-    avatar: Blob;
+    avatar: avatar;
+}
+
+export interface avatar {
+    id: number;
+    name: string;
+    type: string;
+    data: Blob;
 }

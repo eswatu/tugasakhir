@@ -4,6 +4,7 @@ const upload = require('../_helpers/upload');
 const uploadService = require("./avatar.service");
 
 router.post('/post', upload.single("avatar"), uploadService.uploadFiles);
+router.get('/:id', uploadService.downloadImage);
 
 module.exports = router;
 

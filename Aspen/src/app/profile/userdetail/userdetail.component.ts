@@ -1,6 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { user } from '@env/model/user';
 import { UserService } from '@env/services/user-service.service';
 import { Observable } from 'rxjs';
@@ -17,6 +18,8 @@ export class UserdetailComponent implements OnInit {
   userInfo: user;
   form : FormGroup;
   formAvatar: FormControl;
+  pictureImage;
+  urlImage;
   //ava upload
   selectedFiles?: FileList;
   currentFile?: File;
@@ -24,7 +27,8 @@ export class UserdetailComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(){
     this.fileInfos = this.userService.getFiles();
@@ -43,8 +47,21 @@ export class UserdetailComponent implements OnInit {
     this.userService.get<user>(1).subscribe(res => {
       this.userInfo = res;
       this.form.patchValue(res);
-    }, error => console.error(error));
+        if (res.avatar){
+          let blob = new Blob([res.avatar.data], {type: res.avatar.type});
+          let mysrc;
+          var myreader: FileReader = new FileReader();
+          myreader.readAsDataURL(blob);
+          myreader.onloadend = function() {
+            mysrc = myreader.result;
+          }
+          this.pictureImage = mysrc;
+          console.log(this.pictureImage);
+        }
+  }, error => console.error(error));
+  console.log(this.pictureImage);
   }
+  
   toggleEdit(){
     this.isEditing = !this.isEditing;
     this.toggleButtonValue = this.isEditing ? 'Simpan' : 'Ubah';
@@ -58,7 +75,7 @@ export class UserdetailComponent implements OnInit {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.currentFile = file;
-        this.userService.uploadAva(this.currentFile).subscribe({
+        this.userService.uploadAva(this.currentFile, "1").subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);

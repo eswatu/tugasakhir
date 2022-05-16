@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center">
     <div fxLayout="column">
-        <img src="/assets/keroro.jpg" />
+        <img [src]="pictureImage" height="200" width="200"/>
         <mat-toolbar *ngIf="currentFile" class="progress-bar">
             <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
             <span class="progress">{{ progress }}%</span>

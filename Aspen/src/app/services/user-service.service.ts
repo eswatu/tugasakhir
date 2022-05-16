@@ -13,7 +13,7 @@ export class UserService extends BaseService {
     @Inject('BASE_URL') baseUrl: string) {
     super(http, baseUrl);
     this.url = baseUrl + 'api/user/';
-    this.urlava = baseUrl + 'api/avatar/post/';
+    this.urlava = baseUrl + 'api/avatar/';
   }  
   getData<ApiResult>(pageIndex: number, pageSize: number,
     sortColumn: string, sortorder: 'asc' | 'desc',
@@ -41,10 +41,11 @@ export class UserService extends BaseService {
   post<user>(item: user): Observable<user> {
     return this.http.post<user>(this.url, item);
   }
-  uploadAva(file: File): Observable<HttpEvent<any>> {
+  uploadAva(file: File, userId:string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('avatar', file);
-    const req = new HttpRequest('POST', this.urlava, formData, {
+    formData.append('userId', userId);
+    const req = new HttpRequest('POST', this.urlava + 'post/', formData, {
       reportProgress: true,
       responseType: 'text'
     });
@@ -52,5 +53,18 @@ export class UserService extends BaseService {
   }
   getFiles(): Observable<any> {
     return this.http.get(`${this.baseUrl}/files`);
+  }
+  downImage(id:number): Observable<any> {
+    let myUrl = this.urlava + id;
+    return this.http.get<any>(myUrl);
+  }
+  _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+       binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
   }
 }
