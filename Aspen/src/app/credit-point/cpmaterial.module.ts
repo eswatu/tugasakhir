@@ -15,9 +15,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatTabsModule} from "@angular/material/tabs";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+
 
 
 const modules = [
+  MatSlideToggleModule,
+  MatTabsModule,
   MatTooltipModule,
   MatStepperModule,
   MatDialogModule,
@@ -36,13 +41,14 @@ const modules = [
   MatTreeModule
   ];
 
+
+
 @NgModule({
   declarations: [],
   imports: modules,
   exports: modules,
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
-
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
   ]
 })
 export class cpMaterialModule { }

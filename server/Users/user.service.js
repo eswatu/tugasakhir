@@ -70,21 +70,29 @@ async function _delete(id) {
     const user = await getUser(id);
     await user.destroy();
 }
-async function changepassword(id, params) {
-    console.log(params);
-    const user = await getUser(id);
+async function changepassword(body) {
+    const user = await db.User.scope('withPasswordHash').findOne({ where: { id: body.id } });
     if (user) {
-        let oldpwd = params.oldpwd;
-        let newpwd = params.newpwd;
-        if (user.password == oldpwd) {
-            user.password = newpwd;
-            await user.save();
+        let oldpwd = body.oldpwd;
+        let newpwd = await bcrypt.hash(body.newpwd,10);
+        if (bcrypt.compareSync(oldpwd, user.passwordHash)) {
+            db.User.update({passwordHash : newpwd}, {where: {id: user.id}});
             return 'Berhasil ubah password';
         } else {
-            return 'invalid';
+            return 'invalid: password lama salah';
         }
     } else {
-        res.status(400).send({message:'invalid user'});
+        return 'invalid user';
+    }
+}
+async function resetPassword(body){
+    const user = await db.User.scope('withPasswordHash').findOne({ where: { id: body.id } });
+    if (user) {
+        const npwd = bcrypt.hash(user.username, 10);
+        db.User.update({passwordHash : npwd}, {where: {id: user.id}});
+        return "sukses reset";
+    } else {
+        return "gagal reset";
     }
 }
 

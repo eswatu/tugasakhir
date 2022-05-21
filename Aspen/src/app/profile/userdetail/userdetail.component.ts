@@ -2,10 +2,11 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { user } from '@env/model/user';
+import { chpwd, user } from '@env/model/user';
 import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-userdetail',
@@ -78,7 +79,7 @@ export class UserdetailComponent implements OnInit {
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
   }
-  upload(): void {
+  upload() {
     this.progress = 0;
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
@@ -106,6 +107,19 @@ export class UserdetailComponent implements OnInit {
       }
       this.selectedFiles = undefined;
     }
+  }
+  changePassword() {
+    let npwd = <chpwd>{
+      id: 1,
+      oldpwd: this.formPwd.get('oldpwd').value,
+      newpwd: this.formPwd.get('newPwd').value
+    };
+    console.log(npwd);
+    this.userService.changePwd(npwd).subscribe( result => {
+      console.log(result);
+      Swal.fire(result);
+    }, error => console.error(error));
+    
   }
 
 }

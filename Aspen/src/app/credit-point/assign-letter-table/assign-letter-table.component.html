@@ -1,0 +1,72 @@
+<p *ngIf="!asgnLtrs"><em>Loading...</em></p>
+
+<div class="commands text-right" *ngIf="asgnLtrs">
+  <button mat-raised-button color="primary" (click)="openForm(null)">
+      Tambah Baru
+  </button>
+</div>
+
+<table mat-table [dataSource]="asgnLtrs" class="table-striped mat-elevation-z8" [hidden]="!asgnLtrs"
+    matSort (matSortChange)="loadData()"
+    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
+
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let al"> {{al.id}}</td>
+  </ng-container>
+
+  <!-- Nomor Surat -->
+  <ng-container matColumnDef="ltNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nomor Surat</th>
+    <td mat-cell *matCellDef="let al" >{{al.ltNumber}}</td>
+  </ng-container>
+
+  <!-- Tanggal Surat -->
+  <ng-container matColumnDef="ltDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Surat</th>
+    <td mat-cell *matCellDef="let al">{{al.ltDate | date:'dd-MM-yyyy'}} </td>
+  </ng-container>
+
+  <!-- Tanggal Mulai -->
+  <ng-container matColumnDef="ltDateStart">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Mulai</th>
+    <td mat-cell *matCellDef="let al" > {{al.ltDateStart | date: 'dd-MM-yy'}}</td>
+  </ng-container>
+
+  <!-- Tanggal Selesai Column -->
+  <ng-container matColumnDef="ltDateEnd">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Selesai</th>
+    <td mat-cell *matCellDef="let al" style="text-align:center">{{al.ltDateEnd | date:'dd-MM-yy'}}</td>
+  </ng-container>
+
+  <!-- Shared? -->
+  <ng-container matColumnDef="ltShare">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Dibagikan?</th>
+    <td mat-cell *matCellDef="let al" > {{al.ltShare ? 'Ya' : 'Tidak'}}</td>
+  </ng-container>
+    <!-- Catatan -->
+    <ng-container matColumnDef="ltNote">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
+      <td mat-cell *matCellDef="let al" style="text-align:center">{{al.ltNote ?? '-'}}
+      </td>
+    </ng-container>
+
+    <!-- CountryName Column -->
+    <ng-container matColumnDef="aksi">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Opsi</th>
+      <td mat-cell *matCellDef="let al" style="text-align:center" (click)="openForm(al)">
+        <button mat-raised-button [disabled]="al.isCalculated">Ubah Data</button>
+      </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+</table>
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!asgnLtrs"
+    (page)="getData($event)"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>
+﻿

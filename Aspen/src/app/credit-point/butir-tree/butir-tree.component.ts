@@ -104,7 +104,6 @@ setButir(id:number) {
   if (id) {
       let butirOut = this.availButir.find(item => item.id == id);
       if (butirOut) {
-          console.log('butir tree: id '+ id + 'dan butir berisi ' + JSON.stringify(butirOut));
           this.selectedButir.emit(butirOut);
       }
   }

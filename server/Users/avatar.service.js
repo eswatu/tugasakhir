@@ -3,21 +3,22 @@ const db = require("../_helpers/db");
 
 const uploadFiles = async (req, res) => {
     try {
-              if (req.file == undefined) {
-                return res.send(`You must select a file.`);
-              }
+          if (req.file == undefined) {
+            return res.send(`You must select a file.`);
+          }
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
           let uid = parseInt(req.body.userId);
-          let user = db.User.findByPk(uid);
-          console.log("ava service: isi user " + JSON.stringify(user));
+          let user = await db.User.findByPk(uid);      
           if (user.AvatarId) {
+            console.log('ava id: ' + user.AvatarId);
+            //update exist
              db.Avatar.update({
-              data : upldFile,
-              updatedAt: new Date(),
-              type: req.file.mimetype,
-              name: req.file.originalname
-            },{where: {id : user.AvatarId} });
-              return res.send("Sukses update file");
+                data : upldFile,
+                updatedAt: new Date(),
+                type: req.file.mimetype,
+                name: req.file.originalname
+              },{where: {id : user.AvatarId} });
+              return "Sukses update file";
             } else {
                 db.Avatar.create({
                 type: req.file.mimetype,
@@ -34,7 +35,7 @@ const uploadFiles = async (req, res) => {
                   });
                   fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
                     );
-                  return res.send(`Sukses menambahkan profil.`);
+                  return `Sukses menambahkan profil.`;
                 });
           }
         

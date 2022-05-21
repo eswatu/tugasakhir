@@ -86,7 +86,6 @@ loadData(){
 }
   changeButir(butirIn: butirFull){
     this.butirDariTree = butirIn;
-    console.log(this.butirDariTree);
     this.formInput.patchValue(this.butirDariTree);
     this.isThisStepDone = true;
     this.stepper.next();  
@@ -106,7 +105,6 @@ loadData(){
     job.userId = 1;
     job.actDate = this.formInput.get('actDate').value;
     job.actNote = this.formInput.get('actNote').value;
-    console.log(job);
 
     this.actService.post<act>(job).subscribe(
       result => {

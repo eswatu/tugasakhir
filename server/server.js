@@ -20,6 +20,7 @@ app.use('/api/user', require('./Users/user.controller'));
 app.use('/api/acts', require('./Acts/act.controller'));
 app.use('/api/butir', require('./permen/butir.controller'));
 app.use('/api/avatar', require('./Users/avatar.controller'));
+app.use('/api/assignLetter', require('./Acts/assignLetter.controller'));
 //global error handler
 app.use(errorHandler);
 

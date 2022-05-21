@@ -61,8 +61,8 @@ function getById(req, res, next) {
         .catch(next);
 }
 function changePassword(req, res, next) {
-    userService.changepassword(req.params.id, req.params)
-    .then(message => res.send(message))
+    userService.changepassword(req.body)
+    .then(message => res.json(message))
     .catch(next);
 }
 function updateSchema(req, res, next) {

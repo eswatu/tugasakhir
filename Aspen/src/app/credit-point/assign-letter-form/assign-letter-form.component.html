@@ -1,0 +1,44 @@
+<form [formGroup]="formInput" (ngSubmit)="onSubmit()">
+    <div *ngIf="formInput.invalid" class="alert alert-danger">
+            <mat-form-field fxLayout="column">
+                <mat-label>Nomor Surat</mat-label>
+                <input formControlName="ltNumber" id="ltNumber" matInput placeholder="Nomor Surat">
+                <mat-hint>Misalnya: ST-xx/yy/zzz</mat-hint>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill" fxLayout="column">
+                <mat-label>Tanggal Surat</mat-label>
+                <input formControlName="ltDate" id="ltDate" matInput [matDatepicker]="picking">
+                <mat-hint>Tanggal Surat (dd/MM/yyyy)</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picking"></mat-datepicker-toggle>
+                <mat-datepicker #picking></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxLayout="row" >
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Tanggal Mulai" #dateRangeStart>
+                  <input matEndDate placeholder="Tanggal Selesai" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+                </mat-date-range-input>
+                <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            
+            <mat-slide-toggle formControlName="ltShare" ngDefaultControl>Bagi Dengan Yang Lain?</mat-slide-toggle>
+
+            <mat-form-field fxLayout="column">
+                <mat-label>Catatan</mat-label>
+                <input matInput formControlName="ltNote" id="ltNote" placeholder="Catatan Surat Tugas" >
+                <mat-hint>Contoh: Untuk Jenjang x/y/z saja</mat-hint>
+            </mat-form-field>
+    
+            <div fxLayoutGap="12px">
+                <button type="submit" mat-raised-button color="primary" 
+                 fxFlex="20"
+                class="btn btn-success" >Simpan</button>
+            
+                <button type="cancel" mat-raised-button fxFlex="10" color="warn"(click)='closeDialog()' >Batal</button>
+            </div>
+    </div>
+    </form>

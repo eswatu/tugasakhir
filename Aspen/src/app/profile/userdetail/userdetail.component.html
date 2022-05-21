@@ -1,6 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="center">
     <div fxLayout="column">
-        <img [src]="pictureImage" height="200" width="200"/>
+        <div>
+            <img [src]="pictureImage" height="360" width="360"/>
+        </div>
         <mat-toolbar *ngIf="currentFile" class="progress-bar">
             <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
             <span class="progress">{{ progress }}%</span>
@@ -10,7 +12,7 @@
                 <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
                     Upload
                 </button>
-            </div>
+        </div>
     </div>
     <div *ngIf="message" class="message">
         {{ message }}
@@ -53,10 +55,11 @@
                 <input formControlName="renewPwd" id="renewPwd" matInput type="password">
                 <div *ngIf="formPwd.controls.renewPwd.errors?.mustMatch">Passwords must match</div>
             </mat-form-field>
-            <button mat-flat-button type="submit" (onclick)="changePassword" color="primary" [disabled]="!formPwd.valid">Change Password</button>
+            <button mat-flat-button type="submit" (click)="changePassword()" color="primary" [disabled]="!formPwd.valid">Change Password</button>
         </form>
     </div>
 </div>
+<br>
 <div fxLayout="row" fxLayoutAlign="center">
     <mat-button-toggle mat-raised-button (click)="toggleEdit()">{{ toggleButtonValue}}</mat-button-toggle>
 </div>

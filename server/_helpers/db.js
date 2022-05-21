@@ -24,9 +24,12 @@ async function initialize() {
     db.Butir         = require('../permen/butir.model')(sequelize);
     //ini database untuk Kerja
     db.Act           = require('../Acts/act.model')(sequelize);
+    db.AssignLetter  = require('../Acts/assignLetter.model')(sequelize);
     
     //relasi user dan avatar
     db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId", as :"avatar"});
+    //relasi act dan assignment letter
+    db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignId", as: "assignletter"});
     //relasi khusus
     db.Butir.belongsTo(db.SubUnsur);
     db.Butir.belongsTo(db.Aktivitas);

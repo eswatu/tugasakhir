@@ -1,5 +1,4 @@
 import { butirFull } from "./permen";
-import { user } from "./user";
 
 export interface act {
     id: number;
@@ -13,4 +12,14 @@ export interface act {
     calculatedDate: Date;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface assignLetter {
+    id: number;
+    ltNumber: string;
+    ltDate: Date;
+    ltShare: boolean;
+    ltDateStart: Date;
+    ltDateEnd: Date;
+    ltNote: string;
 }
