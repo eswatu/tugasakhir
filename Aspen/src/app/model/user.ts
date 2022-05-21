@@ -7,12 +7,23 @@ export interface user {
     role: string;
     level: string;
     password: string;
-    avatar: avatar;
+    AvatarId: number;
 }
 
 export interface avatar {
     id: number;
     name: string;
     type: string;
-    data: Blob;
+    data: filetype;
+}
+
+export interface filetype {
+    typename: string;
+    data: string;
+}
+
+export interface chpwd {
+    id: number;
+    oldpwd: string;
+    newpwd: string;
 }

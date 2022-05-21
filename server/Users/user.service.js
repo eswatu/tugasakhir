@@ -2,6 +2,7 @@ const config = require('../config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../_helpers/db');
+const { json } = require('body-parser');
 
 module.exports = {
     authenticate,
@@ -9,7 +10,8 @@ module.exports = {
     getById,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    changepassword
 };
 
 async function authenticate({ username, password }) { 
@@ -67,6 +69,23 @@ async function update(id, params) {
 async function _delete(id) {
     const user = await getUser(id);
     await user.destroy();
+}
+async function changepassword(id, params) {
+    console.log(params);
+    const user = await getUser(id);
+    if (user) {
+        let oldpwd = params.oldpwd;
+        let newpwd = params.newpwd;
+        if (user.password == oldpwd) {
+            user.password = newpwd;
+            await user.save();
+            return 'Berhasil ubah password';
+        } else {
+            return 'invalid';
+        }
+    } else {
+        res.status(400).send({message:'invalid user'});
+    }
 }
 
 // helper functions

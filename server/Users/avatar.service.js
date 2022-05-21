@@ -3,21 +3,20 @@ const db = require("../_helpers/db");
 
 const uploadFiles = async (req, res) => {
     try {
-              console.log(JSON.stringify(req.body.userId));
               if (req.file == undefined) {
                 return res.send(`You must select a file.`);
               }
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
           let uid = parseInt(req.body.userId);
           let user = db.User.findByPk(uid);
-          console.log("ava user berisi "+ JSON.stringify(user));
-          if (user.avatarId) {
+          console.log("ava service: isi user " + JSON.stringify(user));
+          if (user.AvatarId) {
              db.Avatar.update({
               data : upldFile,
               updatedAt: new Date(),
               type: req.file.mimetype,
               name: req.file.originalname
-            },{where: {id : user.avatarId} });
+            },{where: {id : user.AvatarId} });
               return res.send("Sukses update file");
             } else {
                 db.Avatar.create({
@@ -27,14 +26,14 @@ const uploadFiles = async (req, res) => {
                 createdAt: new Date(),
                 updatedAt: new Date()
                 }).then((ava) => {
-                fs.writeFileSync(
-                  __basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
-                  );
+                  console.log();
                   db.User.update({ AvatarId: ava.id}, {
                     where: {
                       id: uid
                     }
                   });
+                  fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
+                    );
                   return res.send(`Sukses menambahkan profil.`);
                 });
           }
@@ -47,10 +46,13 @@ const uploadFiles = async (req, res) => {
       return res.send(`Error when trying upload images: ${error}`);
     }
   }
-async function downloadImage(req, res){
-  let image = db.Avatar.findByPk(req.id);
+
+const downloadImage = async (req, res) => {
+  let image = await db.Avatar.findByPk(req.params.id);
   if (image) {
-    res.send(image);    
+      var base64data = Buffer.from(image.data).toString('base64');
+      let result = {typename: image.type, data: base64data}
+      res.send(result);
   } else {
     res.send('file tidak ada');
   }

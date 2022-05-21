@@ -5,17 +5,17 @@
             <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
             <span class="progress">{{ progress }}%</span>
         </mat-toolbar>
-        <mat-toolbar>
+        <div *ngIf="isEditing">
                 <input type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
                 <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
                     Upload
                 </button>
-        </mat-toolbar>
+            </div>
     </div>
     <div *ngIf="message" class="message">
         {{ message }}
-      </div>
-    <div fxLayout="column">
+    </div>
+    <div fxLayout="column" *ngIf="!isEditing">
         <form [formGroup]="form">
             <mat-form-field fxLayout="column" appearance="fill">
                 <mat-label>Username</mat-label>
@@ -34,6 +34,26 @@
                 <mat-hint>Kewenangan</mat-hint>
                 <input formControlName="role" id="role" matInput>
             </mat-form-field>
+        </form>
+    </div>
+    <div fxLayout="column" *ngIf="isEditing">
+        <h2>Ubah Password</h2>
+        <form [formGroup]="formPwd" >
+            <mat-form-field fxLayout="row" appearance="fill">
+                <mat-label>Password Lama</mat-label>
+                <input formControlName="oldpwd" id="oldpwd" matInput type="password">
+                <mat-hint>password lama</mat-hint>
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-label>Password Baru</mat-label>
+                <input formControlName="newPwd" id="newPwd" matInput type="password">
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-label>Ulangi Password Baru</mat-label>
+                <input formControlName="renewPwd" id="renewPwd" matInput type="password">
+                <div *ngIf="formPwd.controls.renewPwd.errors?.mustMatch">Passwords must match</div>
+            </mat-form-field>
+            <button mat-flat-button type="submit" (onclick)="changePassword" color="primary" [disabled]="!formPwd.valid">Change Password</button>
         </form>
     </div>
 </div>

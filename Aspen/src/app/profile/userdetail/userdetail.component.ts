@@ -1,8 +1,9 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { user } from '@env/model/user';
+import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
 import { Observable } from 'rxjs';
 
@@ -17,9 +18,11 @@ export class UserdetailComponent implements OnInit {
   userId;
   userInfo: user;
   form : FormGroup;
+  formPwd: FormGroup;
   formAvatar: FormControl;
   pictureImage;
   urlImage;
+  
   //ava upload
   selectedFiles?: FileList;
   currentFile?: File;
@@ -28,43 +31,49 @@ export class UserdetailComponent implements OnInit {
   fileInfos?: Observable<any>;
   
   constructor(private userService: UserService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private fb: FormBuilder) { }
 
   ngOnInit(){
-    this.fileInfos = this.userService.getFiles();
 
     this.formAvatar = new FormControl();
-    this.form = new FormGroup({
-      username: new FormControl(''),
-      name: new FormControl(''),
-      level: new FormControl(''),
-      role: new FormControl(''),
+    //untuk form tampilan
+    this.form = this.fb.group({
+      username: [''],
+      name    : [''],
+      level   : [''],
+      role    : [''],
     });
+    //untuk password
+    this.formPwd = this.fb.group({
+      oldpwd  : ['', Validators.required],
+      newPwd  : ['',Validators.required],
+      renewPwd: ['', Validators.required]
+    },
+    { validator : MustMatch('newPwd', 'renewPwd')});
+    //load data
     this.loadData();
-    this.toggleButtonValue = 'Ubah';
+    this.toggleButtonValue = 'Edit Mode';
   }
+
   loadData(){
     this.userService.get<user>(1).subscribe(res => {
       this.userInfo = res;
       this.form.patchValue(res);
-        if (res.avatar){
-          let blob = new Blob([res.avatar.data], {type: res.avatar.type});
-          let mysrc;
-          var myreader: FileReader = new FileReader();
-          myreader.readAsDataURL(blob);
-          myreader.onloadend = function() {
-            mysrc = myreader.result;
-          }
-          this.pictureImage = mysrc;
-          console.log(this.pictureImage);
-        }
+      console.log('isi avatar id: ' + res.AvatarId);
+      if (res.AvatarId){
+        this.userService.downImage(res.AvatarId)
+        .subscribe((img) => {
+          let ftype = img['typename'];
+          this.pictureImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:${ftype};base64,` + img['data']);
+          });
+      }
   }, error => console.error(error));
-  console.log(this.pictureImage);
   }
   
   toggleEdit(){
     this.isEditing = !this.isEditing;
-    this.toggleButtonValue = this.isEditing ? 'Simpan' : 'Ubah';
+    this.toggleButtonValue = this.isEditing ? 'Stop Edit' : 'Edit Mode';
   }
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -81,7 +90,6 @@ export class UserdetailComponent implements OnInit {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
               this.message = event.body.message;
-              this.fileInfos = this.userService.getFiles();
             }
           },
           error: (err: any) => {
@@ -99,4 +107,5 @@ export class UserdetailComponent implements OnInit {
       this.selectedFiles = undefined;
     }
   }
+
 }

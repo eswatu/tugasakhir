@@ -1,5 +1,6 @@
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { chpwd, filetype } from '@env/model/user';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 
@@ -41,6 +42,10 @@ export class UserService extends BaseService {
   post<user>(item: user): Observable<user> {
     return this.http.post<user>(this.url, item);
   }
+  changePwd(pwd: chpwd): Observable<string> {
+    let myUrl = this.url + 'changepassword/' + pwd.id;
+    return this.http.post<string>(myUrl, pwd);
+  }
   uploadAva(file: File, userId:string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('avatar', file);
@@ -51,20 +56,9 @@ export class UserService extends BaseService {
     });
     return this.http.request(req);
   }
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
-  }
-  downImage(id:number): Observable<any> {
+  downImage(id:number): Observable<filetype> {
     let myUrl = this.urlava + id;
-    return this.http.get<any>(myUrl);
+    return this.http.get<filetype>(myUrl);
   }
-  _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-       binary += String.fromCharCode( bytes[ i ] );
-    }
-    return window.btoa( binary );
-  }
+
 }

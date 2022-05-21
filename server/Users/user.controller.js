@@ -8,6 +8,7 @@ const authorize = require('../_middleware/authorize');
 //routes
 router.post('/authenticate', authenticationSchema, authenticate);
 router.post('/register', registerSchema, register);
+router.post('/changepassword/:id', changePassword);
 router.get('/', getAll);
 router.get('/current', authorize(), getCurrent);
 router.get('/:id', getById);
@@ -59,7 +60,11 @@ function getById(req, res, next) {
         .then(user => res.json(user))
         .catch(next);
 }
-
+function changePassword(req, res, next) {
+    userService.changepassword(req.params.id, req.params)
+    .then(message => res.send(message))
+    .catch(next);
+}
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         name: Joi.string().required(),
