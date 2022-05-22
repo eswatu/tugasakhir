@@ -24,23 +24,29 @@ async function initialize() {
     db.Butir         = require('../permen/butir.model')(sequelize);
     //ini database untuk Kerja
     db.Act           = require('../Acts/act.model')(sequelize);
+    db.ActFile       = require('../Acts/actFile.model')(sequelize, DataTypes);
     db.AssignLetter  = require('../Acts/assignLetter.model')(sequelize);
+    db.AssignFile    = require('../Acts/assignFile.model')(sequelize, DataTypes);
     
-    //relasi user dan avatar
-    db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId", as :"avatar"});
-    //relasi act dan assignment letter
-    db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignId", as: "assignletter"});
-    //relasi khusus
+    //relasi khusus - mandatory
     db.Butir.belongsTo(db.SubUnsur);
     db.Butir.belongsTo(db.Aktivitas);
     db.SubUnsur.hasMany(db.Butir);
     db.Aktivitas.hasMany(db.Butir);
 
-    //relasi untuk act
-    db.Act.belongsTo(db.User, {foreignKey: "UserId", as: "user"});
+    //relasi user dan avatar
+    db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId", as :"avatar"});
+    //relasi untuk Act
     db.Act.belongsTo(db.Butir, {foreignKey: "ButirId", as: "butir"});
+    db.Act.belongsTo(db.User, {foreignKey: "UserId", as: "user"});
+    db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId", as: "assignLetter"});
+    db.Act.belongsTo(db.ActFile, {foreignKey: "ActFileId", as: "actfile"});
     db.User.hasMany(db.Act);
     db.Butir.hasMany(db.Act);
+    //relasi AssignLetter
+    db.AssignLetter.belongsTo(db.AssignFile, {foreignKey: "AssignFileId", as: "assignFile"});
+    db.AssignLetter.belongsTo(db.User, {foreignKey:"CreatorId", as: "user"});
+    db.AssignLetter.hasMany(db.Act);
     //sync model dengan database
     await sequelize.sync({alter: true});
 }

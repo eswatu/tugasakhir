@@ -14,6 +14,7 @@ import { AssignLetterFormComponent } from './assign-letter-form/assign-letter-fo
 import { AngkreTabComponent } from './angkre-tab/angkre-tab.component';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -33,7 +34,8 @@ export const MY_FORMATS = {
     ButirTreeComponent,
     AssignLetterTableComponent,
     AssignLetterFormComponent,
-    AngkreTabComponent
+    AngkreTabComponent,
+    FileUploadDialogComponent
     ],
   imports: [
     CommonModule,

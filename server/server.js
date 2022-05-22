@@ -21,6 +21,7 @@ app.use('/api/acts', require('./Acts/act.controller'));
 app.use('/api/butir', require('./permen/butir.controller'));
 app.use('/api/avatar', require('./Users/avatar.controller'));
 app.use('/api/assignLetter', require('./Acts/assignLetter.controller'));
+app.use('/api/assignfile', require('./Acts/assignFile.controller'));
 //global error handler
 app.use(errorHandler);
 

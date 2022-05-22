@@ -22,6 +22,7 @@ function createSchema(req, res, next) {
         butirId : Joi.number().required(),
         actDate     : Joi.date().required(),
         butirVolume: Joi.number().required(),
+        actNote: Joi.string().allow(null,'')
     });
     validateRequest(req, next, schema);
 }
@@ -32,7 +33,7 @@ function create(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    actService.getAll(req)
+    actService.getAll(req.query)
         .then(acts => res.json(acts))
         .catch(next);
 }

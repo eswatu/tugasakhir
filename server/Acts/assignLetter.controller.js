@@ -15,21 +15,24 @@ router.delete('/:id',deleteAL );
 module.exports = router;
 
 function createSchema(req, res, next) {
+    console.log(req.body);
     const schema = Joi.object({
         ltNumber: Joi.string().required(),
         ltDate  : Joi.date().required(),
-        ltStart : Joi.date().required(),
-        ltEnd   : Joi.date().required()
+        ltDateStart : Joi.date().required(),
+        ltDateEnd   : Joi.date().required(),
+        ltShare: Joi.boolean(),
+        ltNote: Joi.string().allow(null,'')
     });
     validateRequest(req, next, schema);
 }
 function createAssignLetter(req, res, next) {
     alservice.createAL(req.body)
-        .then(result => res.json(result))
+        .then(() => res.json({message : "Sukses menambahkan data"}))
         .catch(next);
 }
 function getAllAL(req, res,next) {
-    alservice.getAllAL(req)
+    alservice.getAllAL(req.query)
         .then(al => res.json(al))
         .catch(next);
 }

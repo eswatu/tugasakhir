@@ -1,7 +1,7 @@
 module.exports = async function paginate(model, pageIndex, pageSize, sortColumn = 'id', sortOrder = "ASC" , filterColumn, filterQuery)
 {
     const page = parseInt(pageIndex) || 0;
-    const take = parseInt(pageSize) || 8;
+    const take = parseInt(pageSize) || 10;
     const skip = page  * take;
     let options = {};
     if (sortOrder.length < 1) { 

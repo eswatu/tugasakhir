@@ -15,6 +15,11 @@ var storage = multer.diskStorage({
     cb(null, `${Date.now()}-aspen-${file.originalname}`);
   },
 });
-const maxSize = 2 * 1024 * 1024;
-var uploadFile = multer({ storage: storage, fileFilter: imageFilter, limits: {fileSize : maxSize} });
-module.exports = uploadFile;
+const maxImageSize = 2 * 1024 * 1024;
+const maxSize = maxImageSize * 5;
+var uploadImage = multer({ storage: storage, fileFilter: imageFilter, limits: {fileSize : maxImageSize} });
+var uploadFile = multer({ storage: storage, limits: {fileSize : maxSize} });
+module.exports = {
+  uploadFile,
+  uploadImage
+};

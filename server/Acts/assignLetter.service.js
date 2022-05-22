@@ -19,40 +19,45 @@ async function getAllAL(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.AssignLetter;
+    console.log(pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
     return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 async function getALById(id) {
-    return await db.findByPk(id);
+    return await db.AssignLetter.findByPk(id);
 }
-async function createAL(params) {
-    let res;
-    if (await db.findOne({
-        where: {    Id : params.id,
-                    ltNumber: params.ltNumber
+async function createAL(body) {
+    console.log(body);
+    let result;
+    if (await db.AssignLetter.findOne({
+        where: {  ltNumber: body.ltNumber,
+                ltDate: body.ltDate
         }})) {
-        return res.statusCode(400).json({message:"surat tugas sudah ada"});
+        throw "sudah ada entry "+ body.ltNumber + " dengan tanggal " + body.ltDate;
     } else {
-        db.create({
-            ltNumber: params.ltNumber,
-            ltDate  : params.ltDate,
-            ltShare : params.ltShare,
-            ltStart : params.ltStart,
-            ltEnd   : params.ltEnd,
+        db.AssignLetter.create({
+            ltNumber: body.ltNumber,
+            ltDate  : body.ltDate,
+            ltShare : body.ltShare,
+            ltDateStart : body.ltDateStart,
+            ltDateEnd   : body.ltDateEnd,
+            ltNote: body.ltNote,
             createdAt: new Date(),
             updatedAt: new Date()
+        }).then(r => {
+            result = r;
         });
-        return res.statusCode(200).json({message: "berhasil input surat tugas"});
+        return result;
     }
 }
 async function updateAL(id, body) {
-    const st = await db.findByPk(id);
+    const st = await db.AssignLetter.findByPk(id);
     body.updatedAt = new Date();
     Object.assign(st, body);
     await st.save();
     return st;
 }
 async function deleteAL(id) {
-    let st = await db.findByPk(id);
+    let st = await db.AssignLetter.findByPk(id);
     if (st) {
         st.destroy();
         return "sukses delete st";

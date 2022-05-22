@@ -7,6 +7,7 @@ import { assignLetter } from '@env/model/acts';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import { ApiResult } from '@env/services/base.service';
 import { AssignLetterFormComponent } from '../assign-letter-form/assign-letter-form.component';
+import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 
 @Component({
   selector: 'assign-letter-table',
@@ -70,5 +71,16 @@ export class AssignLetterTableComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AssignLetterFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadData() );
+  }
+  uploadFile(id: Number){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    if(id) {
+      dialogConfig.data = {id: id};
+    }
+    const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
   }
 }

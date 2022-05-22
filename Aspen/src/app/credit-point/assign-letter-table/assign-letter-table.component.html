@@ -55,8 +55,9 @@
     <!-- CountryName Column -->
     <ng-container matColumnDef="aksi">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Opsi</th>
-      <td mat-cell *matCellDef="let al" style="text-align:center" (click)="openForm(al)">
-        <button mat-raised-button [disabled]="al.isCalculated">Ubah Data</button>
+      <td mat-cell *matCellDef="let al" style="text-align:center">
+        <button mat-raised-button (click)="uploadFile(al.id)">Upload Berkas</button>
+        <button mat-raised-button [disabled]="al.isCalculated" (click)="openForm(al)">Ubah Data</button>
       </td>
     </ng-container>
 

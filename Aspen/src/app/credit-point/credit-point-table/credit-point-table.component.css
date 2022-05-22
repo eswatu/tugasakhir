@@ -3,3 +3,7 @@ td , th {
     word-wrap: break-word;
     max-width: 400px;
 }
+.mat-paginator {
+    display: flex;
+    justify-content: center;
+}
