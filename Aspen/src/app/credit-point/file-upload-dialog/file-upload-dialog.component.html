@@ -3,8 +3,26 @@
     <span class="progress">{{ progress }}%</span>
 </mat-toolbar>
 <div>
-        <input type="file" (change)="selectFile($event)" accept=".pdf, .docx, .jpeg"/>
+        <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png"/>
         <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
             Upload
         </button>
+</div>
+<div>
+    <table>
+        <tr>
+            <th>Nama File</th>
+            <th>Jenis File</th>
+            <th>Waktu Update</th>
+            <th>Aksi</th>
+        </tr>
+        <tr *ngIf="currentLetterInfo">
+            <td>
+                {{currentLetterInfo.name}}
+            </td>
+            <td>{{currentLetterInfo.type}}</td>
+            <td>{{currentLetterInfo.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
+            <td>Action</td>
+        </tr>
+    </table>
 </div>

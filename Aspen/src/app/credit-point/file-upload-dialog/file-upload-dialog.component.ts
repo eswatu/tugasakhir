@@ -1,6 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { fileInfo } from '@env/model/fileType';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 
 @Component({
@@ -13,16 +14,30 @@ export class FileUploadDialogComponent implements OnInit {
   progress = 0;
   selectedFiles?: FileList;
   message = "";
+  id;
+  currentLetterInfo: fileInfo;
 
   constructor(private dialogRef: MatDialogRef<FileUploadDialogComponent>,
     private assignLetterService: AssignLetterService, 
-    @Inject(MAT_DIALOG_DATA)data) {
+    @Inject(MAT_DIALOG_DATA) data) {
+      if (data) { this.id = data.id; }
      }
 
   ngOnInit(): void {
+    console.log('dari form, isi id adalah: ' + this.id);
+    if (this.id){
+      this.getInfo();
+    }
   }
+  
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+  }
+  getInfo(){
+    this.assignLetterService.getFileInfo(this.id).subscribe(result => {
+      console.log(result);
+      this.currentLetterInfo = result;
+    });
   }
   upload() {
     this.progress = 0;
@@ -52,5 +67,9 @@ export class FileUploadDialogComponent implements OnInit {
       }
       this.selectedFiles = undefined;
     }
+  }
+  closeDialog(){
+    this.currentLetterInfo = null;
+    this.dialogRef.close();
   }
 }

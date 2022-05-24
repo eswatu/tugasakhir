@@ -1,5 +1,6 @@
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { fileInfo } from '@env/model/fileType';
 import { filetype } from '@env/model/user';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
@@ -39,16 +40,17 @@ export class AssignLetterService extends BaseService{
     const formData: FormData = new FormData();
     formData.append('assignFile', file);
     formData.append('assignLetterId', assignLetterId);
-    const req = new HttpRequest('POST', this.urlFile + 'post/', formData, {
+    const req = new HttpRequest('POST', this.urlFile + '/post/' + assignLetterId, formData, {
       reportProgress: true,
       responseType: 'text'
     });
     return this.http.request(req);
   }
-  downImage(id:number): Observable<filetype> {
-    let myUrl = this.urlFile + id;
-    return this.http.get<filetype>(myUrl);
+  getFileInfo(id:number): Observable<fileInfo> {
+    let myUrl = this.urlFile + '/getFileInfo/' + id;
+    return this.http.get<fileInfo>(myUrl);
   }
+
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
       super(http, baseUrl);

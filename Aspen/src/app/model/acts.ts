@@ -22,4 +22,5 @@ export interface assignLetter {
     ltDateStart: Date;
     ltDateEnd: Date;
     ltNote: string;
+    AssignFileId: number;
 }

@@ -8,7 +8,7 @@
             <span class="progress">{{ progress }}%</span>
         </mat-toolbar>
         <div *ngIf="isEditing">
-                <input type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
+                <input single type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
                 <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
                     Upload
                 </button>

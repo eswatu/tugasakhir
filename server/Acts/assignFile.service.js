@@ -6,8 +6,9 @@ const uploadFiles = async (req, res) => {
           if (req.file == undefined) {
             return res.send(`You must select a file.`);
           }
-          let upldFile = fs.readFileSync(__basedir + "/resources/static/st/uploads/" + req.file.filename);
-          let uid = parseInt(req.body.assignLetterId);
+          console.log('isi dari assign file' + JSON.stringify(req.params.id));
+          let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
+          let uid = parseInt(req.params.id);
           let assignLetter = await db.AssignLetter.findByPk(uid);      
           if (assignLetter.AssignFileId) {
             //update exist
@@ -15,14 +16,16 @@ const uploadFiles = async (req, res) => {
                 data : upldFile,
                 updatedAt: new Date(),
                 type: req.file.mimetype,
-                name: req.file.originalname
-              },{where: {id : assignletter.AssignFileId} });
+                name: req.file.originalname,
+                notes: req.body.notes,
+              },{where: {id : assignLetter.AssignFileId} });
               return "Sukses update file";
             } else {
                 db.AssignFile.create({
                 type: req.file.mimetype,
                 name: req.file.originalname,
                 data: upldFile,
+                notes: req.body.notes,
                 createdAt: new Date(),
                 updatedAt: new Date()
                 }).then((af) => {
@@ -32,7 +35,7 @@ const uploadFiles = async (req, res) => {
                       id: uid
                     }
                   });
-                  fs.writeFileSync(__basedir + "/resources/static/st/tmp/" + af.name, af.data
+                  fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data
                     );
                   return `Sukses menambahkan File.`;
                 });
@@ -57,8 +60,15 @@ const downloadFile = async (req, res) => {
     res.send('file tidak ada');
   }
 }
+const getFiles = async (req, res) => {
+  const filelist = await db.AssignFile.findOne({
+    attributes: ['id', 'name','type', 'notes','updatedAt' ]
+  }, {where: { id : req.params.id}});
+  res.send(filelist);
+}
 
 module.exports = {
     uploadFiles,
-    downloadFile
+    downloadFile,
+    getFiles
   };
