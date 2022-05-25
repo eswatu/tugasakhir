@@ -7,6 +7,7 @@ import { ActService } from '@env/services/act.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
 import { act } from '@env/model/acts';
+import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 
 @Component({
   selector: 'credit-point-table',
@@ -76,6 +77,16 @@ export class CreditPointTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadData() );
   }
-
+  uploadFile(nomor: Number){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    if(nomor) {
+      dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP"};
+    }
+    const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
+  }
   
 }

@@ -9,30 +9,18 @@ const uploadFiles = async (req, res) => {
           console.log('isi dari assign file' + JSON.stringify(req.params.id));
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
           let uid = parseInt(req.params.id);
-          let assignFile = await db.AssignFile.findOne({where: {AssignLetterId: uid}});      
-          if (assignFile) {
-            //update exist
-             db.AssignFile.update({
-                data : upldFile,
-                updatedAt: new Date(),
-                type: req.file.mimetype,
-                name: req.file.originalname,
-                notes: req.body.notes,
-              },{where: {id : assignFile.id} });
-              return "Sukses update file";
-            } else {
-                db.AssignFile.create({
-                type: req.file.mimetype,
-                name: req.file.originalname,
-                data: upldFile,
-                notes: req.body.notes,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                AssignLetterId: uid
-                });
-                  fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
-                  return `Sukses menambahkan File.`;
-                };
+            //Tambah File
+            db.ActFile.create({
+            type: req.file.mimetype,
+            name: req.file.originalname,
+            data: upldFile,
+            notes: req.body.notes,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            ActId: uid
+            });
+            fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
+            return `Sukses menambahkan File.`;
       } catch (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');
@@ -41,10 +29,16 @@ const uploadFiles = async (req, res) => {
       return res.send(`Error when trying upload File ST: ${error}`);
     }
   }
-
+const deleteFile = async(req,res) => {
+  let uid = parseInt(req.params.id);
+  let file = await db.ActFile.findByPk(uid);
+  file.destroy();
+  await db.ActFile.save();
+  return "Berhasil menghapus file";
+}
 const downloadFile = async (req, res) => {
   let uid = parseInt(req.params.id);
-  const file = await db.AssignFile.scope('withData').findByPk(uid);
+  const file = await db.ActFile.scope('withData').findByPk(uid);
   console.log(file.name);
   if (file) {
     let pathQ = String(__basedir + "/resources/static/assets/download/" + file.name);
@@ -65,14 +59,15 @@ const downloadFile = async (req, res) => {
 }
 const getdocument = async (req, res) => {
   let uid = parseInt(req.params.id);
-  const datadoc = await db.AssignFile.unscoped().findOne({ where: {id: uid}});
+  const datadoc = await db.ActFile.unscoped().findOne({ where: {id: uid}});
   console.log(datadoc);
   if (datadoc) {
     res.type('application/octet-stream').send(datadoc.data);
   }
 }
+
 const getFiles = async (req, res) => {
-  const filelist = await db.AssignFile.findOne({where: { AssignLetterId: req.params.id}});
+  const filelist = await db.ActFile.findOne({where: { ActId: req.params.id}});
   res.send(filelist);
 }
 
@@ -80,5 +75,6 @@ module.exports = {
     uploadFiles,
     getdocument,
     downloadFile,
-    getFiles
+    getFiles,
+    deleteFile
   };

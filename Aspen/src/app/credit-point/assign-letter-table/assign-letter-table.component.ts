@@ -18,6 +18,7 @@ export class AssignLetterTableComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltNote', 'aksi'];
   public asgnLtrs: MatTableDataSource<assignLetter>;
 
+
   defaultPageIndex: number = 0;
   defaultPageSize: number = 5;
   public defaultSortColumn: string = "id";
@@ -79,9 +80,8 @@ export class AssignLetterTableComponent implements OnInit {
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if(nomor) {
-      dialogConfig.data = {id: nomor};
+      dialogConfig.data = {id: nomor, title: "Surat Tugas", mode: "ST"};
     }
-    console.log("isian tabel id adalah: " + nomor);
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
   }
 }

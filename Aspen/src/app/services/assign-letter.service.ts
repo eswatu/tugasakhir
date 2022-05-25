@@ -36,10 +36,11 @@ export class AssignLetterService extends BaseService{
   post<assignLetter>(item: assignLetter): Observable<any> {
     return this.http.post<assignLetter>(this.url, item);
   }
-  uploadFile(file: File, assignLetterId:string): Observable<HttpEvent<any>> {
+  uploadFile(file: File, assignLetterId:string, notes: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('assignFile', file);
     formData.append('assignLetterId', assignLetterId);
+    formData.append('notes', notes);
     const req = new HttpRequest('POST', this.urlFile + '/post/' + assignLetterId, formData, {
       reportProgress: true,
       responseType: 'text'

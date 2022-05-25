@@ -40,7 +40,8 @@ async function initialize() {
     db.Act.belongsTo(db.Butir, {foreignKey: "ButirId", as: "butir"});
     db.Act.belongsTo(db.User, {foreignKey: "UserId", as: "user"});
     db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId", as: "assignLetter"});
-    db.Act.belongsTo(db.ActFile, {foreignKey: "ActFileId", as: "actfile"});
+    db.Act.hasMany(db.ActFile);
+    db.ActFile.belongsTo(db.Act, {foreignKey: "ActId", as: "act"});
     db.User.hasMany(db.Act);
     db.Butir.hasMany(db.Act);
     //relasi AssignLetter

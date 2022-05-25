@@ -1,28 +1,65 @@
+<h2 align="center">{{title}}</h2>
+<br>
 <mat-toolbar *ngIf="currentFile" class="progress-bar">
     <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
     <span class="progress">{{ progress }}%</span>
 </mat-toolbar>
 <div>
+    <div>
         <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png"/>
         <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
             Upload
         </button>
+    </div>
+        <br>
+        <div>           
+            <label for="notes">Catatan:</label>
+            <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
+        </div>
 </div>
 <div>
-    <table>
-        <tr>
-            <th>Nama File</th>
-            <th>Jenis File</th>
-            <th>Waktu Update</th>
-            <th>Aksi</th>
-        </tr>
-        <tr *ngIf="currentLetterInfo">
-            <td>
-                {{currentLetterInfo.name}}
-            </td>
-            <td>{{currentLetterInfo.type}}</td>
-            <td>{{currentLetterInfo.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
-            <td><button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button></td>
-        </tr>
+    <table *ngIf="currentLetterInfo">
+        <div *ngIf="mode === 'ST'">
+            <tr>
+                <th>Nama File</th>
+                <td>{{currentLetterInfo.name}}</td>
+            </tr>
+            <tr>
+                <th>Jenis File</th>
+                <td>{{currentLetterInfo.type}}</td>
+            </tr>
+            <tr>
+                <th>Waktu Update</th>
+                <td>{{currentLetterInfo.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+            <tr>
+                <th>Catatan</th>
+                <td>{{currentLetterInfo.notes}}</td>
+            </tr>
+            <tr>
+                <th>Aksi</th>
+                <td><button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button></td>
+            </tr>
+        </div>
+        <div *ngIf="mode === 'LAP'">
+            <tr>
+                <th>Nama File</th>
+                <th>Jenis</th>
+                <th>Update</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+            </tr>
+            <tr *ngFor="let item of currentLetterInfo">
+                <td>{{item.name}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.updatedAt}}</td>
+                <td>{{item.notes}}</td>
+                <td>
+                    <button *ngIf="mode === 'LAP'">Hapus</button>
+                    <button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button>
+                </td>
+            </tr>
+        </div>
     </table>
+    <h2 *ngIf="!currentLetterInfo">Belum ada data</h2>
 </div>

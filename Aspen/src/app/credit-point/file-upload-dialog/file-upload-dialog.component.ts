@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { fileInfo } from '@env/model/fileType';
 import { AssignLetterService } from '@env/services/assign-letter.service';
+import { FormControl } from '@angular/forms';
+import { ActService } from '@env/services/act.service';
 
 @Component({
   selector: 'app-file-upload-dialog',
@@ -11,21 +13,27 @@ import { AssignLetterService } from '@env/services/assign-letter.service';
   styleUrls: ['./file-upload-dialog.component.css']
 })
 export class FileUploadDialogComponent implements OnInit {
+  notes: FormControl;
   currentFile? : File;
   progress = 0;
   selectedFiles?: FileList;
   message = "";
   id;
   currentLetterInfo: fileInfo;
-
+  title: string;
+  mode: string;
   constructor(private dialogRef: MatDialogRef<FileUploadDialogComponent>,
-    private assignLetterService: AssignLetterService, 
+    private assignLetterService: AssignLetterService,
+    private actService: ActService,
     @Inject(MAT_DIALOG_DATA) data) {
-      if (data) { this.id = data.id; }
+      if (data) {
+        this.id = data.id;
+        this.title = data.title;
+        this.mode = data.mode;
+      }
+      this.notes = new FormControl('');
      }
-
   ngOnInit(): void {
-    console.log('dari form, isi id adalah: ' + this.id);
     if (this.id){
       this.getInfo();
     }
@@ -35,14 +43,35 @@ export class FileUploadDialogComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
   getInfo(){
+    if (this.mode === "ST") {
     this.assignLetterService.getFileInfo(this.id).subscribe(result => {
-      console.log(result);
+      this.currentLetterInfo = result;
+    });
+  } else if (this.mode === "LAP") {
+    this.actService.getFileInfo(this.id).subscribe(result => {
       this.currentLetterInfo = result;
     });
   }
+  }
   
   download(id:number, name: string){
-    this.assignLetterService.downloadFile(id).subscribe(
+    if (this.mode === "ST") {
+        this.assignLetterService.downloadFile(id).subscribe(
+          (response: any) =>{
+              let data = response;
+              let dataType = data.type;
+              let binaryData = [];
+              binaryData.push(response);
+              let downloadLink = document.createElement('a');
+              downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+              if (data.name)
+                  downloadLink.setAttribute('download', data.name);
+              document.body.appendChild(downloadLink);
+              window.open(downloadLink.href);
+          }
+      );
+  } else if (this.mode === "LAP") {
+    this.actService.downloadFile(id).subscribe(
       (response: any) =>{
           let data = response;
           let dataType = data.type;
@@ -55,19 +84,8 @@ export class FileUploadDialogComponent implements OnInit {
           document.body.appendChild(downloadLink);
           window.open(downloadLink.href);
       }
-  );;
-  //   .subscribe((result)  => {
-  //     var file = new Blob([result.data], {type: result.type});
-  //     var url = URL.createObjectURL(file);
-  //     var a         = document.createElement('a');
-  //     a.href        = url; 
-  //     a.target      = '_blank';
-  //     a.download    = name;
-  //     document.body.appendChild(a);
-  //     a.click();
-  //   },(error) => {
-  //     console.log('getPDF error: ',error);
-  // });
+  );
+  }
 }
   upload() {
     this.progress = 0;
@@ -75,7 +93,8 @@ export class FileUploadDialogComponent implements OnInit {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.currentFile = file;
-        this.assignLetterService.uploadFile(this.currentFile, this.id).subscribe({
+        if (this.mode === "ST") {
+        this.assignLetterService.uploadFile(this.currentFile, this.id, this.notes.value).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
@@ -92,8 +111,31 @@ export class FileUploadDialogComponent implements OnInit {
               this.message = 'Could not upload the file!';
             }
             this.currentFile = undefined;
+            this.notes.reset();
           }
         });
+      } else if (this.mode === "LAP") {
+        this.actService.uploadFile(this.currentFile, this.id, this.notes.value).subscribe({
+          next: (event: any) => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.progress = Math.round(100 * event.loaded / event.total);
+            } else if (event instanceof HttpResponse) {
+              this.message = event.body.message;
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+            this.progress = 0;
+            if (err.error && err.error.message) {
+              this.message = err.error.message;
+            } else {
+              this.message = 'Could not upload the file!';
+            }
+            this.currentFile = undefined;
+            this.notes.reset();
+          }
+        });
+      }
       }
       this.selectedFiles = undefined;
     }

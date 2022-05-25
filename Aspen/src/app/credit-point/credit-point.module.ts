@@ -15,6 +15,8 @@ import { AngkreTabComponent } from './angkre-tab/angkre-tab.component';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +46,9 @@ export const MY_FORMATS = {
     FormsModule,
     ReactiveFormsModule,
     cpMaterialModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [ DatePipe,
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
