@@ -22,7 +22,7 @@
             </td>
             <td>{{currentLetterInfo.type}}</td>
             <td>{{currentLetterInfo.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
-            <td>Action</td>
+            <td><button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button></td>
         </tr>
     </table>
 </div>

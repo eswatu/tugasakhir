@@ -1,6 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map } from 'rxjs';
 import { fileInfo } from '@env/model/fileType';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 
@@ -39,13 +40,42 @@ export class FileUploadDialogComponent implements OnInit {
       this.currentLetterInfo = result;
     });
   }
+  
+  download(id:number, name: string){
+    this.assignLetterService.downloadFile(id).subscribe(
+      (response: any) =>{
+          let data = response;
+          let dataType = data.type;
+          let binaryData = [];
+          binaryData.push(response);
+          let downloadLink = document.createElement('a');
+          downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+          if (data.name)
+              downloadLink.setAttribute('download', data.name);
+          document.body.appendChild(downloadLink);
+          window.open(downloadLink.href);
+      }
+  );;
+  //   .subscribe((result)  => {
+  //     var file = new Blob([result.data], {type: result.type});
+  //     var url = URL.createObjectURL(file);
+  //     var a         = document.createElement('a');
+  //     a.href        = url; 
+  //     a.target      = '_blank';
+  //     a.download    = name;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //   },(error) => {
+  //     console.log('getPDF error: ',error);
+  // });
+}
   upload() {
     this.progress = 0;
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.currentFile = file;
-        this.assignLetterService.uploadFile(this.currentFile, "1").subscribe({
+        this.assignLetterService.uploadFile(this.currentFile, this.id).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);

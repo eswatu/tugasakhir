@@ -44,9 +44,9 @@ async function initialize() {
     db.User.hasMany(db.Act);
     db.Butir.hasMany(db.Act);
     //relasi AssignLetter
-    db.AssignLetter.belongsTo(db.AssignFile, {foreignKey: "AssignFileId", as: "assignFile"});
     db.AssignLetter.belongsTo(db.User, {foreignKey:"CreatorId", as: "user"});
     db.AssignLetter.hasMany(db.Act);
+    db.AssignFile.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId", as: "assignLetter"});
     //sync model dengan database
     await sequelize.sync({alter: true});
 }

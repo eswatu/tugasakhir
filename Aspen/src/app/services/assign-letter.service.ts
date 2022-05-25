@@ -1,9 +1,9 @@
-import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { fileInfo } from '@env/model/fileType';
-import { filetype } from '@env/model/user';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +46,14 @@ export class AssignLetterService extends BaseService{
     });
     return this.http.request(req);
   }
+  download(id:number): Observable<any> {
+    let myurl = this.urlFile + '/' + id;
+    return this.http.get(myurl, { responseType: "blob"});
+  }
+  downloadFile(id: number): Observable<any>{
+    const myUrl = this.urlFile + '/' + id; 
+    return this.http.get(myUrl,{ responseType: 'blob' as 'json'});
+}
   getFileInfo(id:number): Observable<fileInfo> {
     let myUrl = this.urlFile + '/getFileInfo/' + id;
     return this.http.get<fileInfo>(myUrl);

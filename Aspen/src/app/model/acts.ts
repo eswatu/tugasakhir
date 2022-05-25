@@ -1,3 +1,4 @@
+import { fileInfo } from "./fileType";
 import { butirFull } from "./permen";
 
 export interface act {
@@ -23,4 +24,5 @@ export interface assignLetter {
     ltDateEnd: Date;
     ltNote: string;
     AssignFileId: number;
+    assignFile: fileInfo;
 }

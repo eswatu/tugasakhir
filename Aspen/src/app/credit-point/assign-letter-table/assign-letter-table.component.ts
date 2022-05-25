@@ -72,15 +72,16 @@ export class AssignLetterTableComponent implements OnInit {
     const dialogRef = this.dialog.open(AssignLetterFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadData() );
   }
-  uploadFile(id: Number){
+  uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.restoreFocus; true;
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
-    if(id) {
-      dialogConfig.data = {id: id};
+    if(nomor) {
+      dialogConfig.data = {id: nomor};
     }
+    console.log("isian tabel id adalah: " + nomor);
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
   }
 }
