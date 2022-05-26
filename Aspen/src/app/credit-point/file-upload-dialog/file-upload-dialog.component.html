@@ -6,60 +6,63 @@
 </mat-toolbar>
 <div>
     <div>
+        <div>           
+            <label for="notes">Catatan:</label>
+            <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
+        </div>
+        <br>
         <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png"/>
         <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
             Upload
         </button>
     </div>
-        <br>
-        <div>           
-            <label for="notes">Catatan:</label>
-            <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
-        </div>
 </div>
 <div>
-    <table *ngIf="currentLetterInfo">
+    <table *ngIf="currentLetterInfos">
         <div *ngIf="mode === 'ST'">
+            <tr><strong>Mengunggah file hanya akan mengubah file yang tersimpan di server</strong></tr>
             <tr>
                 <th>Nama File</th>
-                <td>{{currentLetterInfo.name}}</td>
+                <td>{{currentLetterInfos.name}}</td>
             </tr>
             <tr>
                 <th>Jenis File</th>
-                <td>{{currentLetterInfo.type}}</td>
+                <td>{{currentLetterInfos.type}}</td>
             </tr>
             <tr>
                 <th>Waktu Update</th>
-                <td>{{currentLetterInfo.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
+                <td>{{currentLetterInfos.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
             </tr>
             <tr>
                 <th>Catatan</th>
-                <td>{{currentLetterInfo.notes}}</td>
+                <td>{{currentLetterInfos.notes}}</td>
             </tr>
             <tr>
                 <th>Aksi</th>
-                <td><button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button></td>
+                <td><button (click)="download(currentLetterInfos.id, currentLetterInfos.name)">Download</button></td>
             </tr>
         </div>
         <div *ngIf="mode === 'LAP'">
-            <tr>
-                <th>Nama File</th>
-                <th>Jenis</th>
-                <th>Update</th>
-                <th>Catatan</th>
-                <th>Aksi</th>
-            </tr>
-            <tr *ngFor="let item of currentLetterInfo">
-                <td>{{item.name}}</td>
-                <td>{{item.type}}</td>
-                <td>{{item.updatedAt}}</td>
-                <td>{{item.notes}}</td>
-                <td>
-                    <button *ngIf="mode === 'LAP'">Hapus</button>
-                    <button (click)="download(currentLetterInfo.id, currentLetterInfo.name)">Download</button>
-                </td>
-            </tr>
+            <div *ngIf="currentLetterInfos.length > 0">
+                <tr>
+                    <th>Nama File</th>
+                    <th>Jenis</th>
+                    <th>Update</th>
+                    <th>Catatan</th>
+                    <th>Aksi</th>
+                </tr>
+                <tr *ngFor="let item of currentLetterInfos;">
+                    <td>{{item.name}}</td>
+                    <td>{{item.type.substring(12,16)}}</td>
+                    <td>{{item.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td>{{item.notes}}</td>
+                    <td *ngIf="item">
+                        <button *ngIf="mode === 'LAP'" (click)="confirmDelete(item.id)">Hapus</button>
+                        <button (click)="download(item.id, item.name)">Download</button>
+                    </td>
+                </tr>
+            </div>
         </div>
     </table>
-    <h2 *ngIf="!currentLetterInfo">Belum ada data</h2>
+    <h2 *ngIf="!currentLetterInfos">Belum ada data</h2>
 </div>

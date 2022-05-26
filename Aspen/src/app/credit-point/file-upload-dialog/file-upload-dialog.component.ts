@@ -6,6 +6,7 @@ import { fileInfo } from '@env/model/fileType';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import { FormControl } from '@angular/forms';
 import { ActService } from '@env/services/act.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-file-upload-dialog',
@@ -19,7 +20,7 @@ export class FileUploadDialogComponent implements OnInit {
   selectedFiles?: FileList;
   message = "";
   id;
-  currentLetterInfo: fileInfo;
+  currentLetterInfos;
   title: string;
   mode: string;
   constructor(private dialogRef: MatDialogRef<FileUploadDialogComponent>,
@@ -45,15 +46,45 @@ export class FileUploadDialogComponent implements OnInit {
   getInfo(){
     if (this.mode === "ST") {
     this.assignLetterService.getFileInfo(this.id).subscribe(result => {
-      this.currentLetterInfo = result;
+      console.log(result);
+      this.currentLetterInfos = result;
     });
   } else if (this.mode === "LAP") {
     this.actService.getFileInfo(this.id).subscribe(result => {
-      this.currentLetterInfo = result;
+      if (result){
+      console.log(result);
+      this.currentLetterInfos = result;
+      } else {
+        this.currentLetterInfos = null;
+      }
     });
   }
   }
-  
+  confirmDelete(id:number) {
+    Swal.fire({
+      title: 'Yakin hapus file ini?',
+      text: "Anda tidak bisa mengembalikan file terhapus!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Hapus saja!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.actService.deletefile(id).subscribe(result => {
+          console.log(result);
+          if (result) {
+            Swal.fire(
+              'Terhapus!',
+              result,
+              'success'
+            )
+            this.closeDialog();
+          }
+        })
+      }
+    })
+  }
   download(id:number, name: string){
     if (this.mode === "ST") {
         this.assignLetterService.downloadFile(id).subscribe(
@@ -120,8 +151,14 @@ export class FileUploadDialogComponent implements OnInit {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
+              Swal.fire(
+                'Berhasil!',
+                event.body,
+                'success'
+              )
+              this.closeDialog();
             }
+            console.log(event);
           },
           error: (err: any) => {
             console.log(err);
@@ -141,7 +178,7 @@ export class FileUploadDialogComponent implements OnInit {
     }
   }
   closeDialog(){
-    this.currentLetterInfo = null;
+    this.currentLetterInfos = null;
     this.dialogRef.close();
   }
 }

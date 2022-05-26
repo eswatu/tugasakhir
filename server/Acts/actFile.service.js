@@ -19,8 +19,15 @@ const uploadFiles = async (req, res) => {
             updatedAt: new Date(),
             ActId: uid
             });
-            fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
-            return `Sukses menambahkan File.`;
+            fs.rm(__basedir + "/resources/static/assets/uploads/" + req.file.filename, {force: true}, (err) => {
+              if(err){
+                  // File deletion failed
+                  console.error(err.message);
+                  return;
+              }
+              console.log("File deleted successfully");
+          });
+            return res.json(`Sukses menambahkan File.`);
       } catch (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');
@@ -32,9 +39,12 @@ const uploadFiles = async (req, res) => {
 const deleteFile = async(req,res) => {
   let uid = parseInt(req.params.id);
   let file = await db.ActFile.findByPk(uid);
-  file.destroy();
-  await db.ActFile.save();
-  return "Berhasil menghapus file";
+  if (file) {
+      await file.destroy();
+      return res.json("Berhasil menghapus file");
+  } else {
+    return res.json('invalid file');
+  }
 }
 const downloadFile = async (req, res) => {
   let uid = parseInt(req.params.id);
@@ -59,7 +69,7 @@ const downloadFile = async (req, res) => {
 }
 const getdocument = async (req, res) => {
   let uid = parseInt(req.params.id);
-  const datadoc = await db.ActFile.unscoped().findOne({ where: {id: uid}});
+  let datadoc = await db.ActFile.findAll({ where: { ActId: uid}});
   console.log(datadoc);
   if (datadoc) {
     res.type('application/octet-stream').send(datadoc.data);
@@ -67,7 +77,7 @@ const getdocument = async (req, res) => {
 }
 
 const getFiles = async (req, res) => {
-  const filelist = await db.ActFile.findOne({where: { ActId: req.params.id}});
+  const filelist = await db.ActFile.findAll({where: { ActId: req.params.id}});
   res.send(filelist);
 }
 

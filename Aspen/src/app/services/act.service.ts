@@ -42,25 +42,28 @@ export class ActService extends BaseService {
     formData.append('actFile', file);
     formData.append('actId', actId);
     formData.append('notes', notes);
-    const req = new HttpRequest('POST', this.urlFile + '/post/' + actId, formData, {
+    const req = new HttpRequest('POST', this.urlFile + 'post/' + actId, formData, {
       reportProgress: true,
       responseType: 'text'
     });
     return this.http.request(req);
   }
   download(id:number): Observable<any> {
-    let myurl = this.urlFile + '/' + id;
+    let myurl = this.urlFile + id;
     return this.http.get(myurl, { responseType: "blob"});
   }
   downloadFile(id: number): Observable<any>{
-    const myUrl = this.urlFile + '/' + id; 
+    const myUrl = this.urlFile +  id; 
     return this.http.get(myUrl,{ responseType: 'blob' as 'json'});
 }
   getFileInfo(id:number): Observable<fileInfo> {
-    let myUrl = this.urlFile + '/getFileInfo/' + id;
+    let myUrl = this.urlFile + 'getFileInfo/' + id;
     return this.http.get<fileInfo>(myUrl);
   }
-
+  deletefile(id:number): Observable<any> {
+    let myurl = this.urlFile + id;
+    return this.http.delete<any>(myurl);
+  }
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
     super(http, baseUrl);
