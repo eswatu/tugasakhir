@@ -17,8 +17,11 @@
             <mat-form-field appearance="fill" fxLayout="row" >
                 <mat-label>Enter a date range</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Tanggal Mulai" #dateRangeStart>
-                  <input matEndDate placeholder="Tanggal Selesai" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+                  <input matStartDate placeholder="Tanggal Mulai"
+                  #dateRangeStart formControlName="ltDateStart">
+                  <input matEndDate placeholder="Tanggal Selesai"
+                  #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+                  formControlName="ltDateEnd" [startAt]="startDate">
                 </mat-date-range-input>
                 <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

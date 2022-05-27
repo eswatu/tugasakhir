@@ -14,8 +14,9 @@ import Swal from 'sweetalert2';
 export class AssignLetterFormComponent implements OnInit {
   formInput: FormGroup;
   idAL;
-  asgnLetter;
+  asgnLetter: assignLetter;
   shared: boolean = false;
+  startAt = new Date(2022 , 5 ,10);
   sd;
   ed;
 
@@ -31,9 +32,9 @@ export class AssignLetterFormComponent implements OnInit {
       }
       this.formInput = fb.group({
         ltNumber: ['', Validators.required],
-        ltDate: ['', Validators.required],
+        ltDate: ['', Validators.required, ],
         ltShare: [this.shared],
-        ltDateStart: [''],
+        ltDateStart: ['', Validators.required],
         ltDateEnd: ['', Validators.required],
         ltNote: [''],
       });
@@ -45,8 +46,18 @@ export class AssignLetterFormComponent implements OnInit {
   loadData(){
     if (this.idAL) {
       this.als.get<assignLetter>(this.idAL).subscribe(result => {
+        console.log(result);
         this.asgnLetter = result;
-        this.formInput.patchValue(result);
+        this.sd = this.asgnLetter.ltDateStart;
+        this.ed = this.asgnLetter.ltDateEnd;
+
+        this.formInput.patchValue({
+          ltNumber: this.asgnLetter.ltNumber,
+          ltDate: this.asgnLetter.ltDate,
+          ltShare: this.asgnLetter.ltShare,
+          ltNote: this.asgnLetter.ltNote,
+        });
+
       }, error => console.error(error));
     }
   }
