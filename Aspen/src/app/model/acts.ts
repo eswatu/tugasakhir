@@ -3,7 +3,7 @@ import { butirFull } from "./permen";
 
 export interface act {
     id: number;
-    butirId:number;
+    ButirId:number;
     butir: butirFull;
     butirVolume: number;
     actNote: string;
@@ -13,6 +13,8 @@ export interface act {
     calculatedDate: Date;
     createdAt: Date;
     updatedAt: Date;
+    AssignLetterId: number;
+    assignLetter: assignLetter;
 }
 
 export interface assignLetter {
@@ -23,6 +25,7 @@ export interface assignLetter {
     ltDateStart: Date;
     ltDateEnd: Date;
     ltNote: string;
+    ltActive: boolean;
     AssignFileId: number;
     assignFile: fileInfo;
 }

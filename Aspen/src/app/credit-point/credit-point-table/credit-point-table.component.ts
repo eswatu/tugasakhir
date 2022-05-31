@@ -8,6 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
 import { act } from '@env/model/acts';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
+import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 
 @Component({
   selector: 'credit-point-table',
@@ -21,8 +22,8 @@ export class CreditPointTableComponent implements OnInit {
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
-  public defaultSortColumn: string = "id";
-  public defaultSortOrder: SortDirection = 'asc';
+  public defaultSortColumn: string = "actDate";
+  public defaultSortOrder: SortDirection = 'desc';
 
   defaultFilterColumn: string = null;
   filterQuery: string = null;
@@ -65,6 +66,7 @@ export class CreditPointTableComponent implements OnInit {
         this.jobs = new MatTableDataSource<act>(result.data);
       }, error => console.error(error));
   }
+  
   openForm(acts:act){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -72,11 +74,14 @@ export class CreditPointTableComponent implements OnInit {
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if (acts) {
-      dialogConfig.data = {  actId: acts.id, butirId: acts.butir.id };
+      dialogConfig.data = {  id: acts.id };
+      const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(() => this.loadData() );
+    } else {
+      const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
     }
-    const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(() => this.loadData() );
   }
+
   uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;

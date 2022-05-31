@@ -42,7 +42,8 @@ async function createAL(body) {
             ltDateEnd   : body.ltDateEnd,
             ltNote: body.ltNote,
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
+            ltActive: body.ltActive
         }).then(r => {
             result = r;
         });

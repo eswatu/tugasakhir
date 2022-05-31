@@ -1,5 +1,4 @@
 <form [formGroup]="formInput" (ngSubmit)="onSubmit()">
-    <div *ngIf="formInput.invalid" class="alert alert-danger">
             <mat-form-field fxLayout="column">
                 <mat-label>Nomor Surat</mat-label>
                 <input formControlName="ltNumber" id="ltNumber" matInput placeholder="Nomor Surat">
@@ -14,14 +13,11 @@
                 <mat-datepicker #picking></mat-datepicker>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" fxLayout="row" >
+            <mat-form-field appearance="fill" fxLayout="column" >
                 <mat-label>Enter a date range</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Tanggal Mulai"
-                  #dateRangeStart formControlName="ltDateStart">
-                  <input matEndDate placeholder="Tanggal Selesai"
-                  #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
-                  formControlName="ltDateEnd" [startAt]="startDate">
+                  <input matStartDate placeholder="Tanggal Mulai" #dateRangeStart formControlName="ltDateStart">
+                  <input matEndDate placeholder="Tanggal Selesai" #dateRangeEnd formControlName="ltDateEnd">
                 </mat-date-range-input>
                 <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -29,6 +25,7 @@
               </mat-form-field>
             
             <mat-slide-toggle formControlName="ltShare" ngDefaultControl>Bagi Dengan Yang Lain?</mat-slide-toggle>
+            <mat-slide-toggle formControlName="ltActive" ngDefaultControl>Aktif?</mat-slide-toggle>
 
             <mat-form-field fxLayout="column">
                 <mat-label>Catatan</mat-label>
@@ -43,5 +40,4 @@
             
                 <button type="cancel" mat-raised-button fxFlex="10" color="warn"(click)='closeDialog()' >Batal</button>
             </div>
-    </div>
-    </form>
+</form>

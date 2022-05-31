@@ -53,6 +53,7 @@ async function createAct(params) {
         butirVolume: params.butirVolume,
         actDate: params.actDate,
         actNote: params.actNote,
+        AssignLetterId: params.AssignLetterId,
         //auto
         isCalculated: false,
         calculatedDate: null,

@@ -1,10 +1,12 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { PermenService } from '@env/services/permen.service';
-import { butirFull, treeNode } from '@env/model/permen';
-import { Output, EventEmitter } from '@angular/core';
+import { treeNode } from '@env/model/permen';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
+import { act } from '@env/model/acts';
 
 
 @Component({
@@ -25,8 +27,6 @@ export class ButirTreeComponent implements OnInit {
     };
   };
 
-  @Input() butirId;
-  @Output() selectedButir = new EventEmitter<butirFull>();
 
   selectedNode = new SelectionModel<FlateNode>(true);
 
@@ -47,10 +47,20 @@ export class ButirTreeComponent implements OnInit {
     node: FlateNode) => node.expandable;
     defaultLevel = 1;
   
-  constructor(private permernServ: PermenService) {
-    
+    //nomor id act
+    act: act;
+
+  constructor(private permernServ: PermenService,
+    private dialogRef: MatDialogRef<ButirTreeComponent>,
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) data) {
+    if (data) {
+      this.act = data.act;
+      console.log("isi dari act form: ");
+      console.log(this.act);
+    }
   }
-    
+  //simpan data semua butir yang ada
   availButir;
 
   ngOnInit(): void {
@@ -83,7 +93,7 @@ export class ButirTreeComponent implements OnInit {
         //console.log(this.dataSource.data);
     }, err => console.error(err));
   }
-
+  //grouping tree
   groupItemBy(array, property) {
     var hash = {},
         props = property.split('.');
@@ -96,6 +106,7 @@ export class ButirTreeComponent implements OnInit {
     }
     return hash;
 }
+//toggle untuk tree
 toggleSelect(node: FlateNode){
   this.selectedNode.toggle(node);
 }
@@ -103,8 +114,25 @@ toggleSelect(node: FlateNode){
 setButir(id:number) {
   if (id) {
       let butirOut = this.availButir.find(item => item.id == id);
+      console.log("butirout adalah: ");
+      console.log(butirOut);
+
       if (butirOut) {
-          this.selectedButir.emit(butirOut);
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.autoFocus = true;
+          dialogConfig.restoreFocus; true;
+          dialogConfig.minWidth = 400;
+          dialogConfig.minHeight = 400;
+          if (!this.act) {
+            this.act = <act>{};
+          }
+          this.act.butir = butirOut;
+          this.act.ButirId = butirOut.id;
+          dialogConfig.data = { act: this.act };
+          console.log("isi dari act form keluar: ");
+          console.log(this.act);
+          const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
+          this.dialogRef.close();
       }
   }
 }
@@ -118,3 +146,5 @@ interface FlateNode {
   level: number;
   id: number;
 }
+
+//buka tree ini, kirim data butir ke next dialog

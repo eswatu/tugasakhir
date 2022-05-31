@@ -15,7 +15,9 @@ function model(sequelize) {
         //tanggal selesai
         ltDateEnd: { type: DataTypes.DATE, allowNull: false },
         //sambungkan ke file
-        ltNote: {type: DataTypes.STRING, allowNull: true}
+        ltNote: {type: DataTypes.STRING, allowNull: true},
+        //set aktif
+        ltActive: {type: DataTypes.BOOLEAN, allowNull: false}
     };
     return sequelize.define('AssignmentLetter',attributes);
 }

@@ -22,7 +22,8 @@ function createSchema(req, res, next) {
         ltDateStart : Joi.date().required(),
         ltDateEnd   : Joi.date().required(),
         ltShare: Joi.boolean(),
-        ltNote: Joi.string().allow(null,'')
+        ltNote: Joi.string().allow(null,''),
+        ltActive: Joi.boolean()
     });
     validateRequest(req, next, schema);
 }

@@ -30,7 +30,7 @@ export class ActService extends BaseService {
     var myUrl = this.url + id;
     return this.http.get<act>(myUrl);
   }
-  put<act>(item: any): Observable<act> {
+  put<act>(item: any): Observable<any> {
     var myUrl = this.url + item.id;
     return this.http.put<act>(myUrl, item);
   }

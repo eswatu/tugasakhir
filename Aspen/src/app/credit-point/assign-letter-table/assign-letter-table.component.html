@@ -45,6 +45,11 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Dibagikan?</th>
     <td mat-cell *matCellDef="let al" > {{al.ltShare ? 'Ya' : 'Tidak'}}</td>
   </ng-container>
+    <!-- Active? -->
+    <ng-container matColumnDef="ltActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Aktif?</th>
+      <td mat-cell *matCellDef="let al" > {{al.ltActive ? 'Ya' : 'Tidak'}}</td>
+    </ng-container>
     <!-- Catatan -->
     <ng-container matColumnDef="ltNote">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>

@@ -15,7 +15,7 @@ import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dia
   styleUrls: ['./assign-letter-table.component.css']
 })
 export class AssignLetterTableComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltNote', 'aksi'];
+  public displayedColumns: string[] = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi'];
   public asgnLtrs: MatTableDataSource<assignLetter>;
 
 

@@ -20,9 +20,10 @@ function createSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),
         butirId : Joi.number().required(),
+        AssignLetterId: Joi.number().required(),
         actDate     : Joi.date().required(),
         butirVolume: Joi.number().required(),
-        actNote: Joi.string().allow(null,'')
+        actNote: Joi.string().allow(null,''),
     });
     validateRequest(req, next, schema);
 }
@@ -47,22 +48,24 @@ function getById(req, res, next) {
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),
-        date     : Joi.date().required(),
-        actId    : Joi.number().required(),
-        actVolume: Joi.number().required(),
+        butirId : Joi.number().required(),
+        AssignLetterId: Joi.number().required(),
+        actDate     : Joi.date().required(),
+        butirVolume: Joi.number().required(),
+        actNote: Joi.string().allow(null,''),
     });
     validateRequest(req, next, schema);
 }
 
 function update(req, res, next) {
     actService.updateAct(req.params.id, req.body)
-        .then(() => res.json({ message: 'Act updated' }))
+        .then(() => res.json({ message: 'Kegiatan Berhasil Diubah' }))
         .catch(next);
 }
 
 function _delete(req, res, next) {
     actService.delete(req.params.id)
-        .then(() => res.json({ message: 'act terhapus' }))
+        .then(() => res.json({ message: 'Kegiatan Sudah Terhapus' }))
         .catch(next);
 }
 

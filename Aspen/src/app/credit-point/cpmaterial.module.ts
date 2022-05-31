@@ -17,10 +17,13 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from "@angular/material/tabs";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 
 const modules = [
+  MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,
   MatTooltipModule,
