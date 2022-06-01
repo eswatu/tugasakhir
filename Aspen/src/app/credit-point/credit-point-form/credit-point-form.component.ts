@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act } from '@env/model/acts';
-import { butirFull} from '@env/model/permen';
+import { butirFull } from '@env/model/permen';
 import { ActService } from '@env/services/act.service';
 import { AssignLetterService } from '@env/services/assign-letter.service';
-import { PermenService } from '@env/services/permen.service';
 import Swal from 'sweetalert2';
 import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 
@@ -19,17 +18,16 @@ export class CreditPointFormComponent {
   //stepper
   formInput : FormGroup;
 
-  //form
   //ini untuk st terpilih
-  surattugas;
-  id;
+  surattugas ;
+
+  id; //untuk mode edit dari tabel
+  job : act; //untuk mode create dari butir
   jenjang: string;
-  job : act;
         
   constructor(
     private actService: ActService,
     private assignLetterService: AssignLetterService,
-    private permenService: PermenService,
     public dialog: MatDialog,
     private dialogRef : MatDialogRef<CreditPointFormComponent>,
      @Inject(MAT_DIALOG_DATA) data){
@@ -37,14 +35,13 @@ export class CreditPointFormComponent {
         if(data) {
           if (data.id) {
             this.id = data.id;
-          }
-          if (data.act) {
+          } else if (data.act) {
             this.job = data.act;
           }
          }
       //init form
     this.formInput = new FormGroup({
-          st: new FormControl(''),
+          AssignLetterId: new FormControl(''),
           //otomatis
           namaButir: new FormControl(''),
           tkButir: new FormControl(''),
@@ -61,7 +58,7 @@ export class CreditPointFormComponent {
 
 ngOnInit() {
   this.loadData();
-  this.getAssignLetterList();
+  this.getAssignLetterList(); //ambil daftar surat tugas aktif
 }
 
 getAssignLetterList(){
@@ -82,19 +79,20 @@ loadData(){
         actDate: result.actDate,
         butirVolume: result.butirVolume,
         actNote: result.actNote,
-        st: result.AssignLetterId
+        AssignLetterId: result.AssignLetterId
         });
-        console.log(this.job);
+        this.setJenjang(this.job.butir.levelReq);
       }, error => console.error(error));
     //eo edit
     } else {
       //input baru
-      this.formInput.patchValue({st: this.job.AssignLetterId});
-    this.formInput.patchValue(this.job);
     this.formInput.patchValue(this.job.butir);
+    this.formInput.patchValue({actDate: new Date()});
+
   }
 
 }
+
 changeButir(){
   const dialogConfig = new MatDialogConfig();
   dialogConfig.autoFocus = true;
@@ -108,13 +106,14 @@ changeButir(){
     this.closeDialog();
   }
 }
+//create job
 createJob() {
   this.job.butirVolume = this.formInput.get('butirVolume').value;
   //replace ya
   this.job.userId = 1;
   this.job.actDate = this.formInput.get('actDate').value;
   this.job.actNote = this.formInput.get('actNote').value;
-  this.job.AssignLetterId = this.formInput.get('st').value;
+  this.job.AssignLetterId = this.formInput.get('AssignLetterId').value;
 }
   onSubmit(){
     this.createJob();
@@ -128,6 +127,7 @@ createJob() {
             }
         }, error => console.error(error));
     } else {
+      //create mode
       this.actService.post<act>(this.job).subscribe(
         result => {
           if (result) {

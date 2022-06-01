@@ -3,7 +3,7 @@ import { butirFull } from "./permen";
 
 export interface act {
     id: number;
-    ButirId:number;
+    butirId:number;
     butir: butirFull;
     butirVolume: number;
     actNote: string;

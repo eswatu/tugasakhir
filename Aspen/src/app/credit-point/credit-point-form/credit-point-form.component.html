@@ -1,7 +1,7 @@
 <form [formGroup]="formInput" >
     <mat-form-field appearance="fill">
         <mat-label>Pilih Surat Tugas</mat-label>
-        <mat-select name="st" formControlName="st">
+        <mat-select name="AssignLetterId" formControlName="AssignLetterId">
             <mat-option *ngFor="let st of surattugas" [value]="st.id">{{st.ltNumber}} Tanggal: {{st.ltDate | date:'dd-MM-yyyy'}}</mat-option>
         </mat-select>
     </mat-form-field>
@@ -62,7 +62,7 @@
     <div fxLayoutGap="12px">
         <button type="submit" mat-raised-button color="primary" 
         [disabled]="formInput.invalid" fxFlex="20"
-        class="btn btn-success" (click)="onSubmit()" *ngIf="!id">Simpan</button>
+        class="btn btn-success" (click)="onSubmit()" *ngIf="!id">Buat Data</button>
         <button type="submit" mat-raised-button color="accent" *ngIf="id"
         [disabled]="formInput.invalid" fxFlex="20"
         class="btn btn-success" (click)="onSubmit()">Ubah Data</button>

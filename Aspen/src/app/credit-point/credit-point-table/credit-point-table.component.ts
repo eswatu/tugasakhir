@@ -17,7 +17,7 @@ import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 })
 
 export class CreditPointTableComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'namaButir', 'actDate', 'jmlPoin', 'butirVolume', 'actNote', 'aksi'];
+  public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin', 'butirVolume', 'actNote', 'aksi'];
   public jobs: MatTableDataSource<act>;
 
   defaultPageIndex: number = 0;
@@ -49,6 +49,7 @@ export class CreditPointTableComponent implements OnInit {
     }
     this.getData(pageEvent);
   }
+
   getData(event: PageEvent) { 
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
@@ -67,16 +68,15 @@ export class CreditPointTableComponent implements OnInit {
       }, error => console.error(error));
   }
   
-  openForm(acts:act){
+  openForm(job:act){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.restoreFocus; true;
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
-    if (acts) {
-      dialogConfig.data = {  id: acts.id };
+    if (job) {
+      dialogConfig.data = {  id: job.id };
       const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(() => this.loadData() );
     } else {
       const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
     }

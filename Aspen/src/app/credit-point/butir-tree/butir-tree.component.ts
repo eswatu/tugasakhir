@@ -56,8 +56,6 @@ export class ButirTreeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data) {
     if (data) {
       this.act = data.act;
-      console.log("isi dari act form: ");
-      console.log(this.act);
     }
   }
   //simpan data semua butir yang ada
@@ -67,7 +65,8 @@ export class ButirTreeComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(forlvl: number = this.defaultLevel) { 
+  loadData(forlvl: number = this.defaultLevel) {
+    //load level 
     this.permernServ.getByLevel(forlvl).subscribe(
       res => {
         this.availButir = res;
@@ -106,11 +105,12 @@ export class ButirTreeComponent implements OnInit {
     }
     return hash;
 }
+
 //toggle untuk tree
 toggleSelect(node: FlateNode){
   this.selectedNode.toggle(node);
 }
-
+//fungsi ketika klik node terakhir
 setButir(id:number) {
   if (id) {
       let butirOut = this.availButir.find(item => item.id == id);
@@ -123,12 +123,14 @@ setButir(id:number) {
           dialogConfig.restoreFocus; true;
           dialogConfig.minWidth = 400;
           dialogConfig.minHeight = 400;
+
           if (!this.act) {
             this.act = <act>{};
           }
           this.act.butir = butirOut;
-          this.act.ButirId = butirOut.id;
+          this.act.butirId = butirOut.id;
           dialogConfig.data = { act: this.act };
+
           console.log("isi dari act form keluar: ");
           console.log(this.act);
           const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
