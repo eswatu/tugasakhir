@@ -9,6 +9,7 @@ import { CreditPointFormComponent } from '../credit-point-form/credit-point-form
 import { act } from '@env/model/acts';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'credit-point-table',
@@ -68,20 +69,32 @@ export class CreditPointTableComponent implements OnInit {
       }, error => console.error(error));
   }
   
-  openForm(job:act){
+  openForm(job:act, jenis: number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.restoreFocus; true;
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if (job) {
-      dialogConfig.data = {  id: job.id };
+      dialogConfig.data = {  id: job.id, jenis: jenis };
       const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
     } else {
+      dialogConfig.data = { jenis: jenis };
       const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
     }
   }
-
+  propose(job:act) {
+    this.actService.propose(job).subscribe(result => {
+      Swal.fire({
+        title: result,
+        confirmButtonText: 'Okay'
+      }).then((result)=> {
+        if (result.isConfirmed) {
+          this.loadData(null);
+        }
+      });
+    }, error => console.error(error));
+  }
   uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;

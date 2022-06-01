@@ -30,9 +30,29 @@ penyelia                  = 4
 penyelia + mahir          = 6
 terampil, mahir, penyelia = 7
  */
-async function getByLevel(level) {
-    level = parseInt(level);
-    const availJob = [];
+async function getByLevel(params) {
+    level = parseInt(params.level);
+    jenis = parseInt(params.jenis);
+    var akt = [];
+    if (jenis != 1) {
+        akt = await db.Aktivitas.findAll({
+        attributes: ['id'],
+        where: {
+            "kodeAkt": 'G'
+        }});
+    } else {
+        akt = await db.Aktivitas.findAll({
+        attributes: ['id'],
+        where: {
+            "kodeAkt": {
+                [Op.ne]: 'G'
+            }
+        }});
+    }
+
+    const selJenis = akt.map(a => a.id);
+   
+    var availJob = [];
     if (level == 1) {
         availJob = [1, 2, 3, 7];
     } else if (level == 2) {
@@ -44,18 +64,16 @@ async function getByLevel(level) {
         {
             include:[{all:true}],
             where: {
+                "AktivitaId": {
+                    [Op.or]: selJenis
+                },
                 "levelReq": {
                 [Op.or]: availJob
             } },
             order: [['SubUnsurId','ASC'],['AktivitaId', 'ASC'],['id','ASC']]
         }
     );
-    /*
-    result = groupItemBy(result, "SubUnsur.namaSubUnsur");
-    Object.entries(result).forEach(entry => {
-        let [key, value] = entry;
-        value = (groupItemBy(value, "aktivita.namaAkt"));
-    });*/ 
+
     return result;
 }
 

@@ -5,7 +5,7 @@ const butirService = require('./butir.service');
 const authorize = require('../_middleware/authorize');
 //routes
 router.get('/', getAll);
-router.get('/forLevel/:level', getByLevel);
+router.get('/jenis/:jenis/forLevel/:level', getByLevel);
 router.get('/SUBName/:id', getSubNById);
 router.get('/AKName/:id', getAktNameId);
 router.get('/:id', getById);
@@ -20,12 +20,12 @@ function getAll(req, res, next) {
         .catch(next);
 }
 function getById(req, res, next) {
-    butirService.getById(req.params.id)
+    butirService.getById(req.params)
         .then(butir => res.json(butir))
         .catch(next);
 }
 function getByLevel(req, res, next) {
-    butirService.getByLevel(req.params.id)
+    butirService.getByLevel(req.params)
         .then(butir => res.json(butir))
         .catch(next);
 }

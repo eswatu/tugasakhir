@@ -2,7 +2,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Pilih Surat Tugas</mat-label>
         <mat-select name="AssignLetterId" formControlName="AssignLetterId">
-            <mat-option *ngFor="let st of surattugas" [value]="st.id">{{st.ltNumber}} Tanggal: {{st.ltDate | date:'dd-MM-yyyy'}}</mat-option>
+            <mat-option *ngFor="let st of surattugas" [value]="st.id">{{st.ltNumber}} Tanggal: {{st.ltDate | date:'dd-MM-yyyy'}}/r Note: {{st.ltNote}}</mat-option>
         </mat-select>
     </mat-form-field>
 

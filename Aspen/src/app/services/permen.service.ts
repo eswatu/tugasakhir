@@ -34,8 +34,8 @@ export class PermenService extends BaseService {
     return this.http.get<ApiResult>(url, { params } );
   }
 
-  getByLevel<butirFull>(level: number): Observable<butirFull[]> {
-    var url = this.baseUrl + "api/Butir/forLevel/" + level;
+  getByLevel<butirFull>(level: number,jenis : number): Observable<butirFull[]> {
+    var url = this.baseUrl + "api/Butir/jenis/"+ jenis + "/forLevel/" + level;
     return this.http.get<butirFull[]>(url);
   }
   

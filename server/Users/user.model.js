@@ -8,7 +8,8 @@ function model(sequelize) {
         username    : { type: DataTypes.STRING, allowNull: false },
         passwordHash: { type: DataTypes.STRING, allowNull: false },
         role        : { type: DataTypes.STRING, allowNull: false },
-        level       : { type: DataTypes.STRING, allowNull: false }
+        level       : { type: DataTypes.STRING, allowNull: false },
+        baseAngkre  : {type: DataTypes.INTEGER, allowNull: false }
     };
     const options = {
         defaultScope: {

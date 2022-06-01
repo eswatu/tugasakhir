@@ -10,6 +10,7 @@ router.post('/', createSchema, create);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', updateSchema, update);
+router.put('/propose/:id', propose);
 router.delete('/:id',_delete);
 
 module.exports = router;
@@ -24,6 +25,7 @@ function createSchema(req, res, next) {
         actDate     : Joi.date().required(),
         butirVolume: Joi.number().required(),
         actNote: Joi.string().allow(null,''),
+        actMain: Joi.number().required()
     });
     validateRequest(req, next, schema);
 }
@@ -44,7 +46,11 @@ function getById(req, res, next) {
         .then(act => res.json(act))
         .catch(next);
 }
-
+function propose(req, res, next) {
+    actService.propose(req.params.id)
+    .then(result => res.json(result))
+    .catch(next);
+}
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),

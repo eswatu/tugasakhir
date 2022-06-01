@@ -6,15 +6,16 @@ export interface act {
     butirId:number;
     butir: butirFull;
     butirVolume: number;
+    actMain:boolean;
     actNote: string;
     userId:number;
     actDate:Date;
     isCalculated: boolean;
     calculatedDate: Date;
+    proposeDate:Date;
     createdAt: Date;
     updatedAt: Date;
     AssignLetterId: number;
-    assignLetter: assignLetter;
 }
 
 export interface assignLetter {

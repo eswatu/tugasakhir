@@ -6,6 +6,8 @@ export interface aktivita {
 
 export interface subUnsur { 
     id: number;
+    kodeUnsur: number;
+    namaUnsur: string;
     kodeSub: string;
     namaSubUnsur: string;
 }
@@ -16,7 +18,7 @@ export interface butirFull {
     namaButir: string;
     tkButir: string;
     hasilKerja: string;
-    jmlPoin: number;
+    jmlPoin: string;
     levelReq: number;
     SubUnsur: subUnsur;
     Aktivita: aktivita;

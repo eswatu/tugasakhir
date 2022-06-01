@@ -9,6 +9,7 @@ module.exports = {
     getById,
     getByDate,
     createAct,
+    propose,
     updateAct,
     deleteAct: _delete
 };
@@ -54,6 +55,7 @@ async function createAct(params) {
         actDate: params.actDate,
         actNote: params.actNote,
         AssignLetterId: params.AssignLetterId,
+        actMain: params.actMain,
         //auto
         isCalculated: false,
         calculatedDate: null,
@@ -63,6 +65,23 @@ async function createAct(params) {
         result = us; 
         console.log("act " + us + "berhasil dibuat");
     });
+    return result;
+}
+async function propose(id) {
+    let act = await getActById(id);
+    console.log('isi dari act ' + JSON.stringify(act));
+    let result;
+    if (act) {
+        if (act.proposeDate) {
+            act.proposeDate = null;
+        } else {
+            act.proposeDate = new Date();
+        }
+        await act.save();
+        result = 'sukses mengajukan';
+    } else {
+        result = 'gagal mengajukan';
+    }
     return result;
 }
 

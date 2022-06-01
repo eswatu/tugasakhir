@@ -18,11 +18,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTabsModule} from "@angular/material/tabs";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatMenuModule} from '@angular/material/menu';
 
 
 
 const modules = [
+  MatMenuModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatTabsModule,

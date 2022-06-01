@@ -24,6 +24,7 @@ export class CreditPointFormComponent {
   id; //untuk mode edit dari tabel
   job : act; //untuk mode create dari butir
   jenjang: string;
+  actMain;
         
   constructor(
     private actService: ActService,
@@ -57,8 +58,8 @@ export class CreditPointFormComponent {
      }
 
 ngOnInit() {
-  this.loadData();
   this.getAssignLetterList(); //ambil daftar surat tugas aktif
+  this.loadData();
 }
 
 getAssignLetterList(){
@@ -82,15 +83,18 @@ loadData(){
         AssignLetterId: result.AssignLetterId
         });
         this.setJenjang(this.job.butir.levelReq);
+        if (result.actMain) {
+          this.actMain = 1;
+        } else {
+          this.actMain = 0;
+        }
       }, error => console.error(error));
     //eo edit
     } else {
       //input baru
     this.formInput.patchValue(this.job.butir);
     this.formInput.patchValue({actDate: new Date()});
-
   }
-
 }
 
 changeButir(){
@@ -101,7 +105,7 @@ changeButir(){
   dialogConfig.minHeight = 400;
   this.createJob();
   if (this.job) {
-    dialogConfig.data = {  act: this.job };
+    dialogConfig.data = {  act: this.job, jenis: this.actMain };
     const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
     this.closeDialog();
   }
@@ -114,6 +118,7 @@ createJob() {
   this.job.actDate = this.formInput.get('actDate').value;
   this.job.actNote = this.formInput.get('actNote').value;
   this.job.AssignLetterId = this.formInput.get('AssignLetterId').value;
+  this.job.actMain = this.actMain;
 }
   onSubmit(){
     this.createJob();

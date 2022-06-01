@@ -37,7 +37,7 @@ export const MY_FORMATS = {
     AssignLetterTableComponent,
     AssignLetterFormComponent,
     AngkreTabComponent,
-    FileUploadDialogComponent
+    FileUploadDialogComponent,
     ],
   imports: [
     CommonModule,

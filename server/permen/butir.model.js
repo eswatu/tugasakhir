@@ -11,7 +11,7 @@ function model(sequelize) {
         //hasil diisi jenis Laporan
         hasilKerja: { type: DataTypes.STRING, allowNull: false },
         //jmlPoin diisi angkre
-        jmlPoin: { type: DataTypes.FLOAT, allowNull: false },
+        jmlPoin: { type: DataTypes.STRING, allowNull: false },
         //levelReq diisi prsiayat jenjang
         levelReq: {type: DataTypes.INTEGER, allowNull: false}
     };

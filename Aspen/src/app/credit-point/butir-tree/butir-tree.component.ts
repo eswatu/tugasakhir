@@ -17,7 +17,6 @@ import { act } from '@env/model/acts';
 
 
 export class ButirTreeComponent implements OnInit {
- 
   private _transformer = (node: treeNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -26,10 +25,7 @@ export class ButirTreeComponent implements OnInit {
       id: node.id
     };
   };
-
-
   selectedNode = new SelectionModel<FlateNode>(true);
-
   treeControl = new FlatTreeControl<FlateNode>(
     (node) => node.level,
     (node) => node.expandable
@@ -45,8 +41,8 @@ export class ButirTreeComponent implements OnInit {
 
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
-    defaultLevel = 1;
-  
+    defaultLevel = 2;
+    defaultJenis;
     //nomor id act
     act: act;
 
@@ -54,8 +50,13 @@ export class ButirTreeComponent implements OnInit {
     private dialogRef: MatDialogRef<ButirTreeComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data) {
-    if (data) {
+    if (data.act) {
       this.act = data.act;
+    }
+    if (parseInt(data.jenis) == 1) {
+    this.defaultJenis = 1;
+    } else {
+      this.defaultJenis = 0;
     }
   }
   //simpan data semua butir yang ada
@@ -65,9 +66,9 @@ export class ButirTreeComponent implements OnInit {
     this.loadData();
   }
 
-  loadData(forlvl: number = this.defaultLevel) {
+  loadData(forlvl: number = this.defaultLevel, jenis: number = this.defaultJenis) {
     //load level 
-    this.permernServ.getByLevel(forlvl).subscribe(
+    this.permernServ.getByLevel(forlvl, jenis).subscribe(
       res => {
         this.availButir = res;
         //split subunsur
