@@ -27,27 +27,26 @@ async function initialize() {
     db.ActFile       = require('../Acts/actFile.model')(sequelize, DataTypes);
     db.AssignLetter  = require('../Acts/assignLetter.model')(sequelize);
     db.AssignFile    = require('../Acts/assignFile.model')(sequelize, DataTypes);
-    
+    db.Submission    = require('../Submission/submission.model')(sequelize);
     //relasi khusus - mandatory
-    db.Butir.belongsTo(db.SubUnsur);
-    db.Butir.belongsTo(db.Aktivitas);
-    db.SubUnsur.hasMany(db.Butir);
-    db.Aktivitas.hasMany(db.Butir);
-
+    db.Butir.belongsTo(db.SubUnsur, {foreignKey: "SubUnsurId"});
+    db.Butir.belongsTo(db.Aktivitas, {foreignKey: "AktivitaId"});
     //relasi user dan avatar
-    db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId", as :"avatar"});
+    db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId"});
     //relasi untuk Act
-    db.Act.belongsTo(db.Butir, {foreignKey: "ButirId", as: "butir"});
-    db.Act.belongsTo(db.User, {foreignKey: "UserId", as: "user"});
-    db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId", as: "assignLetter"});
-    db.Act.hasMany(db.ActFile);
-    db.ActFile.belongsTo(db.Act, {foreignKey: "ActId", as: "act"});
-    db.User.hasMany(db.Act);
-    db.Butir.hasMany(db.Act);
+    db.Act.belongsTo(db.Butir, {foreignKey: "ButirId"});
+    db.Act.belongsTo(db.User, {foreignKey: "UserId"});
+    db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId"});
+    db.Act.hasMany(db.ActFile, {foreignKey: "ActId"});
+    //db.ActFile.belongsTo(db.Act, {foreignKey: "ActId"});
     //relasi AssignLetter
-    db.AssignLetter.belongsTo(db.User, {foreignKey:"CreatorId", as: "user"});
-    db.AssignLetter.hasMany(db.Act);
-    db.AssignFile.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId", as: "assignLetter"});
+    db.AssignLetter.belongsTo(db.User, {foreignKey:"CreatorId"});
+    db.AssignFile.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId"});
+    //relasi submission
+    db.Submission.belongsTo(db.User, {foreignKey: "OwnerId"});
+    db.Submission.hasMany(db.Act, {foreignKey: 'SubId'});
+    db.Submission.belongsToMany(db.AssignLetter, {through: 'SubAssign', timestamps: false });
+
     //sync model dengan database
     await sequelize.sync({alter: true});
 }

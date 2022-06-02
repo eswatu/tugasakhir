@@ -23,6 +23,7 @@ app.use('/api/butir', require('./permen/butir.controller'));
 app.use('/api/avatar', require('./Users/avatar.controller'));
 app.use('/api/assignLetter', require('./Acts/assignLetter.controller'));
 app.use('/api/assignfile', require('./Acts/assignFile.controller'));
+app.use('/api/subm', require('./Submission/submission.controller'))
 //global error handler
 app.use(errorHandler);
 

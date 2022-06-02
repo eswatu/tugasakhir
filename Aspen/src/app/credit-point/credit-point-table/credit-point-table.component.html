@@ -33,7 +33,7 @@
   <ng-container matColumnDef="Butir.namaButir">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Kegiatan</th>
     <td mat-cell *matCellDef="let job" >
-      {{job.butir.namaButir}}
+      {{job.Butir.namaButir}}
     </td>
   </ng-container>
 
@@ -46,7 +46,7 @@
   <!-- Lon Column -->
   <ng-container matColumnDef="Butir.jmlPoin">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai</th>
-    <td mat-cell *matCellDef="let job" > {{job.butir.jmlPoin}} </td>
+    <td mat-cell *matCellDef="let job" > {{job.Butir.jmlPoin}} </td>
   </ng-container>
 
   <!-- CountryName Column -->
@@ -64,12 +64,12 @@
     </ng-container>
 
     <!-- CountryName Column -->
-    <ng-container matColumnDef="aksi">
+    <ng-container matColumnDef="aksi" fxAlign="left">
       <th mat-header-cell *matHeaderCellDef >Opsi</th>
       <td mat-cell *matCellDef="let job" style="text-align:center">
         <button mat-raised-button (click)="uploadFile(job.id)">Upload Berkas</button>
         <button mat-raised-button (click)="openForm(job,job.actType)" [disabled]="job.isCalculated">Ubah Data</button>
-        <button mat-raised-button (click)="propose(job)" >Ajukan</button>
+        <button mat-raised-button (click)="propose(job)" *ngIf="job.proposeDate" >Ajukan</button>
       </td>
     </ng-container>
 

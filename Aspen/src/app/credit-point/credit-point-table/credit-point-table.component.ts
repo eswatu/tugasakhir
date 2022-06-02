@@ -18,6 +18,7 @@ import Swal from 'sweetalert2';
 })
 
 export class CreditPointTableComponent implements OnInit {
+  
   public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin', 'butirVolume', 'actNote', 'aksi'];
   public jobs: MatTableDataSource<act>;
 

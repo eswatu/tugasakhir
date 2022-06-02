@@ -98,7 +98,10 @@ async function _delete(id) {
     const act = await getActById(id);
     await act.destroy();
 }
-
+/*ini untuk cek yg status saja, pilihannya
+ - proposeDate: untuk cek status sudah pengajuan
+ - 
+*/
 // helper functions
 async function getActById(id) {
     const act = await db.Act.findByPk(id, {

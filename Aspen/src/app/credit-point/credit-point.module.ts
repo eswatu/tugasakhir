@@ -17,6 +17,8 @@ import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/materia
 import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SubmissionListComponent } from './submission-list/submission-list.component';
+import { SubmissionComponentComponent } from './submission-component/submission-component.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -38,6 +40,8 @@ export const MY_FORMATS = {
     AssignLetterFormComponent,
     AngkreTabComponent,
     FileUploadDialogComponent,
+    SubmissionListComponent,
+    SubmissionComponentComponent,
     ],
   imports: [
     CommonModule,
