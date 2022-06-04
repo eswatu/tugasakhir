@@ -10,7 +10,7 @@ export class SubmissionService extends BaseService {
   url;
 
   getData<ApiResult>(pageIndex: number, pageSize: number,
-    sortColumn: string, sortOrder: 'asc' | 'desc',
+    sortColumn: string, sortOrder: 'asc' | 'desc' | '',
     filterColumn: string, filterQuery: string): Observable<ApiResult> {
       var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())

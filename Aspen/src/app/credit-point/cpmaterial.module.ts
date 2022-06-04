@@ -20,10 +20,11 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import {MatCardModule} from '@angular/material/card';
 
 
 const modules = [
+  MatCardModule,
   MatExpansionModule,
   MatMenuModule,
   MatSelectModule,

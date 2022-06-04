@@ -1,4 +1,16 @@
-<button mat-flat-button color="primary">Buat Pengajuan Baru</button>
-<p>for information
-    <submission-component [submission]="item"></submission-component>
-</p>
+<button mat-flat-button color="primary" (click)="openForm()">Buat Pengajuan Baru</button>
+<div fxLayout="row" *ngIf="submissions">
+    <ul>
+        <li *ngFor="let item of submissions;">
+            <div fxLayout="column">
+                    <submission-component  [submission]="item"></submission-component>
+            </div>
+        </li>
+    </ul>
+</div>
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!submissions"
+    (page)="getData($event)"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 15, 30]"
+    showFirstLastButtons></mat-paginator>

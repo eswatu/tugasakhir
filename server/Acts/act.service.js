@@ -76,6 +76,8 @@ async function propose(id) {
             act.proposeDate = null;
         } else {
             act.proposeDate = new Date();
+            //ini ganti nanti ke user
+            act.SubId = 1;
         }
         await act.save();
         result = 'sukses mengajukan';

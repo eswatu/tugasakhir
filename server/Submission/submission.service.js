@@ -32,23 +32,19 @@ async function getByDate(ds, de) {
 
 async function createSubmission(params) {
     // validate
-    if (await db.Submission.findOne({
-        where: {
-            subName : params.subName,
-            subDate: params.subDate,
-            subScore: params.subScore,
-        }
-    })) {
-        throw 'Pengajuan sudah terdaftar';
-    }
     let result;
+    if (await db.Submission.findOne({
+        where: {isActive : true}
+    })) {
+        throw 'Sudah ada Pengajuan Aktif';
+    }
     // save Act
     await db.Submission.create({
         //required
         subName : params.subName,
         subDate: params.subDate,
-        dateApproved: params.dateApproved,
-        subScore: params.subScore,
+        dateApproved: params.dateApproved ?? null,
+        subScore: params.subScore ?? 0,
         subNote: params.subNote
     }).then(us => {
         result = us; 

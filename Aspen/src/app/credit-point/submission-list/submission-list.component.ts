@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SortDirection, MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { submission } from '@env/model/submission';
 import { ApiResult } from '@env/services/base.service';
 import { SubmissionService } from '@env/services/submission.service';
+import { SubmissionFormComponent } from '../submission-form/submission-form.component';
 
 @Component({
   selector: 'submission-list',
@@ -12,14 +14,11 @@ import { SubmissionService } from '@env/services/submission.service';
   styleUrls: ['./submission-list.component.css']
 })
 export class SubmissionListComponent implements OnInit {
-  //tabel
-  public displayedColumns: string[] = ['nomor', 'subName', 'subDate', 'subNote'];
-  public jobs: MatTableDataSource<submission>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
   public defaultSortColumn: string = "subDate";
-  public defaultSortOrder: SortDirection = 'act';
+  public defaultSortOrder :SortDirection = "asc";
 
   defaultFilterColumn: string = null;
   filterQuery: string = null;
@@ -30,8 +29,8 @@ export class SubmissionListComponent implements OnInit {
   //lokal
   submissions;
 
-  constructor(private subService: SubmissionService) {
-    
+  constructor(private subService: SubmissionService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -48,10 +47,10 @@ export class SubmissionListComponent implements OnInit {
     this.getData(pageEvent);
   }
   getData(event: PageEvent) {
-    var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
-    var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
-    var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
-    var filterQuery = (this.filterQuery) ? this.filterQuery : null;
+    let sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
+    let sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
+    let filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
+    let filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
     //use service
     this.subService.getData<ApiResult<submission>>(
@@ -61,7 +60,16 @@ export class SubmissionListComponent implements OnInit {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.submissions = new MatTableDataSource<submission>(result.data);
+        this.submissions = result.data;
       }, error => console.error(error));
+  }
+  openForm(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+        const dialogRef = this.dialog.open(SubmissionFormComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => this.loadData() );
   }
 }

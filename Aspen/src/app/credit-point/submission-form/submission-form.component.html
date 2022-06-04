@@ -1,0 +1,24 @@
+<form [formGroup]="formInput" (ngSubmit)="onSubmit()">
+    <mat-form-field fxLayout="column">
+        <mat-label>Nama / Nomor Pengajuan</mat-label>
+        <input formControlName="subName" id="subName" matInput placeholder="nomor pengajuan">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" fxLayout="column">
+        <mat-label>Tanggal Pengajuan</mat-label>
+        <input formControlName="subDate" id="subDate" matInput [matDatepicker]="picker">
+        <mat-hint>Tanggal Pengajuan (dd/MM/yyyy)</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxLayout="column">
+        <mat-label>Catatan</mat-label>
+        <input formControlName="subNote" id="subNote" matInput placeholder="Catatan Pengajuan">
+    </mat-form-field>
+
+    <div fxLayoutGap="12px">
+        <button type="submit" mat-raised-button color="primary" fxFlex="20" class="btn btn-success">Simpan</button>
+        <button type="cancel" mat-raised-button fxFlex="10" color="warn" (click)='closeDialog()'>Batal</button>
+    </div>
+</form>
