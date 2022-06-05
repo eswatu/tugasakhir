@@ -84,15 +84,16 @@ loadData(){
         });
         this.setJenjang(this.job.butir.levelReq);
         if (result.actMain) {
-          this.actMain = 1;
+          this.actMain = true;
         } else {
-          this.actMain = 0;
+          this.actMain = false;
         }
       }, error => console.error(error));
     //eo edit
     } else {
       //input baru
     this.formInput.patchValue(this.job.butir);
+    this.actMain = this.job.actMain;
     this.formInput.patchValue({actDate: new Date()});
   }
 }

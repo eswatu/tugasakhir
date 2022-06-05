@@ -18,7 +18,11 @@ module.exports = async function paginate(model, pageIndex, pageSize, sortColumn 
     
     if (filterQuery && filterColumn) {
         if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
+            if (typeof(parseInt(filterQuery)) == "number") {
+                options = { filterColumn: parseInt(filterQuery) };
+            } else {
             options = { filterColumn: filterQuery };
+            }
         }
     }
     let myOrder;

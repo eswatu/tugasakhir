@@ -23,7 +23,7 @@ async function getAll(req) {
 }
 
 async function getById(id) {
-    return await getActById(id);
+    return await getSubmissionById(id);
 }
 
 async function getByDate(ds, de) { 

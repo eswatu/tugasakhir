@@ -7,13 +7,14 @@ import { AppRoutingModule } from './AppRouting.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { LoginPageComponent } from './login/login-page/login-page.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
+import { ErrorInterceptor, JwtInterceptor } from './_helpers';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,9 @@ import { HttpClientModule } from "@angular/common/http";
     HttpClientModule
   ],
   providers: [
-    {provide: "BASE_URL", useValue: environment.apiUrl}
+    {provide: "BASE_URL", useValue: environment.apiUrl},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })

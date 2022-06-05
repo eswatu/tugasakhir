@@ -37,9 +37,9 @@ export class ActService extends BaseService {
   post<act>(item: act): Observable<any> {
     return this.http.post<act>(this.url, item);
   }
-  propose(item: any): Observable<any> {
-    var myUrl = this.url + 'propose/' + item.id;
-    return this.http.put(myUrl, item);
+  propose(id: number): Observable<any> {
+    var myUrl = this.url + 'propose/' + id;
+    return this.http.get(myUrl);
   }
   uploadFile(file: File, actId:string, notes: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

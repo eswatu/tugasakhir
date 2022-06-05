@@ -6,7 +6,7 @@ export interface act {
     butirId:number;
     butir: butirFull;
     butirVolume: number;
-    actMain:boolean;
+    actMain: boolean;
     actNote: string;
     userId:number;
     actDate:Date;

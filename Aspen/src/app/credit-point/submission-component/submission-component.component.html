@@ -1,12 +1,22 @@
 <mat-card>
-  <mat-card-title>{{submission.subName}}</mat-card-title>
-  <mat-card-subtitle>{{submission.subDate | date:'dd-MM-yyyy'}}</mat-card-subtitle>
+  <div fxLayout="row">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <mat-card-title>{{submission.subName}}</mat-card-title>
+      <mat-card-subtitle>{{submission.subDate | date:'dd-MM-yyyy'}}</mat-card-subtitle>
+    </div>
+    <span fxFlex></span>
+    <div fxLayout="column" fxLayoutAlign="center end">
+      <button mat-stroked-button color="accent" (click)="edit()">Ubah</button>
+    </div>
+  </div>
   <mat-card-content>
     <!-- konten ya-->
+    <ol>
+      <li *ngFor="let st of allAssignLetter">
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ getTitle(allAct,0)}}
+          {{ st}}
         </mat-panel-title>
         <mat-panel-description>
           Klik untuk lihat daftar Kegiatan
@@ -14,15 +24,15 @@
       </mat-expansion-panel-header>
       <!--isi, daftar kegiatan-->
       <ol>
-        <li *ngFor="let item of allAct[getTitle(allAct,0)]">
-          {{item[id]}} {{item[]}}
+        <li *ngFor="let item of allAct[st]">
+          {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}} sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total = {{ item.Butir.jmlPoin * item.butirVolume }}
         </li>
       </ol>
     </mat-expansion-panel>
-
+  </li>
+</ol>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>Ajukan</button>
-    <button mat-button>SHARE</button>
   </mat-card-actions>
 </mat-card>

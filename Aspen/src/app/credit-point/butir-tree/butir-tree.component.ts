@@ -130,6 +130,7 @@ setButir(id:number) {
           }
           this.act.butir = butirOut;
           this.act.butirId = butirOut.id;
+          this.act.actMain = (butirOut.Aktivita.kodeAkt === 'G') ? false : true;
           dialogConfig.data = { act: this.act };
 
           console.log("isi dari act form keluar: ");

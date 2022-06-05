@@ -69,7 +69,6 @@ async function createAct(params) {
 }
 async function propose(id) {
     let act = await getActById(id);
-    console.log('isi dari act ' + JSON.stringify(act));
     let result;
     if (act) {
         if (act.proposeDate) {

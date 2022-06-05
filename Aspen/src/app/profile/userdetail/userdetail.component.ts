@@ -2,7 +2,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { chpwd, user } from '@env/model/user';
+import { chpwd, User } from '@env/model/user';
 import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ export class UserdetailComponent implements OnInit {
   isEditing:boolean = false;
   toggleButtonValue : string; 
   userId;
-  userInfo: user;
+  userInfo: User;
   form : FormGroup;
   formPwd: FormGroup;
   formAvatar: FormControl;
@@ -58,7 +58,7 @@ export class UserdetailComponent implements OnInit {
   }
 
   loadData(){
-    this.userService.get<user>(1).subscribe(res => {
+    this.userService.get<User>(1).subscribe(res => {
       this.userInfo = res;
       this.form.patchValue(res);
       console.log('isi avatar id: ' + res.AvatarId);

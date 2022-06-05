@@ -1,5 +1,5 @@
 
-export interface user { 
+export interface User { 
     id: number;
     username:string;
     name: string;
@@ -7,6 +7,7 @@ export interface user {
     level: string;
     password: string;
     AvatarId: number;
+    token?: string;
 }
 
 export interface avatar {

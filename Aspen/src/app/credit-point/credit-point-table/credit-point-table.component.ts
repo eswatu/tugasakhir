@@ -79,13 +79,15 @@ export class CreditPointTableComponent implements OnInit {
     if (job) {
       dialogConfig.data = {  id: job.id, jenis: jenis };
       const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(() => this.loadData(null) );
     } else {
       dialogConfig.data = { jenis: jenis };
       const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(() => this.loadData(null) );
     }
   }
-  propose(job:act) {
-    this.actService.propose(job).subscribe(result => {
+  propose(id:number) {
+    this.actService.propose(id).subscribe(result => {
       Swal.fire({
         title: result,
         confirmButtonText: 'Okay'
@@ -96,6 +98,7 @@ export class CreditPointTableComponent implements OnInit {
       });
     }, error => console.error(error));
   }
+
   uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;

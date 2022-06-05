@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { submission } from '@env/model/submission';
 import { ActService } from '@env/services/act.service';
+import { SubmissionService } from '@env/services/submission.service';
+import { SubmissionFormComponent } from '../submission-form/submission-form.component';
 
 @Component({
   selector: 'submission-component',
@@ -10,12 +13,14 @@ import { ActService } from '@env/services/act.service';
 export class SubmissionComponentComponent implements OnInit {
   
   @Input() submission: submission;
-  allAct;
 
-  constructor(private actService: ActService) { }
+  allAct;
+  allAssignLetter;
+  constructor(private actService: ActService,
+    private subMService: SubmissionService,
+    public dialog: MatDialog) { }
 
   ngOnInit(){
-    console.log(this.submission);
     this.loadAll();
   }
   loadAll(){
@@ -23,8 +28,8 @@ export class SubmissionComponentComponent implements OnInit {
       .subscribe(result => {
         this.allAct = result['data'];
         this.allAct = this.groupItemBy(this.allAct,'AssignmentLetter.ltNumber');
+        this.allAssignLetter = this.getTitle(this.allAct);
         console.log(this.allAct);
-
       }, error => console.error(error));
   }
 
@@ -40,10 +45,19 @@ export class SubmissionComponentComponent implements OnInit {
     }
     return hash;
 }
-getTitle(obj: Object, index: number){
-  return Object.keys(obj)[index];
+getTitle(obj: Object){
+  return Object.keys(obj);
 }
-
+edit(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    dialogConfig.data = this.submission.id;
+        const dialogRef = this.dialog.open(SubmissionFormComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => this.loadAll() );
+}
 
 
 }

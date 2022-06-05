@@ -27,8 +27,8 @@ function authenticationSchema(req, res, next) {
 }
 function authenticate(req, res, next) { 
     userService.authenticate(req.body)
-        .then(user => res.json(user))
-        .catch(next);
+        .then(user => user ? res.json(user) : res.status(400).json({message:'kesalahan user/password tidak sesuai'}))
+        .catch(err => next(err));
 }
 function registerSchema(req, res, next) {
     const schema = Joi.object({
@@ -56,9 +56,16 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
+    const currentUser = req.user;
+    const id = parseInt(req.params.id);
+    //allow only admin untuk akses semua record
+    if (id !== currentUser.sub && currentUser.role !== "Admin") {
+        return res.status(401).json({message: 'Unauthorized'});
+    }
+
     userService.getById(req.params.id)
-        .then(user => res.json(user))
-        .catch(next);
+        .then(user => user ? res.json(user) : res.sendStatus(404))
+        .catch(err => next(err));
 }
 function changePassword(req, res, next) {
     userService.changepassword(req.body)
