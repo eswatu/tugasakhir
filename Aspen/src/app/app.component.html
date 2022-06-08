@@ -1,25 +1,25 @@
-<mat-toolbar color="primary" fxLayout="row">
-  <button  mat-button fxFlex *ngIf="isAdmin">
-    <mat-icon>business_center</mat-icon>
-    {{user.name}}
-  </button>
-
-  <button  mat-button fxFlex  [routerLink]="['']">
-    <mat-icon>dashboard</mat-icon>
-    Dashboard
-  </button>
-  <button  mat-button fxFlex routerLink="angkakredit">
-    <mat-icon>business_center</mat-icon>
-    Angka Kredit
-  </button>
-
-  <button  mat-button fxFlex routerLink="profile">
-    <mat-icon>badge</mat-icon>
-    Profil
-  </button>
-  <button mat-button fxFlex (click)="logout()">
-    <mat-icon>logout</mat-icon>
-    LogOut
-  </button>
+<mat-toolbar color="primary" fxLayout="row" *ngIf="isAuthorized">
+    <button  mat-button fxFlex *ngIf="isAdmin">
+      <mat-icon>business_center</mat-icon>
+      {{user.name}}
+    </button>
+  
+    <button  mat-button fxFlex  [routerLink]="['']">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </button>
+    <button  mat-button fxFlex routerLink="angkakredit">
+      <mat-icon>business_center</mat-icon>
+      Angka Kredit
+    </button>
+  
+    <button  mat-button fxFlex routerLink="profile">
+      <mat-icon>badge</mat-icon>
+      Profil
+    </button>
+    <button mat-button fxFlex (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      LogOut
+    </button>
 </mat-toolbar>
 <router-outlet></router-outlet>

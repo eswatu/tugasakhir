@@ -1,5 +1,5 @@
 const db = require('../_helpers/db');
-const paginate = require('../_helpers/pagination');
+const pagination = require('../_helpers/pagination');
 
 module.exports = {
     getAll,
@@ -11,7 +11,11 @@ module.exports = {
 };
 
 
-async function getAll(req) {
+async function getAll(q) {
+    const req = q.query;
+    const role = q.headers.userrole;
+    const uid = q.headers.userid;
+
     var pageIndex = req.pageIndex;
     var pageSize = req.pageSize;
     var sortColumn = req.sortColumn;
@@ -19,7 +23,11 @@ async function getAll(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Submission;
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    if (role === 'Admin') {
+        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    } else {
+        return await pagination.pageuser(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+    }
 }
 
 async function getById(id) {
@@ -30,14 +38,18 @@ async function getByDate(ds, de) {
     return await getSubmissionByDate(ds, de);
 }
 
-async function createSubmission(params) {
+async function createSubmission(req) {
+    const params = req.body;
+    const uid = req.headers.userid;
     // validate
     let result;
     if (await db.Submission.findOne({
-        where: {isActive : true}
+        where: {isActive : true,
+            UserId: uid
+        }
     })) {
-        throw 'Sudah ada Pengajuan Aktif';
-    }
+        result = 'Sudah ada pengajuan aktif';
+    } else {
     // save Act
     await db.Submission.create({
         //required
@@ -45,23 +57,32 @@ async function createSubmission(params) {
         subDate: params.subDate,
         dateApproved: params.dateApproved ?? null,
         subScore: params.subScore ?? 0,
-        subNote: params.subNote
+        subNote: params.subNote,
+        UserId: uid
     }).then(us => {
-        result = us; 
+        result = 'Berhasil membuat Pengajuan'; 
         console.log("Pengajuan " + us + "berhasil dibuat");
     });
+    }
     return result;
 }
 
-async function updateSubmission(id, params) {
+async function updateSubmission(id, params, headers) {
+    const userid = headers.userid;
+    const role = headers.userrole;
     const sub = await getSubmissionById(id);
-    // copy params to user and save
-    Object.assign(sub, params);
-    await sub.save();
-    return sub;
+    if (parseInt(userid) == sub.UserId || role === 'Admin') {
+        // copy params to user and save
+        Object.assign(sub, params);
+        await sub.save();
+        return 'Berhasil mengubah pengajuan';
+    } else {
+        return "anda tidak berhak melakukan perubahan";
+    }
 }
 
-async function _delete(id) {
+async function _delete(req) {
+    const id = req.params.id;
     const sub = await getSubmissionById(id);
     await sub.destroy();
 }

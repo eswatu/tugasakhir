@@ -8,8 +8,9 @@ function model(sequelize) {
         actNote: {type: DataTypes.STRING, allowNull: true},
         //bawah ini untuk server
         actMain: {type: DataTypes.BOOLEAN, allowNull: false},
-        isCalculated: { type: DataTypes.BOOLEAN, allowNull: false},
+        isProposed: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
         proposeDate:{type: DataTypes.DATE, allowNull: true},
+        isCalculated: { type: DataTypes.BOOLEAN, allowNull: false},
         calculatedDate: {type: DataTypes.DATE, allowNull: true},
         actDate: {type:DataTypes.DATE, allowNull: true}
         //besok tambahin file upload

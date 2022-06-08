@@ -128,7 +128,7 @@ setButir(id:number) {
           if (!this.act) {
             this.act = <act>{};
           }
-          this.act.butir = butirOut;
+          this.act.Butir = butirOut;
           this.act.butirId = butirOut.id;
           this.act.actMain = (butirOut.Aktivita.kodeAkt === 'G') ? false : true;
           dialogConfig.data = { act: this.act };

@@ -8,13 +8,13 @@
 
     <mat-form-field fxLayout="column">
         <mat-label>Nama Kegiatan</mat-label>
-        <input formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true">
+        <textarea formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true" rows=2></textarea>
         <mat-hint>Otomatis</mat-hint>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
         <mat-label>Tingkat Kegiatan</mat-label>
-        <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true">
+        <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true" >
         <mat-hint>Otomatis</mat-hint>
     </mat-form-field>
 

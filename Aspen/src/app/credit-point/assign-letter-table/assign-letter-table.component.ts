@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
@@ -18,7 +18,8 @@ export class AssignLetterTableComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi'];
   public asgnLtrs: MatTableDataSource<assignLetter>;
 
-
+  @Input() authUserId: number;
+  
   defaultPageIndex: number = 0;
   defaultPageSize: number = 5;
   public defaultSortColumn: string = "id";
@@ -26,6 +27,7 @@ export class AssignLetterTableComponent implements OnInit {
 
   defaultFilterColumn: string = null;
   filterQuery: string = null;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -43,6 +45,9 @@ export class AssignLetterTableComponent implements OnInit {
       this.filterQuery = q;
     }
     this.getData(pageEvent);
+  }
+  editable(uid:number){
+    return this.authUserId == uid;
   }
   getData(event: PageEvent) { 
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;

@@ -30,13 +30,13 @@ function createSchema(req, res, next) {
     validateRequest(req, next, schema);
 }
 function create(req, res, next) { 
-    actService.createAct(req.body)
+    actService.createAct(req)
         .then(() => res.json({ message: "Sukses Input Kegiatan" }))
         .catch(next);
 }
 
 function getAll(req, res, next) {
-    actService.getAll(req.query)
+    actService.getAll(req)
         .then(acts => res.json(acts))
         .catch(next);
 }

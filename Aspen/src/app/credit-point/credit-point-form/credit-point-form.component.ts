@@ -75,14 +75,14 @@ loadData(){
     //edit mode
     this.actService.get<act>(this.id).subscribe(result => {
       this.job = result;
-      this.formInput.patchValue(this.job.butir);
+      this.formInput.patchValue(this.job.Butir);
       this.formInput.patchValue({
         actDate: result.actDate,
         butirVolume: result.butirVolume,
         actNote: result.actNote,
         AssignLetterId: result.AssignLetterId
         });
-        this.setJenjang(this.job.butir.levelReq);
+        this.setJenjang(this.job.Butir.levelReq);
         if (result.actMain) {
           this.actMain = true;
         } else {
@@ -92,7 +92,7 @@ loadData(){
     //eo edit
     } else {
       //input baru
-    this.formInput.patchValue(this.job.butir);
+    this.formInput.patchValue(this.job.Butir);
     this.actMain = this.job.actMain;
     this.formInput.patchValue({actDate: new Date()});
   }

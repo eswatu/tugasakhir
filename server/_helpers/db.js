@@ -40,10 +40,10 @@ async function initialize() {
     db.Act.hasMany(db.ActFile, {foreignKey: "ActId"});
     //db.ActFile.belongsTo(db.Act, {foreignKey: "ActId"});
     //relasi AssignLetter
-    db.AssignLetter.belongsTo(db.User, {foreignKey:"CreatorId"});
+    db.AssignLetter.belongsTo(db.User, {foreignKey:"UserId"});
     db.AssignFile.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId"});
     //relasi submission
-    db.Submission.belongsTo(db.User, {foreignKey: "OwnerId"});
+    db.Submission.belongsTo(db.User, {foreignKey: "UserId"});
     db.Submission.hasMany(db.Act, {foreignKey: 'SubId'});
     db.Submission.belongsToMany(db.AssignLetter, {through: 'SubAssign', timestamps: false });
 

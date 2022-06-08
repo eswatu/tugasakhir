@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '@env/services';
 
 @Component({
   selector: 'app-angkre-tab',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./angkre-tab.component.css']
 })
 export class AngkreTabComponent implements OnInit {
-
-  constructor() { }
+  uid;
+  constructor(private authSrvc: AuthenticationService) {
+    this.authSrvc.user.subscribe(x => this.uid = x.id);
+  }
 
   ngOnInit(): void {
   }

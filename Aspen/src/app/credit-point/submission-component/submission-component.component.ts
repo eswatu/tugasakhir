@@ -24,7 +24,7 @@ export class SubmissionComponentComponent implements OnInit {
     this.loadAll();
   }
   loadAll(){
-    this.actService.getData(0,1000,'actDate','desc','SubId','1')
+    this.actService.getData(0,1000,'actDate','desc','isProposed', 'true')
       .subscribe(result => {
         this.allAct = result['data'];
         this.allAct = this.groupItemBy(this.allAct,'AssignmentLetter.ltNumber');

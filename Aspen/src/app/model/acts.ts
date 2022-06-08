@@ -4,7 +4,7 @@ import { butirFull } from "./permen";
 export interface act {
     id: number;
     butirId:number;
-    butir: butirFull;
+    Butir: butirFull;
     butirVolume: number;
     actMain: boolean;
     actNote: string;
@@ -12,6 +12,7 @@ export interface act {
     actDate:Date;
     isCalculated: boolean;
     calculatedDate: Date;
+    isProposed: boolean;
     proposeDate:Date;
     createdAt: Date;
     updatedAt: Date;

@@ -25,14 +25,14 @@ function createSchema(req, res, next) {
     validateRequest(req, next, schema);
 }
 function create(req, res, next) { 
-    subService.createSubmission(req.body)
-        .then(() => res.json({ message: "Sukses Membuat Pengajuan" }))
+    subService.createSubmission(req)
+        .then(result => res.json(result))
         .catch(next);
 }
 
 function getAll(req, res, next) {
-    subService.getAll(req.query)
-        .then(acts => res.json(acts))
+    subService.getAll(req)
+        .then(subs => res.json(subs))
         .catch(next);
 }
 
@@ -53,7 +53,7 @@ function updateSchema(req, res, next) {
 }
 
 function update(req, res, next) {
-    subService.updateSubmission(req.params.id, req.body)
+    subService.updateSubmission(req.params.id, req.body, req.headers)
         .then(() => res.json({ message: 'Pengajuan Berhasil Diubah' }))
         .catch(next);
 }

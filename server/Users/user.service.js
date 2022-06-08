@@ -20,7 +20,7 @@ async function authenticate({ username, password }) {
         throw 'Username atau password tidak sesuai';
     }
     //success
-    const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
+    const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '1d' });
     return { ...omitHash(user.get()), token };
 }
 
@@ -105,6 +105,6 @@ async function getUser(id) {
 }
 
 function omitHash(user) { 
-    const { hash, ...userWithoutHash } = user;
-    return userWithoutHash;
+    const { passwordHash, ...userWithoutPasswordHash } = user;
+    return userWithoutPasswordHash;
 }

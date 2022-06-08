@@ -28,7 +28,7 @@ function createSchema(req, res, next) {
     validateRequest(req, next, schema);
 }
 function createAssignLetter(req, res, next) {
-    alservice.createAL(req.body)
+    alservice.createAL(req)
         .then(() => res.json({message : "Sukses menambahkan data"}))
         .catch(next);
 }
@@ -43,7 +43,7 @@ function getByIdAL(req,res,next) {
         .catch(next);
 }
 function updateAL(req, res, next) {
-    alservice.updateAL(req.params.id, req.body)
+    alservice.updateAL(req.params.id, req.body, req.headers)
         .then(al => res.json(al))
         .catch(next);
 }

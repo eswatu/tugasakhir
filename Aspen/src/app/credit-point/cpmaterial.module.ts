@@ -21,9 +21,14 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 
 
 const modules = [
+  MatToolbarModule,
+  MatProgressBarModule,
   MatCardModule,
   MatExpansionModule,
   MatMenuModule,

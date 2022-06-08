@@ -13,13 +13,15 @@ export class AppComponent {
 
   user: User;
   
-  constructor(private authenticationService: AuthenticationService,
-    private userService: UserService) {
+  constructor(private authenticationService: AuthenticationService) {
       this.authenticationService.user.subscribe(x => this.user = x);
   }
 
   get isAdmin() {
       return this.user && this.user.role === "Admin";
+  }
+  get isAuthorized() {
+    return this.user;
   }
 
   logout() {
@@ -27,8 +29,6 @@ export class AppComponent {
   }
   ngOnInit() {
     this.loading = true;
-    this.userService.get(this.user.id).pipe(first()).subscribe(user => {
-        this.loading = false;
-    });
+    console.log(this.user);
 }
 }

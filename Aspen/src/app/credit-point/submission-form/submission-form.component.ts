@@ -24,7 +24,7 @@ export class SubmissionFormComponent implements OnInit {
       //buat form
       this.formInput = fb.group({
         subName: ['', Validators.required],
-        subDate: ['', Validators.required],
+        subDate: [new Date(), Validators.required],
         subNote: ['', Validators.required]
       });
      }
@@ -59,7 +59,7 @@ export class SubmissionFormComponent implements OnInit {
         this.submission.subNote = this.formInput.get('subNote').value;
         this.subService.post(this.submission).subscribe(res => {
           Swal.fire(
-            res.message
+            res
           )
         }, error => {
           console.error(error);
@@ -70,6 +70,7 @@ export class SubmissionFormComponent implements OnInit {
           }
           )
         });
+        this.closeDialog();
     }
   }
 }

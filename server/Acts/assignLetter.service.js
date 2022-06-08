@@ -1,7 +1,7 @@
 const config = require('../config.json');
 const { Sequelize } = require('../models');
 const db = require('../_helpers/db');
-const paginate = require('../_helpers/pagination');
+const pagination = require('../_helpers/pagination');
 
 module.exports = {
 getAllAL,
@@ -19,14 +19,14 @@ async function getAllAL(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.AssignLetter;
-    console.log(pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
+    return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 async function getALById(id) {
     return await db.AssignLetter.findByPk(id);
 }
-async function createAL(body) {
-    console.log(body);
+async function createAL(req) {
+    const body = req.body;
+    const uid = req.headers.userid;
     let result;
     if (await db.AssignLetter.findOne({
         where: {  ltNumber: body.ltNumber,
@@ -43,19 +43,24 @@ async function createAL(body) {
             ltNote: body.ltNote,
             createdAt: new Date(),
             updatedAt: new Date(),
-            ltActive: body.ltActive
+            ltActive: body.ltActive,
+            UserId: uid
         }).then(r => {
             result = r;
         });
         return result;
     }
 }
-async function updateAL(id, body) {
+async function updateAL(id, body, headers) {
     const st = await db.AssignLetter.findByPk(id);
-    body.updatedAt = new Date();
-    Object.assign(st, body);
-    await st.save();
-    return st;
+    if (headers.userrole === "Admin" || st.UserId == headers.userid) {
+        body.updatedAt = new Date();
+        Object.assign(st, body);
+        await st.save();
+        return st;
+    } else {
+        return 'anda tidak berhak melakukan edit';
+    }
 }
 async function deleteAL(id) {
     let st = await db.AssignLetter.findByPk(id);

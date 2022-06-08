@@ -1,7 +1,7 @@
 const config = require('../config.json');
 const {Sequelize} = require('../models');
 const db = require('../_helpers/db');
-const paginate = require('../_helpers/pagination');
+const pagination = require('../_helpers/pagination');
 
 
 module.exports = {
@@ -15,7 +15,11 @@ module.exports = {
 };
 
 
-async function getAll(req) {
+async function getAll(rq) {
+    const req = rq.query;
+    const role = rq.headers.userrole;
+    const uid = parseInt(rq.headers.userid);
+
     var pageIndex = req.pageIndex;
     var pageSize = req.pageSize;
     var sortColumn = req.sortColumn;
@@ -23,7 +27,11 @@ async function getAll(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Act;
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    if (role === "Admin") {
+        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    } else if (role === "User") {
+        return await pagination.pageuser(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+    }
 }
 
 async function getById(id) {
@@ -33,11 +41,13 @@ async function getByDate(ds, de) {
     return await getActByDate(ds, de);
 }
 
-async function createAct(params) {
+async function createAct(req) {
+    const params = req.body;
+    const uid = parseInt(req.headers.userid);
     // validate
     if (await db.Act.findOne({
         where: {
-            UserId : params.userId,
+            UserId : uid,
             ButirId: params.butirId,
             butirVolume: params.butirVolume,
             actDate: params.actDate,
@@ -49,7 +59,7 @@ async function createAct(params) {
     // save Act
     await db.Act.create({
         //required
-        UserId : params.userId,
+        UserId : uid,
         ButirId: params.butirId,
         butirVolume: params.butirVolume,
         actDate: params.actDate,
@@ -73,8 +83,10 @@ async function propose(id) {
     if (act) {
         if (act.proposeDate) {
             act.proposeDate = null;
+            act.isProposed = false;
         } else {
             act.proposeDate = new Date();
+            act.isProposed = true;
             //ini ganti nanti ke user
             act.SubId = 1;
         }
