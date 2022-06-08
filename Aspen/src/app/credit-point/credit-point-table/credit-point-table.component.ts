@@ -67,6 +67,7 @@ export class CreditPointTableComponent implements OnInit {
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
         this.jobs = new MatTableDataSource<act>(result.data);
+        console.log(result);
       }, error => console.error(error));
   }
   

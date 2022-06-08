@@ -1,10 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { ShowHideStyleBuilder } from '@angular/flex-layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { assignLetter } from '@env/model/acts';
 import { AssignLetterService } from '@env/services/assign-letter.service';
-import * as moment from 'moment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -33,7 +31,7 @@ export class AssignLetterFormComponent implements OnInit {
       }
       this.formInput = fb.group({
         ltNumber: ['', Validators.required],
-        ltDate: ['', Validators.required],
+        ltDate: [new Date(), Validators.required],
         ltShare: [this.shared],
         ltDateStart: ['', Validators.required],
         ltDateEnd: ['', Validators.required],

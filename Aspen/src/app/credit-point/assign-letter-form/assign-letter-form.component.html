@@ -36,7 +36,7 @@
             <div fxLayoutGap="12px">
                 <button type="submit" mat-raised-button color="primary" 
                  fxFlex="20"
-                class="btn btn-success" >Simpan</button>
+                class="btn btn-success" [disabled]="formInput.invalid" [hidden]="formInput.invalid">Simpan</button>
             
                 <button type="cancel" mat-raised-button fxFlex="10" color="warn"(click)='closeDialog()' >Batal</button>
             </div>

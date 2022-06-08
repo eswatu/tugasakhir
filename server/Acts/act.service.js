@@ -1,7 +1,6 @@
-const config = require('../config.json');
-const {Sequelize} = require('../models');
 const db = require('../_helpers/db');
-const pagination = require('../_helpers/pagination');
+const subService = require('../Submission/submission.service');
+const paginate = require('../_helpers/pagination');
 
 
 module.exports = {
@@ -14,11 +13,10 @@ module.exports = {
     deleteAct: _delete
 };
 
-
 async function getAll(rq) {
     const req = rq.query;
     const role = rq.headers.userrole;
-    const uid = parseInt(rq.headers.userid);
+    const uid = parseInt(rq.headers.userId);
 
     var pageIndex = req.pageIndex;
     var pageSize = req.pageSize;
@@ -28,9 +26,9 @@ async function getAll(rq) {
     var filterQuery = req.filterQuery;
     var model = db.Act;
     if (role === "Admin") {
-        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else if (role === "User") {
-        return await pagination.pageuser(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
     }
 }
 
@@ -79,8 +77,9 @@ async function createAct(req) {
 }
 async function propose(id) {
     let act = await getActById(id);
+    let sub = await subService.getSubByUserId(act.UserId);
     let result;
-    if (act) {
+    if (act && sub) {
         if (act.proposeDate) {
             act.proposeDate = null;
             act.isProposed = false;
@@ -88,12 +87,12 @@ async function propose(id) {
             act.proposeDate = new Date();
             act.isProposed = true;
             //ini ganti nanti ke user
-            act.SubId = 1;
+            act.SubId = sub.UserId;
         }
         await act.save();
         result = 'sukses mengajukan';
     } else {
-        result = 'gagal mengajukan';
+        result = 'gagal mengajukan. tidak ada pengajuan';
     }
     return result;
 }

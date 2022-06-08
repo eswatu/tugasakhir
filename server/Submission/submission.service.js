@@ -1,9 +1,10 @@
 const db = require('../_helpers/db');
-const pagination = require('../_helpers/pagination');
+const paginate = require('../_helpers/pagination');
 
 module.exports = {
     getAll,
     getById,
+    getSubByUserId,
     getByDate,
     createSubmission,
     updateSubmission,
@@ -24,16 +25,23 @@ async function getAll(q) {
     var filterQuery = req.filterQuery;
     var model = db.Submission;
     if (role === 'Admin') {
-        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else {
-        return await pagination.pageuser(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
     }
 }
 
 async function getById(id) {
     return await getSubmissionById(id);
 }
-
+async function getSubByUserId(id) {
+    const sub = await db.Submission.findOne({
+        where: {
+            UserId: id
+        }
+    });
+    return sub ?? null;
+}
 async function getByDate(ds, de) { 
     return await getSubmissionByDate(ds, de);
 }
