@@ -10,6 +10,7 @@ import { act } from '@env/model/acts';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 import Swal from 'sweetalert2';
+import { AuthenticationService } from '@env/services';
 
 @Component({
   selector: 'credit-point-table',
@@ -18,8 +19,9 @@ import Swal from 'sweetalert2';
 })
 
 export class CreditPointTableComponent implements OnInit {
-  
-  public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin', 'butirVolume', 'actNote', 'aksi'];
+  activeSubmission
+
+  public displayedColumns: string[];
   public jobs: MatTableDataSource<act>;
 
   defaultPageIndex: number = 0;
@@ -32,11 +34,21 @@ export class CreditPointTableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  isAdmin;
   //  filterTextChanged: Subject<string> = new Subject<string>();
   constructor(
     private actService: ActService,
+    private authService: AuthenticationService,
     public dialog: MatDialog) {
+      this.authService.user.subscribe(x => {
+        this.isAdmin = ( x.role === "Admin") ? true : false ;
+
+        if (this.isAdmin){
+        this.displayedColumns = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'user', 'aksi'];
+        } else {
+          this.displayedColumns = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -87,6 +99,7 @@ export class CreditPointTableComponent implements OnInit {
       dialogRef.afterClosed().subscribe(() => this.loadData(null) );
     }
   }
+  
   propose(id:number) {
     this.actService.propose(id).subscribe(result => {
       Swal.fire({

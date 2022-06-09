@@ -1,5 +1,6 @@
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { act } from '@env/model';
 import { fileInfo } from '@env/model/fileType';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
@@ -29,6 +30,10 @@ export class ActService extends BaseService {
   get<act>(id: number): Observable<act> {
     var myUrl = this.url + id;
     return this.http.get<act>(myUrl);
+  }
+  getBySub(id): Observable<act[]> {
+    var myUrl = this.url + 'sub/' + id;
+    return this.http.get<act[]>(myUrl);
   }
   put<act>(item: any): Observable<any> {
     var myUrl = this.url + item.id;

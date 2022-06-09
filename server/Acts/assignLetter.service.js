@@ -1,7 +1,5 @@
-const config = require('../config.json');
-const { Sequelize } = require('../models');
 const db = require('../_helpers/db');
-const paginate = require('../_helpers/pagination');
+const pagination = require('../_helpers/pagination');
 
 module.exports = {
 getAllAL,
@@ -19,7 +17,8 @@ async function getAllAL(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.AssignLetter;
-    return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
+    
+    return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 async function getALById(id) {
     return await db.AssignLetter.findByPk(id);

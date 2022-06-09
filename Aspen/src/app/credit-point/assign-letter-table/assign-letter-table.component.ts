@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { assignLetter } from '@env/model/acts';
+import { AuthenticationService } from '@env/services';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import { ApiResult } from '@env/services/base.service';
 import { AssignLetterFormComponent } from '../assign-letter-form/assign-letter-form.component';
@@ -15,10 +16,11 @@ import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dia
   styleUrls: ['./assign-letter-table.component.css']
 })
 export class AssignLetterTableComponent implements OnInit {
-  public displayedColumns: string[] = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi'];
+  public displayedColumns;
   public asgnLtrs: MatTableDataSource<assignLetter>;
 
-  @Input() authUserId: number;
+  authUserId: number;
+  isAdmin: boolean;
   
   defaultPageIndex: number = 0;
   defaultPageSize: number = 5;
@@ -32,7 +34,19 @@ export class AssignLetterTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private alService:AssignLetterService,
-    public dialog: MatDialog) { }
+    private authService: AuthenticationService,
+    public dialog: MatDialog) {
+      this.authService.user.subscribe(u => {
+        this.authUserId = u.id;
+        this.isAdmin = ( u.role === "Admin") ? true : false;
+
+        if (this.isAdmin) {
+            this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi', 'user'];
+         } else {
+           this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi']
+         }
+      });
+    }
 
   ngOnInit(): void {
     this.loadData(null);

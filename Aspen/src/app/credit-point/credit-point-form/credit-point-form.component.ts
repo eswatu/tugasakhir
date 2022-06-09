@@ -137,11 +137,10 @@ createJob() {
       this.actService.post<act>(this.job).subscribe(
         result => {
           if (result) {
-            Swal.fire(result.message);
+            Swal.fire(result.message).then(() => this.closeDialog());
             }
         }, error => console.error(error));
     }
-    this.closeDialog();
   }
 
   closeDialog(){

@@ -1,9 +1,4 @@
 <mat-toolbar color="primary" fxLayout="row" *ngIf="isAuthorized">
-    <button  mat-button fxFlex *ngIf="isAdmin">
-      <mat-icon>business_center</mat-icon>
-      {{user.name}}
-    </button>
-  
     <button  mat-button fxFlex  [routerLink]="['']">
       <mat-icon>dashboard</mat-icon>
       Dashboard
@@ -16,6 +11,9 @@
     <button  mat-button fxFlex routerLink="profile">
       <mat-icon>badge</mat-icon>
       Profil
+    </button>
+    <button mat-button>
+      {{user.name}}
     </button>
     <button mat-button fxFlex (click)="logout()">
       <mat-icon>logout</mat-icon>

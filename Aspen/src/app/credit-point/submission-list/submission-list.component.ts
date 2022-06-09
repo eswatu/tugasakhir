@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SortDirection, MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { submission } from '@env/model/submission';
+import { AuthenticationService } from '@env/services';
 import { ApiResult } from '@env/services/base.service';
 import { SubmissionService } from '@env/services/submission.service';
 import { SubmissionFormComponent } from '../submission-form/submission-form.component';
@@ -14,7 +15,7 @@ import { SubmissionFormComponent } from '../submission-form/submission-form.comp
   styleUrls: ['./submission-list.component.css']
 })
 export class SubmissionListComponent implements OnInit {
-
+  user;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
   public defaultSortColumn: string = "subDate";
@@ -28,9 +29,14 @@ export class SubmissionListComponent implements OnInit {
 
   //lokal
   submissions;
-
-  constructor(private subService: SubmissionService,
+  adminstatus;
+  constructor(private authService: AuthenticationService,
+    private subService: SubmissionService,
     public dialog: MatDialog) {
+      this.authService.user.subscribe( x => {
+        this.user = x;
+        this.adminstatus = (x.role === "Admin") ? true : false;
+      });
   }
 
   ngOnInit(): void {

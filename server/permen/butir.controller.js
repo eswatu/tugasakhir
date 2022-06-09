@@ -4,11 +4,11 @@ const Joi = require('joi');
 const butirService = require('./butir.service');
 const authorize = require('../_middleware/authorize');
 //routes
-router.get('/', getAll);
-router.get('/jenis/:jenis/forLevel/:level', getByLevel);
-router.get('/SUBName/:id', getSubNById);
-router.get('/AKName/:id', getAktNameId);
-router.get('/:id', getById);
+router.get('/', authorize(), getAll);
+router.get('/jenis/:jenis/forLevel/:level',authorize(),  getByLevel);
+router.get('/SUBName/:id',authorize(),  getSubNById);
+router.get('/AKName/:id',authorize(),  getAktNameId);
+router.get('/:id', authorize(), getById);
 
 module.exports = router;
 

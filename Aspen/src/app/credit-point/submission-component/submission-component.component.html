@@ -3,6 +3,7 @@
     <div fxLayout="column" fxLayoutAlign="center start">
       <mat-card-title>{{submission.subName}}</mat-card-title>
       <mat-card-subtitle>{{submission.subDate | date:'dd-MM-yyyy'}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="isAdmin" color="yellow">{{submission.User.name}}</mat-card-subtitle>
     </div>
     <span fxFlex></span>
     <div fxLayout="column" fxLayoutAlign="center end">
@@ -16,7 +17,7 @@
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ st}}
+          {{st}}
         </mat-panel-title>
         <mat-panel-description>
           Klik untuk lihat daftar Kegiatan

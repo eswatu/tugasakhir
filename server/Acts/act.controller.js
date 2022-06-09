@@ -6,12 +6,13 @@ const actService = require('./act.service');
 const authorize = require('../_middleware/authorize');
 
 //routes
-router.post('/', createSchema, create);
-router.get('/', getAll);
-router.get('/:id', getById);
-router.put('/:id', updateSchema, update);
-router.get('/propose/:id', propose);
-router.delete('/:id',_delete);
+router.post('/', authorize(), createSchema, create);
+router.get('/', authorize(), getAll);
+router.get('/:id', authorize(), getById);
+router.put('/:id', authorize(), updateSchema, update);
+router.get('/propose/:id', authorize(), propose);
+router.delete('/:id', authorize(), _delete);
+router.get('/sub/:id', authorize(), getBySubId);
 
 module.exports = router;
 
@@ -47,7 +48,7 @@ function getById(req, res, next) {
         .catch(next);
 }
 function propose(req, res, next) {
-    actService.propose(req.params.id)
+    actService.propose(req)
     .then(result => res.json(result))
     .catch(next);
 }
@@ -73,6 +74,11 @@ function _delete(req, res, next) {
     actService.delete(req.params.id)
         .then(() => res.json({ message: 'Kegiatan Sudah Terhapus' }))
         .catch(next);
+}
+function getBySubId(req, res, next){
+    actService.getActBySubId(req.params.id)
+    .then(result => res.json(result))
+    .catch(next);
 }
 
 /*

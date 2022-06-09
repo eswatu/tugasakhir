@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { chpwd, User } from '@env/model/user';
+import { AuthenticationService } from '@env/services';
 import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
 import { Observable } from 'rxjs';
@@ -14,6 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./userdetail.component.css']
 })
 export class UserdetailComponent implements OnInit {
+
   isEditing:boolean = false;
   toggleButtonValue : string; 
   userId;
@@ -32,8 +34,14 @@ export class UserdetailComponent implements OnInit {
   fileInfos?: Observable<any>;
   
   constructor(private userService: UserService,
+    private authService: AuthenticationService,
     private sanitizer: DomSanitizer,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {
+      this.authService.user.subscribe(x => {
+        this.userInfo = x;
+        this.userId = x.id;
+      });
+    }
 
   ngOnInit(){
 
@@ -44,6 +52,7 @@ export class UserdetailComponent implements OnInit {
       name    : [''],
       level   : [''],
       role    : [''],
+      baseAngkre: ['']
     });
     //untuk password
     this.formPwd = this.fb.group({
@@ -58,20 +67,17 @@ export class UserdetailComponent implements OnInit {
   }
 
   loadData(){
-    this.userService.get<User>(1).subscribe(res => {
-      this.userInfo = res;
-      this.form.patchValue(res);
-      console.log('isi avatar id: ' + res.AvatarId);
-      if (res.AvatarId){
-        this.userService.downImage(res.AvatarId)
+      this.form.patchValue(this.userInfo);
+
+      if (this.userInfo.AvatarId){
+        this.userService.downImage(this.userInfo.AvatarId)
         .subscribe((img) => {
           let ftype = img['typename'];
           this.pictureImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:${ftype};base64,` + img['data']);
-          });
+          }, error => console.error(error));
       }
-  }, error => console.error(error));
   }
-  
+
   toggleEdit(){
     this.isEditing = !this.isEditing;
     this.toggleButtonValue = this.isEditing ? 'Stop Edit' : 'Edit Mode';
@@ -85,7 +91,7 @@ export class UserdetailComponent implements OnInit {
       const file: File | null = this.selectedFiles.item(0);
       if (file) {
         this.currentFile = file;
-        this.userService.uploadAva(this.currentFile, "1").subscribe({
+        this.userService.uploadAva(this.currentFile, this.userId).subscribe({
           next: (event: any) => {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
@@ -110,7 +116,7 @@ export class UserdetailComponent implements OnInit {
   }
   changePassword() {
     let npwd = <chpwd>{
-      id: 1,
+      id: this.userId,
       oldpwd: this.formPwd.get('oldpwd').value,
       newpwd: this.formPwd.get('newPwd').value
     };

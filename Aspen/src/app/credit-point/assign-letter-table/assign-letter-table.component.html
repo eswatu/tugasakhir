@@ -56,7 +56,7 @@
       <td mat-cell *matCellDef="let al" style="text-align:center">{{al.ltNote ?? '-'}}
       </td>
     </ng-container>
-
+    
     <!-- CountryName Column -->
     <ng-container matColumnDef="aksi">
       <th mat-header-cell *matHeaderCellDef>Opsi</th>
@@ -64,6 +64,11 @@
         <button mat-raised-button (click)="uploadFile(al.id)" *ngIf="editable(al.UserId)">Upload Berkas {{al.assignFileId}}</button>
         <button mat-raised-button [disabled]="al.isCalculated" (click)="openForm(al)" *ngIf="editable(al.UserId)">Ubah Data</button>
       </td>
+    </ng-container>
+    <!-- Pembuat? -->
+    <ng-container matColumnDef="user" *ngIf="isAdmin">
+      <th mat-header-cell *matHeaderCellDef>Pembuat Surat</th>
+      <td mat-cell *matCellDef="let al" > {{al.User.name}}</td>
     </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -9,7 +9,8 @@ function model(sequelize) {
         dateApproved: {type: DataTypes.DATE, allowNull: true},
         subScore: {type: DataTypes.INTEGER, allowNull: true},
         subNote: {type: DataTypes.STRING, allowNull: true},
-        isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true}
+        isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true},
+        isSubmitted: {type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false}
     };
     return sequelize.define('Submission', attributes);
 }

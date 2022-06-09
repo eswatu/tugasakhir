@@ -20,7 +20,6 @@
     <div fxLayout="column" *ngIf="!isEditing">
         <form [formGroup]="form">
             <mat-form-field fxLayout="column" appearance="fill">
-                <mat-label>Username</mat-label>
                 <input formControlName="username" id="username" matInput>
                 <mat-hint>Username</mat-hint>
             </mat-form-field>
@@ -35,6 +34,10 @@
             <mat-form-field fxLayout="row">
                 <mat-hint>Kewenangan</mat-hint>
                 <input formControlName="role" id="role" matInput>
+            </mat-form-field>
+            <mat-form-field fxLayout="row">
+                <mat-hint>Angka Kredit</mat-hint>
+                <input formControlName="baseAngkre" id="baseAngkre" matInput>
             </mat-form-field>
         </form>
     </div>

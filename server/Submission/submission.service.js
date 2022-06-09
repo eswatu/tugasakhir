@@ -1,5 +1,5 @@
 const db = require('../_helpers/db');
-const paginate = require('../_helpers/pagination');
+const pagination = require('../_helpers/pagination');
 
 module.exports = {
     getAll,
@@ -8,14 +8,15 @@ module.exports = {
     getByDate,
     createSubmission,
     updateSubmission,
-    deleteAct: _delete
+    deleteAct: _delete,
+    getActiveSubmission
 };
 
 
 async function getAll(q) {
     const req = q.query;
     const role = q.headers.userrole;
-    const uid = q.headers.userid;
+    let  uid = parseInt(q.headers.userid);
 
     var pageIndex = req.pageIndex;
     var pageSize = req.pageSize;
@@ -24,10 +25,11 @@ async function getAll(q) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Submission;
-    if (role === 'Admin') {
-        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    
+    if (role === "Admin") {
+        return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else {
-        return await paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
     }
 }
 
@@ -103,9 +105,33 @@ async function getSubmissionById(id) {
     if (!sub) throw 'Pengajuan tidak ditemukan';
     return sub;
 }
+
 async function getSubmissionByDate(ds,de) {
     const sub = await db.Submission.findAll({ where: { createdAt: q >= ds & q <= de}});
     if (!sub) throw 'Pengajuan tidak ditemukan';
     return sub;
+}
+async function getActiveSubmission(userId) {
+    const sub = await db.Submission.findOne({where:
+        { UserId: userId,
+        isActive: true
+        }});
+    return sub;
+}
+async function submitSub(id) {
+    const sub = getSubmissionById(id);
+    if (sub) {
+        sub.isSubmitted = true;
+        return 'Berhasil mengajukan penilaian';
+    } else {
+        throw 'pengajuan tidak valid id';
+    }
+}
+async function approveSubmission(req) {
+    const sub = getSubmissionById(parseInt(req.params.id));
+    if (sub) {
+        sub.subScore = req.body.score;
+        sub.subNote = re.body.subNote;
+    }
 }
 

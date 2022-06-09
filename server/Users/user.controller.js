@@ -8,12 +8,12 @@ const authorize = require('../_middleware/authorize');
 //routes
 router.post('/authenticate', authenticationSchema, authenticate);
 router.post('/register', registerSchema, register);
-router.post('/changepassword/:id', changePassword);
-router.get('/', getAll);
+router.post('/changepassword/:id',authorize(),  changePassword);
+router.get('/',authorize(), getAll);
 router.get('/current', authorize(), getCurrent);
-router.get('/:id', getById);
+router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), updateSchema, update);
-router.delete('/:id',authorize(), _delete);
+router.delete('/:id', authorize(), _delete);
 
 module.exports = router;
 
@@ -56,10 +56,10 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
-    const currentUser = req.user;
     const id = parseInt(req.params.id);
+    console.log('isi id: ' + id + ' dan isi header: ' + req.headers.userid)
     //allow only admin untuk akses semua record
-    if (id !== currentUser.sub && currentUser.role !== "Admin") {
+    if (id != parseInt(req.headers.userid) && req.headers.userrole !== "Admin") {
         return res.status(401).json({message: 'Unauthorized'});
     }
 
@@ -67,6 +67,7 @@ function getById(req, res, next) {
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
+
 function changePassword(req, res, next) {
     userService.changepassword(req.body)
     .then(message => res.json(message))

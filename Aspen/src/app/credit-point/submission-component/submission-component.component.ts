@@ -13,6 +13,7 @@ import { SubmissionFormComponent } from '../submission-form/submission-form.comp
 export class SubmissionComponentComponent implements OnInit {
   
   @Input() submission: submission;
+  @Input() isAdmin: boolean;
 
   allAct;
   allAssignLetter;
@@ -24,13 +25,11 @@ export class SubmissionComponentComponent implements OnInit {
     this.loadAll();
   }
   loadAll(){
-    this.actService.getData(0,1000,'actDate','desc','isProposed', 'true')
-      .subscribe(result => {
-        this.allAct = result['data'];
-        this.allAct = this.groupItemBy(this.allAct,'AssignmentLetter.ltNumber');
-        this.allAssignLetter = this.getTitle(this.allAct);
-        console.log(this.allAct);
-      }, error => console.error(error));
+    this.actService.getBySub(this.submission.id).subscribe(result => {
+          this.allAct = this.groupItemBy(result, 'AssignmentLetter.ltNumber');
+          this.allAssignLetter = this.getTitle(this.allAct);
+          console.log(result);
+    }, err => console.error(err));
   }
 
   groupItemBy(array, property) {

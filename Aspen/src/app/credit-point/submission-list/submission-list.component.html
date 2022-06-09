@@ -3,7 +3,7 @@
     <ul>
         <li *ngFor="let item of submissions;">
             <div fxLayout="column">
-                    <submission-component  [submission]="item"></submission-component>
+                    <submission-component  [submission]="item" [isAdmin]="adminstatus"></submission-component>
             </div>
         </li>
     </ul>

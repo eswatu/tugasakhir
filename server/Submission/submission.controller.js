@@ -6,11 +6,11 @@ const subService = require('./submission.service');
 const authorize = require('../_middleware/authorize');
 
 //routes
-router.post('/', createSchema, create);
-router.get('/', getAll);
-router.get('/:id', getById);
-router.put('/:id', updateSchema, update);
-router.delete('/:id',_delete);
+router.post('/', authorize(), createSchema, create);
+router.get('/', authorize(), getAll);
+router.get('/:id', authorize(), getById);
+router.put('/:id', authorize(), updateSchema, update);
+router.delete('/:id', authorize(), _delete);
 
 module.exports = router;
 
@@ -63,3 +63,4 @@ function _delete(req, res, next) {
         .then(() => res.json({ message: 'Pengajuan Sudah Terhapus' }))
         .catch(next);
 }
+

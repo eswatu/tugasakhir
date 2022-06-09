@@ -6,11 +6,11 @@ const alservice = require('./assignLetter.service');
 const authorize = require('../_middleware/authorize');
 
 //router
-router.post('/', createSchema, createAssignLetter);
-router.get('/', getAllAL);
-router.get('/:id', getByIdAL);
-router.put('/:id', createSchema, updateAL);
-router.delete('/:id',deleteAL );
+router.post('/', authorize(), createSchema, createAssignLetter);
+router.get('/', authorize(), getAllAL);
+router.get('/:id', authorize(), getByIdAL);
+router.put('/:id', authorize(), createSchema, updateAL);
+router.delete('/:id', authorize(), deleteAL);
 
 module.exports = router;
 
