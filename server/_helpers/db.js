@@ -22,6 +22,7 @@ async function initialize() {
     db.Aktivitas     = require('../permen/aktivitas.model')(sequelize);
     db.SubUnsur      = require('../permen/subUnsur.model')(sequelize);
     db.Butir         = require('../permen/butir.model')(sequelize);
+    db.SpecialButir = require('../permen/specialbutir.model')(sequelize);
     //ini database untuk Kerja
     db.Act           = require('../Acts/act.model')(sequelize);
     db.ActFile       = require('../Acts/actFile.model')(sequelize, DataTypes);
@@ -31,6 +32,7 @@ async function initialize() {
     //relasi khusus - mandatory
     db.Butir.belongsTo(db.SubUnsur, {foreignKey: "SubUnsurId"});
     db.Butir.belongsTo(db.Aktivitas, {foreignKey: "AktivitaId"});
+    db.SpecialButir.belongsTo(db.Butir, {foreignKey: "ButirId"});
     //relasi user dan avatar
     db.User.belongsTo(db.Avatar, {foreignKey: "AvatarId"});
     //relasi untuk Act

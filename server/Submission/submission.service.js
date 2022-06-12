@@ -122,6 +122,7 @@ async function submitSub(id) {
     const sub = getSubmissionById(id);
     if (sub) {
         sub.isSubmitted = true;
+
         return 'Berhasil mengajukan penilaian';
     } else {
         throw 'pengajuan tidak valid id';
@@ -134,4 +135,62 @@ async function approveSubmission(req) {
         sub.subNote = re.body.subNote;
     }
 }
+//id untuk id submission, level untuk jenjang user.
+async function calcSubScore(id){
+    let sub = await db.Submission.findOne(id);
+    const usr = await db.User.findOne(sub.UserId);
+    const level = usr.level;
+    if (sub)
+    {
+        const acts = await db.Acts.findAll({where: {SubId: id}});
+        const specialB = await db.SpecialButir.findAll();
+        const sb = Object.keys(specialB).map((key)=> obj[key]);
+        console.log(sb);
 
+        let total = 0;
+        for (item in acts) {
+            const butir = await db.Butir.findOne({where: {id: item.ButirId}});
+            if (!sb.includes(item.id)) {
+                //ini sisipkan perhitungan berdasarkan level angka kredit poin
+                /*level
+                terampil                  = 1
+                mahir                     = 2
+                terampil + mahir          = 3
+                penyelia                  = 4
+                penyelia + mahir          = 6
+                terampil, mahir, penyelia = 7
+                */
+               let modifier = 0;
+               switch (butir.levelReq) {
+                case 1:
+                   modifier = (level == 1 ) ? 1 : (level == 2 ) ? 0.8 : 0 ;     
+                    break;
+                case 2:
+                    modifier = (level == 2 ) ? 1 : 0.8;
+                    break;
+                case 3:
+                    modifier = (level < 3) ? 1 : 0.8;
+                    break;
+                case 4:
+                    modifier = (level == 1) ? 0 : (level == 2) ? 0.8 : 1;
+                    break;
+                case 6:
+                    modifier = (level == 1) ? 0.8 : 1;
+                    break;
+                case 7:
+                    modifier = 1;
+                    break;  
+                default:
+                    break;
+               }
+                total += item.butirVolume * parseFloat(butir.jmlPoin) * modifier;
+            } else {
+                const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
+                const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01); 
+                total += item.butirVolume * gapPoint;
+            }
+        }
+        sub.subScore = total;
+    }
+    sub.save();
+}

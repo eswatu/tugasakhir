@@ -15,7 +15,7 @@ module.exports = {
       username: "pegawai1",
       passwordHash: await bcrypt.hash("pegawai1", 10) ,
       role: "Admin",
-      level: "pelaksana",
+      level: 2,
       createdAt: new Date(),
       updatedAt: new Date(),
       baseAngkre : 60
@@ -24,7 +24,7 @@ module.exports = {
       username: "pegawai2",
       passwordHash: await bcrypt.hash("pegawai2", 10) ,
       role: "User",
-      level: "pelaksana",
+      level: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
       baseAngkre : 80
@@ -33,7 +33,7 @@ module.exports = {
       username: "pegawai3",
       passwordHash: await bcrypt.hash("pegawai3", 10) ,
       role: "User",
-      level: "pelaksana",
+      level: 4,
       createdAt: new Date(),
       updatedAt: new Date(),
       baseAngkre : 100

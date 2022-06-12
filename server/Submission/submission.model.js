@@ -7,10 +7,12 @@ function model(sequelize) {
         subName: {type: DataTypes.STRING, allowNull: false},
         subDate: {type: DataTypes.DATE, allowNull: true},
         dateApproved: {type: DataTypes.DATE, allowNull: true},
-        subScore: {type: DataTypes.INTEGER, allowNull: true},
+        //untuk nilai yang diajukan, dihitung oleh jumlah ACT
+        subScore: {type: DataTypes.FLOAT, allowNull: true},
         subNote: {type: DataTypes.STRING, allowNull: true},
         isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true},
-        isSubmitted: {type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false}
+        isSubmitted: {type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false},
+        subScoreApproved: {type:DataTypes.FLOAT, allowNull:true}
     };
     return sequelize.define('Submission', attributes);
 }
