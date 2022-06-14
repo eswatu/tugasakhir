@@ -78,8 +78,6 @@ async function createAct(req) {
 async function propose(req) {
     let act = await getActById(parseInt(req.params.id));
     let sub = await subService.getActiveSubmission(parseInt(req.headers.userid));
-    console.log('isi dari sub: ' + JSON.stringify(sub));
-    console.log('isi dari act: ' + JSON.stringify(act));
 
     let result;
     if (act != null && sub != null) {
@@ -93,6 +91,7 @@ async function propose(req) {
             //ini ganti nanti ke user
             act.SubId = sub.id;
         }
+        subService.calcSubScore(sub.id);
         await act.save();
         result = 'sukses mengajukan';
     } else {
@@ -131,7 +130,7 @@ async function getActByDate(ds,de) {
 async function getActBySubId(sid) {
     const acts = await db.Act.findAll(
         {   where: { SubId: sid},
-            include: {all: true}
+            include: [{model: db.AssignLetter}, {model: db.Butir} ]
         });
     if (acts) {
         return acts;

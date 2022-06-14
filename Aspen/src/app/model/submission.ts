@@ -10,4 +10,6 @@ export interface submission {
     subNote: string;
     assignLetters: [assignLetter];
     acts : [act];
+    isSubmitted: boolean;
+    subScoreApproved: number;
 }

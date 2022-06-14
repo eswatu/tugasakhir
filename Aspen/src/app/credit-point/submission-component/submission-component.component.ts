@@ -1,8 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
+import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { act } from '@env/model';
 import { submission } from '@env/model/submission';
 import { ActService } from '@env/services/act.service';
 import { SubmissionService } from '@env/services/submission.service';
+import Swal from 'sweetalert2';
 import { SubmissionFormComponent } from '../submission-form/submission-form.component';
 
 @Component({
@@ -14,22 +17,61 @@ export class SubmissionComponentComponent implements OnInit {
   
   @Input() submission: submission;
   @Input() isAdmin: boolean;
+  @Input() target: number;
 
   allAct;
   allAssignLetter;
+  totalValue;
+
+  private dialogRef = null;
+  private dialogData;
   constructor(private actService: ActService,
     private subMService: SubmissionService,
-    public dialog: MatDialog) { }
+    private injector: Injector,
+    public dialog: MatDialog) {
+      this.dialogRef = this.injector.get(MatDialogRef, null);
+      this.dialogData = this.injector.get(MAT_DIALOG_DATA, null);
+      if (this.dialogData) {
+        this.submission = this.dialogData.sub;
+        this.target = this.dialogData.target;
+        this.isAdmin = true;
+      }
+      console.log(this.submission);
+    }
 
   ngOnInit(){
     this.loadAll();
   }
+  get isSubmitted(){
+    return this.submission.isSubmitted;
+  }
+
   loadAll(){
     this.actService.getBySub(this.submission.id).subscribe(result => {
           this.allAct = this.groupItemBy(result, 'AssignmentLetter.ltNumber');
           this.allAssignLetter = this.getTitle(this.allAct);
-          console.log(result);
+          this.totalValue = 0;
+          this.allAssignLetter.forEach((item) => {
+            this.totalValue += this.getPoinPerAssignLetter(item);
+          })
+
     }, err => console.error(err));
+  }
+
+getPoinPerAssignLetter(nama: string){
+  const item = this.allAct[nama];
+  let score = 0;
+  item.forEach((cp) => {
+    score+= this.getPoinCredit(cp.Butir.jmlPoin, cp.butirVolume);
+  })
+  return score;
+}
+getPoinCredit(numberInput, jmlButir){
+    if (numberInput.length > 6) {
+       return (parseFloat(numberInput.substring(0,2)) * this.target * 0.01) * jmlButir;
+    } else {
+      return parseFloat(numberInput) * jmlButir;
+    }
   }
 
   groupItemBy(array, property) {
@@ -57,6 +99,11 @@ edit(){
         const dialogRef = this.dialog.open(SubmissionFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadAll() );
 }
-
+submitSub(){
+this.subMService.submitSub(this.submission.id).subscribe(res => {
+  Swal.fire(res);
+}, error => console.error(error));
+this.loadAll();
+}
 
 }

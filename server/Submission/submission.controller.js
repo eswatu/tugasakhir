@@ -10,6 +10,7 @@ router.post('/', authorize(), createSchema, create);
 router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), updateSchema, update);
+router.post('/submit/:id', authorize(), submitSub);
 router.delete('/:id', authorize(), _delete);
 
 module.exports = router;
@@ -61,6 +62,11 @@ function update(req, res, next) {
 function _delete(req, res, next) {
     subService.delete(req.params.id)
         .then(() => res.json({ message: 'Pengajuan Sudah Terhapus' }))
+        .catch(next);
+}
+function submitSub(req, res, next) {
+    subService.submitSub(req.params.id)
+        .then(result => res.json(result))
         .catch(next);
 }
 

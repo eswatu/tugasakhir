@@ -1,3 +1,11 @@
 .mat-card {
     border: 1px solid
 }
+.listedact {
+    width:50em;
+    word-break: break-word;
+}
+#wait {
+    color: coral;
+    text-align: center;
+}

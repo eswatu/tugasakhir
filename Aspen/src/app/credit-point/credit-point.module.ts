@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SubmissionListComponent } from './submission-list/submission-list.component';
 import { SubmissionComponentComponent } from './submission-component/submission-component.component';
 import { SubmissionFormComponent } from './submission-form/submission-form.component';
+import { ValuationTableComponent } from './valuation-table/valuation-table.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,6 +45,7 @@ export const MY_FORMATS = {
     SubmissionListComponent,
     SubmissionComponentComponent,
     SubmissionFormComponent,
+    ValuationTableComponent,
     ],
   imports: [
     CommonModule,

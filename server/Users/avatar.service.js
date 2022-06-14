@@ -7,7 +7,7 @@ const uploadFiles = async (req, res) => {
             return res.send(`You must select a file.`);
           }
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
-          let uid = parseInt(req.body.userId);
+          let uid = parseInt(req.headers.userid);
           let user = await db.User.findByPk(uid);      
           if (user.AvatarId) {
             console.log('ava id: ' + user.AvatarId);
@@ -27,16 +27,12 @@ const uploadFiles = async (req, res) => {
                 createdAt: new Date(),
                 updatedAt: new Date()
                 }).then((ava) => {
-                  console.log();
-                  db.User.update({ AvatarId: ava.id}, {
-                    where: {
-                      id: uid
-                    }
-                  });
+                  user.update({AvatarId: ava.id});
                   fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
-                    );
+                  );
                   return `Sukses menambahkan profil.`;
                 });
+                await user.save();
           }
         
       } catch (error) {

@@ -9,7 +9,9 @@ module.exports = {
     createSubmission,
     updateSubmission,
     deleteAct: _delete,
-    getActiveSubmission
+    getActiveSubmission,
+    submitSub,
+    calcSubScore
 };
 
 
@@ -119,15 +121,17 @@ async function getActiveSubmission(userId) {
     return sub;
 }
 async function submitSub(id) {
-    const sub = getSubmissionById(id);
+    const sub = await db.Submission.findByPk(id);
     if (sub) {
-        sub.isSubmitted = true;
-
+        await sub.update({isSubmitted : true});
+        await sub.save();
         return 'Berhasil mengajukan penilaian';
     } else {
+
         throw 'pengajuan tidak valid id';
     }
 }
+
 async function approveSubmission(req) {
     const sub = getSubmissionById(parseInt(req.params.id));
     if (sub) {
@@ -137,20 +141,22 @@ async function approveSubmission(req) {
 }
 //id untuk id submission, level untuk jenjang user.
 async function calcSubScore(id){
-    let sub = await db.Submission.findOne(id);
-    const usr = await db.User.findOne(sub.UserId);
-    const level = usr.level;
+    let sub = await db.Submission.findByPk(id);
+    const usr = await db.User.findByPk(sub.UserId);
+    const level = parseInt(usr.level);
     if (sub)
     {
-        const acts = await db.Acts.findAll({where: {SubId: id}});
+        //ambil act yang sudah propose, belum diperhitungkan, dengan subId sama
+        const acts = await db.Act.findAll({where: {SubId: id, calculatedDate: null, isProposed: true }});
         const specialB = await db.SpecialButir.findAll();
-        const sb = Object.keys(specialB).map((key)=> obj[key]);
-        console.log(sb);
-
+        const sb = specialB.map(function(item) {
+            return item["ButirId"];
+        });
         let total = 0;
-        for (item in acts) {
-            const butir = await db.Butir.findOne({where: {id: item.ButirId}});
-            if (!sb.includes(item.id)) {
+        for (let ac in acts) {
+            const butir = await db.Butir.findByPk(acts[ac].ButirId);
+            //cek apakah sudah dihitung atau belum, diajukan atau belum.
+            if (!sb.includes(butir.id)) {
                 //ini sisipkan perhitungan berdasarkan level angka kredit poin
                 /*level
                 terampil                  = 1
@@ -160,37 +166,43 @@ async function calcSubScore(id){
                 penyelia + mahir          = 6
                 terampil, mahir, penyelia = 7
                 */
-               let modifier = 0;
-               switch (butir.levelReq) {
-                case 1:
-                   modifier = (level == 1 ) ? 1 : (level == 2 ) ? 0.8 : 0 ;     
-                    break;
-                case 2:
-                    modifier = (level == 2 ) ? 1 : 0.8;
-                    break;
-                case 3:
-                    modifier = (level < 3) ? 1 : 0.8;
-                    break;
-                case 4:
-                    modifier = (level == 1) ? 0 : (level == 2) ? 0.8 : 1;
-                    break;
-                case 6:
-                    modifier = (level == 1) ? 0.8 : 1;
-                    break;
-                case 7:
-                    modifier = 1;
-                    break;  
-                default:
-                    break;
-               }
-                total += item.butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    let modifier = 0;
+                    switch (butir.levelReq) {
+                        case 1:
+                        modifier = (level == 1 ) ? 1 : (level == 2 ) ? 0.8 : 0 ;     
+                            break;
+                        case 2:
+                            modifier = (level == 2 ) ? 1 : 0.8;
+                            break;
+                        case 3:
+                            modifier = (level < 3) ? 1 : 0.8;
+                            break;
+                        case 4:
+                            modifier = (level == 1) ? 0 : (level == 2) ? 0.8 : 1;
+                            break;
+                        case 6:
+                            modifier = (level == 1) ? 0.8 : 1;
+                            break;
+                        case 7:
+                            modifier = 1;
+                            break;  
+                        default:
+                            break;
+                    }
+                total += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
             } else {
                 const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
-                const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01); 
-                total += item.butirVolume * gapPoint;
+                console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
+                const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01) * gap; 
+                total += acts[ac].butirVolume * gapPoint;
             }
+            acts[ac].calculatedDate = new Date();
+            console.log('tanggal perhitungan adalah: ' + acts[ac].calculatedDate);
+            acts[ac].save();
         }
         sub.subScore = total;
+
+        console.log('nilai subscore adalah: ' + sub.subScore);
     }
     sub.save();
 }

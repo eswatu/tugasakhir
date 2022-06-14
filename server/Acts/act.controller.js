@@ -55,7 +55,7 @@ function propose(req, res, next) {
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         userId   : Joi.number().required(),
-        butirId : Joi.number().required(),
+        ButirId : Joi.number().required(),
         AssignLetterId: Joi.number().required(),
         actDate     : Joi.date().required(),
         butirVolume: Joi.number().required(),

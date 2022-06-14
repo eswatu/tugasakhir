@@ -1,0 +1,64 @@
+<p *ngIf="!aspenSubmissions"><em>Loading...</em></p>
+
+<!-- <mat-form-field [hidden]="!aspenSubmissions">
+    <input matInput (keyup)="onFilterTextChanged($event.target.value)"
+        placeholder="Filter by name (or part of it)...">
+</mat-form-field> -->
+<h2> Klik pada baris untuk melihat pengajuan</h2>
+<table mat-table [dataSource]="aspenSubmissions" class="table-striped mat-elevation-z8" [hidden]="!aspenSubmissions"
+    matSort (matSortChange)="loadData()"
+    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
+
+  <!-- Num Column -->
+  <ng-container matColumnDef="nomor">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nomor</th>
+    <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+  </ng-container>
+
+  <!-- Nama Submission -->
+  <ng-container matColumnDef="subName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Pengajuan</th>
+    <td mat-cell *matCellDef="let sub" >
+      {{sub.subName}}
+    </td>
+  </ng-container>
+
+  <!-- Tanggal Pengajuan -->
+  <ng-container matColumnDef="subDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Pengajuan</th>
+    <td mat-cell *matCellDef="let sub">{{sub.subDate | date:'dd-MM-yyyy'}} </td>
+  </ng-container>
+
+  <!-- Nama yang mengajukan -->
+  <ng-container matColumnDef="subOwner">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Pegawai</th>
+    <td mat-cell *matCellDef="let sub" > {{sub.User.name}} </td>
+  </ng-container>
+
+  <!-- Catatan -->
+  <ng-container matColumnDef="subNote">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan Pengajuan</th>
+    <td mat-cell *matCellDef="let sub" style="text-align:center">{{sub.subNote ?? '-'}}
+    </td>
+  </ng-container>
+
+    <!-- Nilai Diterima -->
+    <ng-container matColumnDef="subScore">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
+      <td mat-cell *matCellDef="let sub" style="text-align:center"
+            >{{sub.subScore}}
+      </td>
+    </ng-container>
+    
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'done': row.subScore > 0 && row.dateApproved != null, 'undone':row.subScore == 0 && row.dateApproved == null}"
+        (click)="checkSubmission(row)"></tr>
+</table>
+<!-- Pagination directive -->
+<mat-paginator [hidden]="!aspenSubmissions"
+    (page)="getData($event)"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons></mat-paginator>
+﻿

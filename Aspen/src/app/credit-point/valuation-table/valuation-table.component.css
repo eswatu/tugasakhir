@@ -1,0 +1,10 @@
+.mat-paginator {
+    display: flex;
+    justify-content: center;
+}
+.done {
+    background-color:greenyellow
+}
+.undone {
+    background-color:crimson
+}

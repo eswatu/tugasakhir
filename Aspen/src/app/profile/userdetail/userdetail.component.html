@@ -1,4 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center">
+    <br>
     <div fxLayout="column">
         <div>
             <img [src]="pictureImage" height="360" width="360"/>
@@ -9,6 +10,8 @@
         </mat-toolbar>
         <div *ngIf="isEditing">
                 <input single type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
+                <br>
+                <mat-hint>File berupa gambar, ukuran maksimal 2MB</mat-hint>
                 <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
                     Upload
                 </button>

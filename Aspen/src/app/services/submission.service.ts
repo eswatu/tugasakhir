@@ -36,7 +36,10 @@ export class SubmissionService extends BaseService {
   post<submission>(item: any): Observable<any> {
     return this.http.post<submission>(this.url, item);
   }
-
+  submitSub(id: number): Observable<any> {
+    var myUrl = this.url + 'submit/' + id;
+    return this.http.post(myUrl,null);
+  }
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
       super(http, baseUrl);

@@ -76,6 +76,7 @@ export class UserdetailComponent implements OnInit {
           this.pictureImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:${ftype};base64,` + img['data']);
           }, error => console.error(error));
       }
+      this.form.patchValue({level: this.jenjang});
   }
 
   toggleEdit(){
@@ -112,6 +113,7 @@ export class UserdetailComponent implements OnInit {
         });
       }
       this.selectedFiles = undefined;
+      this.ngOnInit();
     }
   }
   changePassword() {
@@ -127,5 +129,16 @@ export class UserdetailComponent implements OnInit {
     }, error => console.error(error));
     
   }
-
+get jenjang(){
+  switch (parseInt(this.userInfo.level)) {
+    case 1:
+      return 'Terampil';
+    case 2:
+      return 'Mahir';
+    case 3:
+      return 'Penyelia';
+    default:
+      return 'invalid level';
+  }
+}
 }
