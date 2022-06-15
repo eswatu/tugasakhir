@@ -17,6 +17,7 @@ export interface act {
     createdAt: Date;
     updatedAt: Date;
     AssignLetterId: number;
+    hasFile: boolean;
 }
 
 export interface assignLetter {
@@ -30,4 +31,5 @@ export interface assignLetter {
     ltActive: boolean;
     AssignFileId: number;
     assignFile: fileInfo;
+    hasFile: boolean;
 }

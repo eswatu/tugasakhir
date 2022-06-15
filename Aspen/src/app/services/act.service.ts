@@ -62,12 +62,13 @@ export class ActService extends BaseService {
     return this.http.get(myurl, { responseType: "blob"});
   }
   downloadFile(id: number): Observable<any>{
+    //id merupakan id dari file
     const myUrl = this.urlFile +  id; 
     return this.http.get(myUrl,{ responseType: 'blob' as 'json'});
   }
-  getFileInfo(id:number): Observable<fileInfo> {
+  getFileInfo(id:number): Observable<any> {
     let myUrl = this.urlFile + 'getFileInfo/' + id;
-    return this.http.get<fileInfo>(myUrl);
+    return this.http.get<any>(myUrl);
   }
   deletefile(id:number): Observable<any> {
     let myurl = this.urlFile + id;

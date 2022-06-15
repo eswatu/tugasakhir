@@ -1,7 +1,7 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 	<!-- Tree node template for expandable nodes -->
-	<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding class="mat-tree-node">
-		<mat-button-toggle matTreeNodeToggle value="node.id" (click)="setButir(node.id)">
+	<mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding >
+		<mat-button-toggle matTreeNodeToggle value="node.id" (click)="setButir(node.id)" style="padding:1px 1px;">
 				{{node.name}}
 		</mat-button-toggle>
 	</mat-tree-node>

@@ -46,13 +46,11 @@ export class FileUploadDialogComponent implements OnInit {
   getInfo(){
     if (this.mode === "ST") {
     this.assignLetterService.getFileInfo(this.id).subscribe(result => {
-      console.log(result);
       this.currentLetterInfos = result;
     });
   } else if (this.mode === "LAP") {
     this.actService.getFileInfo(this.id).subscribe(result => {
       if (result){
-      console.log(result);
       this.currentLetterInfos = result;
       } else {
         this.currentLetterInfos = null;
@@ -176,6 +174,7 @@ export class FileUploadDialogComponent implements OnInit {
       }
       this.selectedFiles = undefined;
     }
+    this.ngOnInit();
   }
   closeDialog(){
     this.currentLetterInfos = null;

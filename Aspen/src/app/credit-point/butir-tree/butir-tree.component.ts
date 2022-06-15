@@ -7,7 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
 import { act } from '@env/model/acts';
-
+import { AuthenticationService } from '@env/services';
 
 @Component({
   selector: 'cp-butir-tree',
@@ -41,15 +41,21 @@ export class ButirTreeComponent implements OnInit {
 
   hasChild = (_: number, 
     node: FlateNode) => node.expandable;
-    defaultLevel = 2;
+    defaultLevel;
     defaultJenis;
     //nomor id act
     act: act;
 
-  constructor(private permernServ: PermenService,
+  constructor(
+    private authService: AuthenticationService,
+    private permernServ: PermenService,
     private dialogRef: MatDialogRef<ButirTreeComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data) {
+      this.authService.user.subscribe(u => {
+        this.defaultLevel = parseInt(u.level);
+      }, error => console.error(error));
+
     if (data.act) {
       this.act = data.act;
     }
@@ -81,7 +87,7 @@ export class ButirTreeComponent implements OnInit {
             //.map((item) => ({name: item[0], children: item[1]}));
             for (let dtil in splot) {
               if (splot.hasOwnProperty(dtil)) {
-                splot[dtil] = splot[dtil].map((dt) => ({name: dt.namaButir, children: null, id: dt.id}));
+                splot[dtil] = splot[dtil].map((dt) => ({name: dt.namaButir +' '+ dt.tkButir, children: null, id: dt.id}));
               }
             }
             split[item] = Object.entries(splot).map((item) => ({name: item[0], children: item[1]}));;

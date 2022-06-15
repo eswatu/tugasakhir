@@ -1,5 +1,16 @@
-.button {
-    white-space: pre-wrap !important;
-    word-wrap: break-word;
-    max-width: 400px;
+.mat-button-toggle {
+    border: 3px solid black;
+    display: inline-flex;
+    justify-content: flex-start;
+    background-color: DodgerBlue;
+    font-size: 14px;
+    line-height: 15px;
+    flex-direction: column;
+    padding: 0 0px!important;
+}
+
+.mat-button-toggle-label-content {
+    padding: 0 4px;
+    line-height: 28px;
+    display: inline-block;
 }

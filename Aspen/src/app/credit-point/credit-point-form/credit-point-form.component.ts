@@ -1,8 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { act } from '@env/model/acts';
-import { butirFull } from '@env/model/permen';
 import { ActService } from '@env/services/act.service';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import Swal from 'sweetalert2';
@@ -25,8 +25,9 @@ export class CreditPointFormComponent {
   job : act; //untuk mode create dari butir
   jenjang: string;
   actMain;
-        
+  
   constructor(
+    private router: Router,
     private actService: ActService,
     private assignLetterService: AssignLetterService,
     public dialog: MatDialog,
@@ -76,13 +77,14 @@ loadData(){
     this.actService.get<act>(this.id).subscribe(result => {
       this.job = result;
       this.formInput.patchValue(this.job.Butir);
+      this.setJenjang(this.job.Butir.levelReq);
       this.formInput.patchValue({
         actDate: result.actDate,
         butirVolume: result.butirVolume,
         actNote: result.actNote,
-        AssignLetterId: result.AssignLetterId
+        AssignLetterId: result.AssignLetterId,
+        levelReq: this.jenjang
         });
-        this.setJenjang(this.job.Butir.levelReq);
         if (result.actMain) {
           this.actMain = true;
         } else {
@@ -94,7 +96,8 @@ loadData(){
       //input baru
     this.formInput.patchValue(this.job.Butir);
     this.actMain = this.job.actMain;
-    this.formInput.patchValue({actDate: new Date()});
+    this.setJenjang(this.job.Butir.levelReq);
+    this.formInput.patchValue({actDate: new Date(), levelReq: this.jenjang});
   }
 }
 
@@ -137,7 +140,9 @@ createJob() {
       this.actService.post<act>(this.job).subscribe(
         result => {
           if (result) {
-            Swal.fire(result.message).then(() => this.closeDialog());
+            Swal.fire(result.message).then(() => {
+              this.closeDialog();
+            });
             }
         }, error => console.error(error));
     }
@@ -150,24 +155,25 @@ createJob() {
   setJenjang(level:number){
     switch (level) {
       case 1:
-        this.jenjang = 'Terampil';
+        this.jenjang =  'Terampil';
         break;
       case 2:
-        this.jenjang = 'Mahir'
+        this.jenjang =  'Mahir';
         break;
       case 3:
-        this.jenjang = 'Terampil dan Mahir'
+        this.jenjang =  'Terampil dan Mahir';
         break;
       case 4:
-        this.jenjang = 'Penyelia';
+        this.jenjang =  'Penyelia';
         break;
       case 6:
-        this.jenjang = 'Mahir dan Penyelia';
+        this.jenjang =  'Mahir dan Penyelia';
         break;
       case 7:
-        this.jenjang = 'Terampil, Mahir, dan Penyelia';
+        this.jenjang =  'Terampil, Mahir, dan Penyelia';
         break;
       default:
+        this.jenjang =  'invalid kode';
         break;
     }
   }

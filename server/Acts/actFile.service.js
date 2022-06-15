@@ -49,7 +49,6 @@ const deleteFile = async(req,res) => {
 const downloadFile = async (req, res) => {
   let uid = parseInt(req.params.id);
   const file = await db.ActFile.scope('withData').findByPk(uid);
-  console.log(file.name);
   if (file) {
     let pathQ = String(__basedir + "/resources/static/assets/download/" + file.name);
     fs.writeFileSync(pathQ, file.data);
@@ -70,7 +69,6 @@ const downloadFile = async (req, res) => {
 const getdocument = async (req, res) => {
   let uid = parseInt(req.params.id);
   let datadoc = await db.ActFile.findAll({ where: { ActId: uid}});
-  console.log(datadoc);
   if (datadoc) {
     res.type('application/octet-stream').send(datadoc.data);
   }
@@ -78,7 +76,12 @@ const getdocument = async (req, res) => {
 
 const getFiles = async (req, res) => {
   const filelist = await db.ActFile.findAll({where: { ActId: req.params.id}});
-  res.send(filelist);
+  console.log(filelist);
+  if (filelist) {
+    res.send(filelist);
+  } else {
+    res.send({message: "tidak ada data"});
+  }
 }
 
 module.exports = {

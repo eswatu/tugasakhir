@@ -32,7 +32,7 @@ export class CreditPointTableComponent implements OnInit {
   defaultFilterColumn: string = null;
   filterQuery: string = null;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isAdmin;
   //  filterTextChanged: Subject<string> = new Subject<string>();
@@ -53,8 +53,10 @@ export class CreditPointTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData(null);
+    this.paginator._intl.itemsPerPageLabel = "item per halaman";
   }
   loadData(query: string = null) {
+    this.jobs = null;
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
@@ -75,11 +77,23 @@ export class CreditPointTableComponent implements OnInit {
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
+        result.data.forEach(d => {
+          if (d.isProposed == false || !d.isCalculated == false) {
+            this.actService.getFileInfo(d.id).subscribe(r => {
+              console.log(r);
+              if (r.length > 0) {
+                d.hasFile = true;
+              } else {
+                d.hasFile = false;
+              }
+            });
+          }
+        });
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
         this.jobs = new MatTableDataSource<act>(result.data);
-        console.log(result);
+
       }, error => console.error(error));
   }
   
@@ -92,11 +106,11 @@ export class CreditPointTableComponent implements OnInit {
     if (job) {
       dialogConfig.data = {  id: job.id, jenis: jenis };
       const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(() => this.loadData(null) );
+      dialogRef.afterClosed().subscribe(()=> this.loadData(null));
     } else {
       dialogConfig.data = { jenis: jenis };
       const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(() => this.loadData(null) );
+      dialogRef.afterClosed().subscribe(()=> this.loadData(null));
     }
   }
   
@@ -123,6 +137,7 @@ export class CreditPointTableComponent implements OnInit {
       dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP"};
     }
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(()=> {this.loadData(null)});
   }
   
 }

@@ -2,6 +2,41 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 table {
-    width: 100%;
+    width: 90%;
+    justify-content: center;
+    border: 2px solid black;
+    margin-left: auto;
+    margin-right: auto;    
+}
+table tr th {
+    border-right: 1px solid;
+    align-items: center;
+    justify-content: center;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+table tr td {
+    border-right: 1px solid;
+    padding-top:2px;
+    padding-bottom: 2px;
+}
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+.tomboltambah {
+    margin-left: 100px;
+    margin-bottom:10px;
+    margin-top:20px;
+}
+.mat-header-cell {
+    font-weight: bold;
+    font-size: 14px;
+}
+button {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
 }

@@ -6,6 +6,7 @@ import { submission } from '@env/model/submission';
 import { ActService } from '@env/services/act.service';
 import { SubmissionService } from '@env/services/submission.service';
 import Swal from 'sweetalert2';
+import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 import { SubmissionFormComponent } from '../submission-form/submission-form.component';
 
 @Component({
@@ -74,7 +75,7 @@ getPoinCredit(numberInput, jmlButir){
     }
   }
 
-  groupItemBy(array, property) {
+groupItemBy(array, property) {
     var hash = {},
         props = property.split('.');
     for (var i = 0; i < array.length; i++) {
@@ -99,6 +100,18 @@ edit(){
         const dialogRef = this.dialog.open(SubmissionFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadAll() );
 }
+lihatFile(nomor: Number){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.autoFocus = true;
+  dialogConfig.restoreFocus; true;
+  dialogConfig.minWidth = 400;
+  dialogConfig.minHeight = 400;
+  if(nomor) {
+    dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP"};
+  }
+  const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
+}
+
 submitSub(){
 this.subMService.submitSub(this.submission.id).subscribe(res => {
   Swal.fire(res);

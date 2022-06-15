@@ -74,6 +74,19 @@ export class AssignLetterTableComponent implements OnInit {
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
+        result.data.forEach(d => {
+          if (d.ltActive == true) {
+            this.alService.getFileInfo(d.id).subscribe(r => {
+              console.log(r);
+              if (r) {
+                d.hasFile = true;
+              } else {
+                d.hasFile = false;
+              }
+            });
+          }
+        });
+
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;

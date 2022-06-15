@@ -55,9 +55,9 @@ export class AssignLetterService extends BaseService{
     const myUrl = this.urlFile + '/' + id; 
     return this.http.get(myUrl,{ responseType: 'blob' as 'json'});
 }
-  getFileInfo(id:number): Observable<fileInfo> {
+  getFileInfo(id:number): Observable<any> {
     let myUrl = this.urlFile + '/getFileInfo/' + id;
-    return this.http.get<fileInfo>(myUrl);
+    return this.http.get<any>(myUrl);
   }
 
   constructor(http: HttpClient,

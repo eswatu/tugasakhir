@@ -1,10 +1,10 @@
 <p *ngIf="!jobs"><em>Loading...</em></p>
 
-<div class="commands text-right" *ngIf="jobs">
-  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">
+<div class="commands text-right" *ngIf="jobs" class="tomboltambah">
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Tambah Laporan Penugasan">
       Tambah Laporan
   </button>
-<mat-menu #menu="matMenu">
+<mat-menu #menu="matMenu" >
   <button mat-menu-item (click)="openForm(null,1)">
       Pekerjaan Utama
   </button>
@@ -14,25 +14,20 @@
 </mat-menu>
 </div>
 
-<!-- <mat-form-field [hidden]="!jobs">
-    <input matInput (keyup)="onFilterTextChanged($event.target.value)"
-        placeholder="Filter by name (or part of it)...">
-</mat-form-field> -->
-
-<table mat-table [dataSource]="jobs" class="table-striped mat-elevation-z8" [hidden]="!jobs"
+<table mat-table [dataSource]="jobs" class="mat-elevation-z16" [hidden]="!jobs"
     matSort (matSortChange)="loadData()"
     matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nomor</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2em;">Nomor</th>
     <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
   </ng-container>
 
   <!-- Kegiatan Column -->
   <ng-container matColumnDef="Butir.namaButir">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Kegiatan</th>
-    <td mat-cell *matCellDef="let job" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header >Nama Kegiatan</th>
+    <td mat-cell *matCellDef="let job" style="padding-left:5px; padding-right:5px">
       {{job.Butir.namaButir}}
     </td>
   </ng-container>
@@ -40,47 +35,51 @@
   <!-- Lat Column -->
   <ng-container matColumnDef="actDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Kegiatan</th>
-    <td mat-cell *matCellDef="let job">{{job.actDate | date:'dd-MM-yyyy'}} </td>
+    <td mat-cell *matCellDef="let job" style="text-align:center;">{{job.actDate | date:'dd-MM-yyyy'}} </td>
   </ng-container>
 
-  <!-- Lon Column -->
+  <!-- Kolom nilai kredit-->
   <ng-container matColumnDef="Butir.jmlPoin">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai</th>
-    <td mat-cell *matCellDef="let job" > {{job.Butir.jmlPoin}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Kredit</th>
+    <td mat-cell *matCellDef="let job" class="numeric" style="padding-right:5px"> {{job.Butir.jmlPoin}} </td>
   </ng-container>
 
-  <!-- CountryName Column -->
+  <!-- Kolom jumlah kegiatan -->
   <ng-container matColumnDef="butirVolume">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Volume Kegiatan</th>
-    <td mat-cell *matCellDef="let job" style="text-align:center">{{job.butirVolume}}
+    <td mat-cell *matCellDef="let job" class="numeric" style="padding-right:5px">{{job.butirVolume}}
     </td>
   </ng-container>
 
-    <!-- CountryName Column -->
+    <!-- Kolom catatan -->
     <ng-container matColumnDef="actNote">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
-      <td mat-cell *matCellDef="let job" style="text-align:center">{{job.actNote ?? '-'}}
+      <th mat-header-cell *matHeaderCellDef mat-sort-header >Catatan</th>
+      <td mat-cell *matCellDef="let job" style="text-align:left;">{{job.actNote ?? '-'}}
       </td>
     </ng-container>
     
-    <!-- CountryName Column -->
-    <ng-container matColumnDef="aksi" fxAlign="left">
-      <th mat-header-cell *matHeaderCellDef >Opsi</th>
-      <td mat-cell *matCellDef="let job" style="text-align:center" fxLayoutGap="8px">
-        <button mat-raised-button (click)="uploadFile(job.id)">Upload Berkas</button>
-        <button mat-raised-button (click)="openForm(job,job.actType)"[disabled]="job.isCalculated" *ngIf="!job.isProposed">Ubah/Hapus</button>
-        <button mat-raised-button (click)="propose(job.id)" *ngIf="!job.isProposed">Ajukan</button>
+    <!-- Kolom tindakan -->
+    <ng-container matColumnDef="aksi" >
+      <th mat-header-cell *matHeaderCellDef style="width:180px;">Opsi</th>
+      <td mat-cell *matCellDef="let job" fxLayoutGap="8px" fxLayoutAlign="start stretch"
+        style="padding-right:5px; padding-left:5px;" >
+        <button mat-raised-button (click)="uploadFile(job.id)" *ngIf="!job.isProposed"
+          matTooltip="Klik untuk unggah laporan">Upload</button>
+        <button mat-raised-button (click)="openForm(job,job.actType)"[disabled]="job.isCalculated"
+          *ngIf="!job.isProposed" matTooltip="Klik untuk mengubah data laporan">Ubah/Hapus</button>
+        <button mat-raised-button (click)="propose(job.id)" *ngIf="!job.isProposed && job.hasFile"
+          matTooltip="Klik untuk ajukan berkas">Ajukan</button>
       </td>
     </ng-container>
     <!-- Khusus admin lihat si pembuat Column -->
     <ng-container matColumnDef="user" *ngIf="isAdmin">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
-      <td mat-cell *matCellDef="let job" style="text-align:center">{{job.User.name}}
+      <td mat-cell *matCellDef="let job">{{job.User.name}} 
       </td>
     </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{ 'nofile' : !row.hasFile , 'selesaihitung': row.isCalculated}" ></tr>
 </table>
 <!-- Pagination directive -->
 <mat-paginator [hidden]="!jobs"
@@ -89,3 +88,21 @@
     [pageSizeOptions]="[10, 20, 50]"
     showFirstLastButtons></mat-paginator>
 ﻿
+<table class="keterangan">
+  <tr>
+    <th>Warna</th>
+    <th style="min-width:40px;height:auto">Keterangan</th>
+  </tr>
+  <tr >
+    <td class="nofile"></td>
+    <td>Belum Ada file diunggah</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Sudah ada file diunggah</td>
+  </tr>
+  <tr >
+    <td class="selesaihitung"></td>
+    <td>Sudah diperhitungkan</td>
+  </tr>
+</table>

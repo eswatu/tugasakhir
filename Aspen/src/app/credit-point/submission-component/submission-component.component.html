@@ -32,14 +32,18 @@
       <!--isi, daftar kegiatan-->
       <ol>
         <li *ngFor="let item of allAct[st]">
-          <p align="left" class="listedact" fxLayout="column">
-            {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
-            sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
-          </p>
-          <span></span>
-          <p align="right" fxLayout="column" class="listedact">
-            {{ getPoinCredit(item.Butir.jmlPoin , item.butirVolume) }}
-          </p>
+          <div fxLayout="row">
+            <div fxLayout="column" fxFlex="80">
+                  {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
+                  sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
+            </div>
+            <div fxLayout="column" fxFlex="10" fxLayoutAlign="right" id="nilai">
+                {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
+            </div>
+            <div fxLayout="column" fxFlex="10">
+              <button mat-flat-button (click)="lihatFile(item.id)">Lihat File</button>
+            </div>
+          </div>
         </li>
       </ol>
     </mat-expansion-panel>
