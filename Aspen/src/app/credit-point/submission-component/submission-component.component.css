@@ -1,4 +1,6 @@
-.mat-card {
+.textarea {
+    min-width:800px;
+}.mat-card {
     border: 1px solid
 }
 .listedact {
@@ -9,6 +11,10 @@
     color: coral;
     text-align: center;
 }
-#nilai {
+.nilai {
     font-size:x-large;
 }
+mat-form-field {
+    width: 90%;
+    margin-left: 4%;
+  }

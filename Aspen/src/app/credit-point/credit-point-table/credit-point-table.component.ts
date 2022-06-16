@@ -115,16 +115,28 @@ export class CreditPointTableComponent implements OnInit {
   }
   
   propose(id:number) {
-    this.actService.propose(id).subscribe(result => {
-      Swal.fire({
-        title: result,
-        confirmButtonText: 'Okay'
-      }).then((result)=> {
-        if (result.isConfirmed) {
-          this.loadData(null);
-        }
-      });
-    }, error => console.error(error));
+    Swal.fire({
+      title: 'Yakin Mengajukan?',
+      text: "Pastikan isian sudah sesuai",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, ajukan!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.actService.propose(id).subscribe(result => {
+          Swal.fire({
+            title: result,
+            confirmButtonText: 'Okay'
+          }).then((result)=> {
+            if (result.isConfirmed) {
+              this.loadData(null);
+            }
+          });
+        }, error => console.error(error));
+      }
+    })
   }
 
   uploadFile(nomor: Number){

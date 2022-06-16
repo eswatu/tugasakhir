@@ -6,19 +6,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 table {
     width: 90%;
     justify-content: center;
-    border: 2px solid black;
     margin-left: auto;
     margin-right: auto;    
 }
 table tr th {
-    border-right: 1px solid;
     align-items: center;
     justify-content: center;
     text-align: center !important;
     vertical-align: middle !important;
 }
 table tr td {
-    border-right: 1px solid;
     padding-top:2px;
     padding-bottom: 2px;
 }
@@ -39,4 +36,13 @@ button {
     padding-bottom: 2px;
     padding-left: 2px;
     padding-right: 2px;
+}
+.nofile {
+    background-color: rgb(255, 46, 99)
+}
+.normal {
+    background-color: rgb(234, 234, 234);
+}
+.selesai {
+    background-color:rgb(8, 217, 214)
 }

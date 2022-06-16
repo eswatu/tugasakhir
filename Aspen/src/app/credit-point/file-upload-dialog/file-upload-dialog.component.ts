@@ -72,12 +72,7 @@ export class FileUploadDialogComponent implements OnInit {
         this.actService.deletefile(id).subscribe(result => {
           console.log(result);
           if (result) {
-            Swal.fire(
-              'Terhapus!',
-              result,
-              'success'
-            )
-            this.closeDialog();
+            this.closeDialog(result);
           }
         })
       }
@@ -128,7 +123,7 @@ export class FileUploadDialogComponent implements OnInit {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
+              this.closeDialog(event.body);
             }
           },
           error: (err: any) => {
@@ -149,12 +144,7 @@ export class FileUploadDialogComponent implements OnInit {
             if (event.type === HttpEventType.UploadProgress) {
               this.progress = Math.round(100 * event.loaded / event.total);
             } else if (event instanceof HttpResponse) {
-              Swal.fire(
-                'Berhasil!',
-                event.body,
-                'success'
-              )
-              this.closeDialog();
+              this.closeDialog(event.body);
             }
             console.log(event);
           },
@@ -176,7 +166,12 @@ export class FileUploadDialogComponent implements OnInit {
     }
     this.ngOnInit();
   }
-  closeDialog(){
+  closeDialog(masukan:string){
+    Swal.fire(
+      'Berhasil!',
+      masukan,
+      'success'
+    )
     this.currentLetterInfos = null;
     this.dialogRef.close();
   }

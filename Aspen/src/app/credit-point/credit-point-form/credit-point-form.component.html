@@ -59,14 +59,14 @@
         <mat-hint>Contoh: Pekerjaan kemarin</mat-hint>
     </mat-form-field>
 
-    <div fxLayoutGap="12px">
-        <button type="submit" mat-raised-button color="primary" 
-        [disabled]="formInput.invalid" fxFlex="20"
-        class="btn btn-success" (click)="onSubmit()" *ngIf="!id">Buat Data</button>
-        <button type="submit" mat-raised-button color="accent" *ngIf="id"
-        [disabled]="formInput.invalid" fxFlex="20"
-        class="btn btn-success" (click)="onSubmit()">Ubah Data</button>
-        <button type="cancel" mat-raised-button fxFlex="10" color="accent"(click)='closeDialog()' >Batal</button>
-        <button mat-raised-button fxFlex="30" end color="warn" (click)='hapusPekerjaan()' *ngIf="id">Hapus Pekerjaan</button>
-    </div>
 </form>
+<div fxLayoutGap="12px">
+    <button type="submit" mat-raised-button color="primary" 
+    [disabled]="formInput.invalid" fxFlex="20"
+    class="btn btn-success" (click)="onSubmit()" *ngIf="!id">Buat Data</button>
+    <button type="submit" mat-raised-button color="accent" *ngIf="id"
+    [disabled]="formInput.invalid" fxFlex="20"
+    class="btn btn-success" (click)="onSubmit()">Ubah Data</button>
+    <button type="cancel" mat-raised-button fxFlex="10" color="accent"(click)='closeDialog()' >Batal</button>
+    <button mat-raised-button fxFlex="30" end color="warn" (click)='hapusPekerjaan()' *ngIf="id">Hapus Pekerjaan</button>
+</div>

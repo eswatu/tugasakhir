@@ -25,7 +25,7 @@
           </div>
           <span fxFlex stretch></span>
           <div fxLayout="column">
-            <b>{{getPoinPerAssignLetter(st)}}</b>
+            <b>{{getPoinPerAssignLetter(st) | number:'0.1-4'}}</b>
           </div>
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -33,15 +33,21 @@
       <ol>
         <li *ngFor="let item of allAct[st]">
           <div fxLayout="row">
-            <div fxLayout="column" fxFlex="80">
+            <div fxLayout="column" fxFlex="1 0 400px">
                   {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
                   sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
             </div>
-            <div fxLayout="column" fxFlex="10" fxLayoutAlign="right" id="nilai">
+            <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
                 {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
             </div>
-            <div fxLayout="column" fxFlex="10">
-              <button mat-flat-button (click)="lihatFile(item.id)">Lihat File</button>
+            <div fxLayout="column" fxFlex="1 0 10px">
+              <button mat-raised-button (click)="rejectAct(item.id)" color="warn">Kembalikan</button>
+            </div>
+            <div fxLayout="column" fxFlex="1 0 10px" >
+              <button mat-raised-button (click)="lihatFile(item.id)">Lihat File</button>
+            </div>
+            <div fxLayout="column" fxFlex="1 0 10px">
+              <button mat-raised-button (click)="approve(item.id)" color="primary" *ngIf="!item.approved">Terima</button>
             </div>
           </div>
         </li>
@@ -65,8 +71,16 @@
         </div>
       </div>
     </div>
-    <div *ngIf="isAdmin == true">
-      <p>approve saja</p>
+    <div *ngIf="isAdmin == true" >
+      <mat-form-field>
+        <mat-label>Catatan:</mat-label>
+        <textarea matInput type="text" id="subNote" [formControl]="subNote" cdkTextareaAutosize
+        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
+      <h2 class="nilai">
+        Jumlah diterima:<b style="color:rgb(16, 196, 16);font-style: bold;"> {{approveValue | number:'0.1-4'}} / {{totalValue | number:'0.1-4'}}</b>
+      </h2>
+      <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary">Terima Pengajuan</button>
     </div>
   </mat-card-actions>
 </mat-card>

@@ -1,3 +1,10 @@
+table {
+    border: 2px solid black;
+    border-right: 1px solid;
+}
+td, th {
+    border-right: 1px solid;
+}
 .mat-paginator {
     display: flex;
     justify-content: center;
@@ -5,9 +12,6 @@
 .mat-cell {
     padding-left: 5px;
     padding-right: 5px;
-}
-.nofile {
-    background-color: coral;
 }
 .tleft {
     text-align: left;

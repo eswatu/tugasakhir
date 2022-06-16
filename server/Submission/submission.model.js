@@ -12,7 +12,6 @@ function model(sequelize) {
         subNote: {type: DataTypes.STRING, allowNull: true},
         isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true},
         isSubmitted: {type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false},
-        subScoreApproved: {type:DataTypes.FLOAT, allowNull:true}
     };
     return sequelize.define('Submission', attributes);
 }

@@ -103,7 +103,7 @@ export class AssignLetterTableComponent implements OnInit {
       dialogConfig.data = {  id: al.id};
     }
     const dialogRef = this.dialog.open(AssignLetterFormComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(() => this.loadData() );
+    dialogRef.afterClosed().subscribe(() => this.loadData(null) );
   }
   uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();

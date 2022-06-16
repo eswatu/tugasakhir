@@ -65,7 +65,7 @@ ngOnInit() {
 
 getAssignLetterList(){
   //ambil daftar surat tugas yang aktif
-  this.assignLetterService.getData(0,20,"ltDate","asc","ltActive","true")
+  this.assignLetterService.getData(0,20,"ltDate","asc","ltActive", "1")
   .subscribe( result => {
     this.surattugas = result['data'];
   });

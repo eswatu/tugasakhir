@@ -1,5 +1,6 @@
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act } from '@env/model';
 import { submission } from '@env/model/submission';
@@ -21,17 +22,22 @@ export class SubmissionComponentComponent implements OnInit {
   @Input() target: number;
 
   allAct;
+  defaultActs;
   allAssignLetter;
   totalValue;
+  approveValue = 0;
 
   private dialogRef = null;
   private dialogData;
+  subNote = new FormControl('');
+
   constructor(private actService: ActService,
     private subMService: SubmissionService,
     private injector: Injector,
     public dialog: MatDialog) {
       this.dialogRef = this.injector.get(MatDialogRef, null);
       this.dialogData = this.injector.get(MAT_DIALOG_DATA, null);
+
       if (this.dialogData) {
         this.submission = this.dialogData.sub;
         this.target = this.dialogData.target;
@@ -49,13 +55,15 @@ export class SubmissionComponentComponent implements OnInit {
 
   loadAll(){
     this.actService.getBySub(this.submission.id).subscribe(result => {
+          result.forEach(item => item['approved'] = false);
+          this.defaultActs = result;
+          console.log(result);
           this.allAct = this.groupItemBy(result, 'AssignmentLetter.ltNumber');
           this.allAssignLetter = this.getTitle(this.allAct);
           this.totalValue = 0;
           this.allAssignLetter.forEach((item) => {
             this.totalValue += this.getPoinPerAssignLetter(item);
           })
-
     }, err => console.error(err));
   }
 
@@ -117,6 +125,61 @@ this.subMService.submitSub(this.submission.id).subscribe(res => {
   Swal.fire(res);
 }, error => console.error(error));
 this.loadAll();
+}
+
+rejectAct(id:number){
+  Swal.fire({
+    title: 'Yakin Mengembalikan?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, Kembalikan!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.actService.propose(id).subscribe(() => {
+        Swal.fire({
+          title: 'Sudah ditolak, muat ulang menu dialog ini.',
+          confirmButtonText: 'Okay'
+        });
+      }, error => console.error(error));
+    }
+  })
+  this.allAct = null;
+  this.allAssignLetter = null;
+  this.totalValue = null;
+  this.loadAll();
+}
+approve(id) {
+  Swal.fire({
+    title: 'Yakin terima hasil pekerjaan ini?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, Terima!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const aksi :act = this.defaultActs.find(item => item.id == id);
+      this.approveValue += this.getPoinCredit(aksi.Butir.jmlPoin, aksi.butirVolume);
+      aksi['approved'] = true;
+      this.defaultActs = this.defaultActs.map(obj => {
+        if (obj.id == id) {
+          return {... obj, approved: true};
+        }
+        return obj;
+      });
+      console.log('id adalah ' + id + ' dan jumlah appove = ' + this.approveValue);
+    }
+  })
+  }
+
+approveSubmission() {
+this.submission.subNote = this.subNote.value;
+this.submission.subScore = this.approveValue;
+this.subMService.approveSub(this.submission).subscribe(res => {
+  console.log(res);
+});
 }
 
 }

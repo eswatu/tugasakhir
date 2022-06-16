@@ -1,19 +1,20 @@
+table {
+    border: 2px solid black;
+    border-right: 1px solid;
+}
 td , th {
     white-space: normal;
     max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
+    border-right: 1px solid;
+
 }
 .mat-paginator {
     display: flex;
     justify-content: center;
 }
-.nofile {
-    background-color: coral;
-}
-.selesaihitung {
-    background-color:rgb(28, 223, 206)
-}
+
 .keterangan {
     max-width: 200px;
     border: 2px solid black;

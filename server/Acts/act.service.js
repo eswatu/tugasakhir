@@ -81,24 +81,27 @@ async function propose(req) {
 
     let result;
     if (act != null && sub != null) {
+        let msg;
         if (act.isProposed) {
             act.proposeDate = null;
             act.isProposed = false;
-            act.SubId = null;
+            msg = 'sukses menolak';
         } else {
             act.proposeDate = new Date();
             act.isProposed = true;
             //ini ganti nanti ke user
             act.SubId = sub.id;
+            msg = 'sukses mengajukan';
         }
         subService.calcSubScore(sub.id);
         await act.save();
-        result = 'sukses mengajukan';
+        result = msg;
     } else {
         result = 'gagal mengajukan. tidak ada pengajuan';
     }
     return result;
 }
+
 
 async function updateAct(id, params) {
     const act = await getActById(id);
@@ -129,7 +132,7 @@ async function getActByDate(ds,de) {
 }
 async function getActBySubId(sid) {
     const acts = await db.Act.findAll(
-        {   where: { SubId: sid},
+        {   where: { SubId: sid, isProposed: true, isCalculated: false},
             include: [{model: db.AssignLetter}, {model: db.Butir} ]
         });
     if (acts) {

@@ -11,6 +11,7 @@ router.get('/', authorize(), getAll);
 router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), updateSchema, update);
 router.post('/submit/:id', authorize(), submitSub);
+router.put('/approve/:id', authorize(), approveSub);
 router.delete('/:id', authorize(), _delete);
 
 module.exports = router;
@@ -69,4 +70,8 @@ function submitSub(req, res, next) {
         .then(result => res.json(result))
         .catch(next);
 }
-
+function approveSub(req, res, next) {
+    subService.approveSubmission(req.params.id, req.body, req.headers)
+        .then(result => res.json(result))
+        .catch(next);
+}

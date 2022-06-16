@@ -16,11 +16,11 @@
 
 <table mat-table [dataSource]="jobs" class="mat-elevation-z16" [hidden]="!jobs"
     matSort (matSortChange)="loadData()"
-    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
+    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder" >
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 2em;">Nomor</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1%;">Nomor</th>
     <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
   </ng-container>
 
@@ -63,10 +63,10 @@
       <th mat-header-cell *matHeaderCellDef style="width:180px;">Opsi</th>
       <td mat-cell *matCellDef="let job" fxLayoutGap="8px" fxLayoutAlign="start stretch"
         style="padding-right:5px; padding-left:5px;" >
-        <button mat-raised-button (click)="uploadFile(job.id)" *ngIf="!job.isProposed"
+        <button mat-raised-button (click)="uploadFile(job.id)" *ngIf="!job.isProposed && !job.hasFile"
           matTooltip="Klik untuk unggah laporan">Upload</button>
-        <button mat-raised-button (click)="openForm(job,job.actType)"[disabled]="job.isCalculated"
-          *ngIf="!job.isProposed" matTooltip="Klik untuk mengubah data laporan">Ubah/Hapus</button>
+        <button mat-raised-button (click)="openForm(job,job.actType)" *ngIf="!job.isProposed || job.isCalculated"
+          matTooltip="Klik untuk mengubah data laporan">Ubah/Hapus</button>
         <button mat-raised-button (click)="propose(job.id)" *ngIf="!job.isProposed && job.hasFile"
           matTooltip="Klik untuk ajukan berkas">Ajukan</button>
       </td>
@@ -78,8 +78,9 @@
       </td>
     </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{ 'nofile' : !row.hasFile , 'selesaihitung': row.isCalculated}" ></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color:rgb(234, 234, 234);"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+  [ngClass]="{ 'nofile' : !row.hasFile ,'normal': row.isProposed, 'selesai': row.isCalculated}"></tr>
 </table>
 <!-- Pagination directive -->
 <mat-paginator [hidden]="!jobs"
@@ -102,7 +103,7 @@
     <td>Sudah ada file diunggah</td>
   </tr>
   <tr >
-    <td class="selesaihitung"></td>
-    <td>Sudah diperhitungkan</td>
+    <td class="selesai"></td>
+    <td >Sudah diperhitungkan</td>
   </tr>
 </table>

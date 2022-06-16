@@ -12,8 +12,8 @@
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nomor</th>
-    <td mat-cell *matCellDef="let al" class="tright"> {{al.id}}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1% !important;">Nomor</th>
+    <td mat-cell *matCellDef="let al" class="tcenter">{{al.id}}</td>
   </ng-container>
 
   <!-- Nomor Surat -->
@@ -31,7 +31,7 @@
   <!-- Tanggal Mulai -->
   <ng-container matColumnDef="ltDateStart">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Mulai</th>
-    <td mat-cell *matCellDef="let al" class="tcenter"> {{al.ltDateStart | date: 'dd-MM-yy'}}</td>
+    <td mat-cell *matCellDef="let al" class="tcenter">{{al.ltDateStart | date: 'dd-MM-yy'}}</td>
   </ng-container>
 
   <!-- Tanggal Selesai Column -->
@@ -43,12 +43,12 @@
   <!-- Shared? -->
   <ng-container matColumnDef="ltShare">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Dibagikan?</th>
-    <td mat-cell *matCellDef="let al" > {{al.ltShare ? 'Ya' : 'Tidak'}}</td>
+    <td mat-cell *matCellDef="let al" class="tcenter" >{{al.ltShare ? 'Ya' : 'Tidak'}}</td>
   </ng-container>
     <!-- Active? -->
     <ng-container matColumnDef="ltActive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Aktif?</th>
-      <td mat-cell *matCellDef="let al" class="tcenter"> {{al.ltActive ? 'Ya' : 'Tidak'}}</td>
+      <td mat-cell *matCellDef="let al" class="tcenter">{{al.ltActive ? 'Ya' : 'Tidak'}}</td>
     </ng-container>
     <!-- Catatan -->
     <ng-container matColumnDef="ltNote">
@@ -60,7 +60,7 @@
     <!-- CountryName Column -->
     <ng-container matColumnDef="aksi">
       <th mat-header-cell *matHeaderCellDef>Opsi</th>
-      <td mat-cell *matCellDef="let al" style="text-align:center">
+      <td mat-cell *matCellDef="let al" style="text-align:center" fxLayoutAlign="start stretch">
         <button mat-raised-button (click)="uploadFile(al.id)" *ngIf="editable(al.UserId)">Upload Berkas {{al.assignFileId}}</button>
         <button mat-raised-button [disabled]="al.isCalculated" (click)="openForm(al)" *ngIf="editable(al.UserId)">Ubah Data</button>
       </td>
@@ -68,11 +68,11 @@
     <!-- Pembuat? -->
     <ng-container matColumnDef="user" *ngIf="isAdmin">
       <th mat-header-cell *matHeaderCellDef>Pembuat Surat</th>
-      <td mat-cell *matCellDef="let al" > {{al.User.name}}</td>
+      <td mat-cell *matCellDef="let al">{{al.User.name}}</td>
     </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'nofile':!row.hasFile}"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'nofile':!row.hasFile, 'selesai': !row.ltActive}"></tr>
 </table>
 <!-- Pagination directive -->
 <mat-paginator [hidden]="!asgnLtrs"

@@ -11,7 +11,8 @@ module.exports = {
     deleteAct: _delete,
     getActiveSubmission,
     submitSub,
-    calcSubScore
+    calcSubScore,
+    approveSubmission
 };
 
 
@@ -127,18 +128,23 @@ async function submitSub(id) {
         await sub.save();
         return 'Berhasil mengajukan penilaian';
     } else {
-
         throw 'pengajuan tidak valid id';
     }
 }
 
-async function approveSubmission(req) {
-    const sub = getSubmissionById(parseInt(req.params.id));
-    if (sub) {
-        sub.subScore = req.body.score;
-        sub.subNote = re.body.subNote;
+async function approveSubmission(id, params, headers) {
+    const adm = headers.userrole;
+    const sub = await getSubmissionById(id);
+    if (sub && adm === 'Admin') {
+        Object.assign(sub, params);
+        await sub.update({dateApproved: new Date(), isActive: false});
+        await sub.save();
+        return 'berhasil menerima pengajuan';
+    } else {
+        throw 'gagal terima pengajuan';
     }
 }
+
 //id untuk id submission, level untuk jenjang user.
 async function calcSubScore(id){
     let sub = await db.Submission.findByPk(id);

@@ -83,7 +83,7 @@ export class SubmissionListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.restoreFocus; true;
-    dialogConfig.minWidth = 400;
+    dialogConfig.minWidth = 300;
     dialogConfig.minHeight = 400;
         const dialogRef = this.dialog.open(SubmissionFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.loadData() );
