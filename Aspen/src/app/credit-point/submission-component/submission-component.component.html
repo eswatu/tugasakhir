@@ -80,7 +80,7 @@
       <h2 class="nilai">
         Jumlah diterima:<b style="color:rgb(16, 196, 16);font-style: bold;"> {{approveValue | number:'0.1-4'}} / {{totalValue | number:'0.1-4'}}</b>
       </h2>
-      <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary">Terima Pengajuan</button>
+      <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary" *ngIf="submission.isActive">Terima Pengajuan</button>
     </div>
   </mat-card-actions>
 </mat-card>

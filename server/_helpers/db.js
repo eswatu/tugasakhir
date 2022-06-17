@@ -50,5 +50,5 @@ async function initialize() {
     db.Submission.belongsToMany(db.AssignLetter, {through: 'SubAssign', timestamps: false });
 
     //sync model dengan database
-    await sequelize.sync({alter: true});
+    await sequelize.sync({alter: false});
 }

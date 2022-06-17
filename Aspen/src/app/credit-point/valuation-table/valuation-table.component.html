@@ -26,25 +26,25 @@
   <!-- Tanggal Pengajuan -->
   <ng-container matColumnDef="subDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Pengajuan</th>
-    <td mat-cell *matCellDef="let sub">{{sub.subDate | date:'dd-MM-yyyy'}} </td>
+    <td mat-cell *matCellDef="let sub" class="tcenter">{{sub.subDate | date:'dd-MM-yyyy'}} </td>
   </ng-container>
 
   <!-- Nama yang mengajukan -->
   <ng-container matColumnDef="subOwner">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Pegawai</th>
-    <td mat-cell *matCellDef="let sub" > {{sub.User.name}} </td>
+    <td mat-cell *matCellDef="let sub"  > {{sub.User.name}} </td>
   </ng-container>
 
   <!-- Catatan -->
   <ng-container matColumnDef="subNote">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan Pengajuan</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
     <td mat-cell *matCellDef="let sub" style="text-align:center">{{sub.subNote ?? '-'}}
     </td>
   </ng-container>
 
     <!-- Nilai Diterima -->
     <ng-container matColumnDef="subScore">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Diterima</th>
       <td mat-cell *matCellDef="let sub" style="text-align:center"
             >{{sub.subScore}}
       </td>

@@ -17,7 +17,8 @@ async function getAllAL(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.AssignLetter;
-    
+    console.log(' isi kolom ' + filterColumn + ' dan query '+ filterQuery);
+    console.log('jenis ' + typeof(filterColumn) + ' dan ' + typeof(filterQuery));
     return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 async function getALById(id) {

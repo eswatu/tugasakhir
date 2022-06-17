@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 module.exports =  {
     paginate,
     paging
@@ -10,7 +12,7 @@ async function paginate(model, pageIndex, pageSize,
     const take = parseInt(pageSize) || 10;
     const skip = page  * take;
     let options = {};
-    
+    let filter = { UserId: uid};
     if (sortOrder.length < 1) { 
         sortOrder = "ASC";
     }
@@ -19,16 +21,6 @@ async function paginate(model, pageIndex, pageSize,
     } else if (sortOrder.toUpperCase() == 'DESC') {
         options = { order: [[sortColumn, 'DESC']] }
     } 
-    
-    if (filterQuery && filterColumn) {
-        if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
-            if (typeof(parseInt(filterQuery)) == "number") {
-                options = { filterColumn: parseInt(filterQuery) };
-            } else {
-            options = { filterColumn: filterQuery };
-            }
-        }
-    }
     let myOrder;
     if (sortColumn.includes('.')) {
         const splitedcolumn = sortColumn.split('.');
@@ -36,9 +28,24 @@ async function paginate(model, pageIndex, pageSize,
     } else {
         myOrder = [sortColumn, sortOrder.toUpperCase()];
     }
+   if (filterColumn && filterQuery) {
+        if (filterQuery != "" && filterColumn != "") {                
+                if (!isNaN(filterQuery)) {
+                    filter[filterColumn] = parseInt(filterQuery);
+                } else if (filterQuery === 'true' || filterQuery === 'false') {
+                    if (filterQuery === 'true') {
+                        filter[filterColumn] = true;
+                    } else {
+                        filter[filterColumn] = false;
+                    }
+                } else {
+                    filter[filterColumn] = {[Op.substring] : filterQuery };
+                }
+        }
+    }
 
     const { count, rows } = await model.findAndCountAll({
-        where: { UserId : uid},
+        where: filter,
         include: {all: true},
         subQuery: false,
         offset: skip,
@@ -63,6 +70,7 @@ async function paginate(model, pageIndex, pageSize,
         filterQuery: filterQuery
     };
 }
+
 async function paging(model, pageIndex, pageSize,
     sortColumn = 'id', sortOrder = "ASC" ,
     filterColumn, filterQuery)
@@ -71,7 +79,8 @@ async function paging(model, pageIndex, pageSize,
     const take = parseInt(pageSize) || 10;
     const skip = page  * take;
     let options = {};
-    
+    let filter = {};
+
     if (sortOrder.length < 1) { 
         sortOrder = "ASC";
     }
@@ -81,15 +90,6 @@ async function paging(model, pageIndex, pageSize,
         options = { order: [[sortColumn, 'DESC']] }
     } 
     
-    if (filterQuery && filterColumn) {
-        if (filterQuery.length > 0 && filterQuery != undefined || filterQuery != "" && filterColumn != "") {
-            if (typeof(parseInt(filterQuery)) == "number") {
-                options = { filterColumn: parseInt(filterQuery) };
-            } else {
-            options = { filterColumn: filterQuery };
-            }
-        }
-    }
     let myOrder;
     if (sortColumn.includes('.')) {
         const splitedcolumn = sortColumn.split('.');
@@ -97,7 +97,24 @@ async function paging(model, pageIndex, pageSize,
     } else {
         myOrder = [sortColumn, sortOrder.toUpperCase()];
     }
+    if (filterColumn && filterQuery) {
+        if (filterQuery != "" && filterColumn != "") {                
+                if (!isNaN(filterQuery)) {
+                    filter[filterColumn] = parseInt(filterQuery);
+                } else if (filterQuery === 'true' || filterQuery === 'false') {
+                    if (filterQuery === 'true') {
+                        filter[filterColumn] = true;
+                    } else {
+                        filter[filterColumn] = false;
+                    }
+                } else {
+                    filter[filterColumn] = {[Op.substring] : filterQuery };
+                }
+        }
+    }
+
     const { count, rows } = await model.findAndCountAll({
+        where: filter,
         include: {all: true},
         subQuery: false,
         offset: skip,

@@ -30,7 +30,7 @@ const uploadFiles = async (req, res) => {
                 updatedAt: new Date(),
                 AssignLetterId: uid
                 });
-                  fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
+                  //fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
                   return `Sukses menambahkan File.`;
                 };
       } catch (error) {
