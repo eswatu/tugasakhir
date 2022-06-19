@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [ngClass]="{'normal': submission.isSubmitted, 'selesai': !submission.isActive && submission.dateApproved}">
   <div fxLayout="row">
     <div fxLayout="column" fxLayoutAlign="center start">
       <mat-card-title>{{submission.subName}}</mat-card-title>
@@ -7,7 +7,7 @@
     </div>
     <span fxFlex></span>
     <div fxLayout="column" fxLayoutAlign="center end">
-      <button mat-stroked-button color="accent" *ngIf="isSubmitted == false " (click)="edit()">Ubah</button>
+      <button mat-stroked-button color="accent" *ngIf="!submission.isSubmitted && submission.isActive && submission.dateApproved == null" (click)="edit()">Ubah</button>
     </div>
   </div>
   <mat-card-content>
@@ -40,38 +40,60 @@
             <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
                 {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
             </div>
-            <div fxLayout="column" fxFlex="1 0 10px">
+            <div *ngIf="isAdmin">
               <button mat-raised-button (click)="rejectAct(item.id)" color="warn">Kembalikan</button>
-            </div>
-            <div fxLayout="column" fxFlex="1 0 10px" >
               <button mat-raised-button (click)="lihatFile(item.id)">Lihat File</button>
-            </div>
-            <div fxLayout="column" fxFlex="1 0 10px">
               <button mat-raised-button (click)="approve(item.id)" color="primary" *ngIf="!item.approved">Terima</button>
             </div>
-          </div>
+            </div>
         </li>
       </ol>
     </mat-expansion-panel>
   </li>
 </ol>
   </mat-card-content>
-  <mat-card-actions>
     <div *ngIf="isAdmin == false">
       <div fxLayout="row">
-        <div fxLayout="column">
-          <button mat-button *ngIf="isSubmitted == false" (click)="submitSub()">Ajukan</button>
-          <h3 *ngIf="isSubmitted == true" color="green">Sudah Diajukan</h3>
+        <!--belum selesai-->
+        <div *ngIf="submission.isActive">
+          <!--tombol pengajuan bila belum diajukan-->
+          <div fxLayout="column">
+            <button mat-raised-button *ngIf="!submission.isSubmitted && !submission.dateApproved" (click)="submitSub()">Ajukan</button>
+            <!--tulisan status kalau sudah diajukan-->
+            <div *ngIf="submission.isSubmitted && !submission.dateApproved">
+                Sudah diajukan: Menunggu Penilaian
+            </div>
+          </div>
+          <span fxFlex stretch></span>
+          <div fxLayout="column" *ngIf="!submission.dateApproved">
+            <mat-card-subtitle>Jumlah pengajuan saat ini: {{totalValue}}</mat-card-subtitle>
+          </div>
         </div>
-        <span fxFlex stretch>
-          <h3 *ngIf="submission.isSubmitted == true && submission.subScoreApproved == null" id="wait">Menunggu Approval</h3>
-        </span>
-        <div fxLayout="column">
-          <mat-card-subtitle>Jumlah pengajuan saat ini: {{totalValue}}</mat-card-subtitle>
+        <!--sudah selesai-->
+        <div fxLayout="column" *ngIf="!submission.isSubmitted && !submission.isActive && submission.dateApproved != null">
+          <div fxLayout="row">
+            <div fxLayout="column">
+              <mat-card-subtitle>
+                <h3>
+                  Tanggal penilaian: {{submission.dateApproved | date:'dd-MMM-yyyy'}}
+                </h3>
+              </mat-card-subtitle>
+            </div>
+            <span fxFlex stretch>
+              <h1 style="font-weight:bold">Selesai Diproses</h1>
+            </span>
+            <div fxLayout="column" >
+              <mat-card-subtitle>
+                <h3>
+                 <b>Jumlah Diterima: {{submission.subScore}}</b>
+                </h3>
+              </mat-card-subtitle>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div *ngIf="isAdmin == true" >
+    <div *ngIf="isAdmin" >
       <mat-form-field>
         <mat-label>Catatan:</mat-label>
         <textarea matInput type="text" id="subNote" [formControl]="subNote" cdkTextareaAutosize
@@ -82,5 +104,4 @@
       </h2>
       <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary" *ngIf="submission.isActive">Terima Pengajuan</button>
     </div>
-  </mat-card-actions>
 </mat-card>

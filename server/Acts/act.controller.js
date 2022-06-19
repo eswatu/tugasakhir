@@ -32,8 +32,10 @@ function createSchema(req, res, next) {
 }
 function create(req, res, next) { 
     actService.createAct(req)
-        .then(() => res.json({ message: "Sukses Input Kegiatan" }))
-        .catch(next);
+        .then((r) => { 
+            res.json(r)
+        })
+        .catch(next);       
 }
 
 function getAll(req, res, next) {
@@ -65,14 +67,14 @@ function updateSchema(req, res, next) {
 }
 
 function update(req, res, next) {
-    actService.updateAct(req.params.id, req.body)
-        .then(() => res.json({ message: 'Kegiatan Berhasil Diubah' }))
+    actService.updateAct(req)
+        .then((r) => res.json(r))
         .catch(next);
 }
 
 function _delete(req, res, next) {
-    actService.delete(req.params.id)
-        .then(() => res.json({ message: 'Kegiatan Sudah Terhapus' }))
+    actService.deleteAct(req.params.id)
+        .then(r => res.json(r))
         .catch(next);
 }
 function getBySubId(req, res, next){
@@ -80,7 +82,3 @@ function getBySubId(req, res, next){
     .then(result => res.json(result))
     .catch(next);
 }
-
-/*
-.format(["DD/MM/YYYY","DD-MM-YY"])
-*/

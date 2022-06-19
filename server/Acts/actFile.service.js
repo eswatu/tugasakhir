@@ -6,7 +6,6 @@ const uploadFiles = async (req, res) => {
           if (req.file == undefined) {
             return res.send(`You must select a file.`);
           }
-          console.log('isi dari assign file' + JSON.stringify(req.params.id));
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
           let uid = parseInt(req.params.id);
             //Tambah File
@@ -46,6 +45,7 @@ const deleteFile = async(req,res) => {
     return res.json('invalid file');
   }
 }
+
 const downloadFile = async (req, res) => {
   let uid = parseInt(req.params.id);
   const file = await db.ActFile.scope('withData').findByPk(uid);
@@ -89,5 +89,5 @@ module.exports = {
     getdocument,
     downloadFile,
     getFiles,
-    deleteFile
+    deleteFile,
   };

@@ -22,6 +22,7 @@ import { SubmissionComponentComponent } from './submission-component/submission-
 import { SubmissionFormComponent } from './submission-form/submission-form.component';
 import { ValuationTableComponent } from './valuation-table/valuation-table.component';
 
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'MM/DD/YYYY'

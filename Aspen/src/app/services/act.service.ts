@@ -39,6 +39,10 @@ export class ActService extends BaseService {
     var myUrl = this.url + item.id;
     return this.http.put<act>(myUrl, item);
   }
+  delete<act>(id:number): Observable<act> {
+    var myUrl = this.url + id;
+    return this.http.delete<act>(myUrl);
+  }
   post<act>(item: act): Observable<any> {
     return this.http.post<act>(this.url, item);
   }

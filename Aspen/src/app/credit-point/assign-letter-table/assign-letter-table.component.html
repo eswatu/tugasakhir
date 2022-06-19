@@ -42,8 +42,11 @@
 
   <!-- Shared? -->
   <ng-container matColumnDef="ltShare">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Dibagikan?</th>
-    <td mat-cell *matCellDef="let al" class="tcenter" >{{al.ltShare ? 'Ya' : 'Tidak'}}</td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+    <td mat-cell *matCellDef="let al" class="tcenter" >
+      <mat-icon *ngIf="!al.hasFile">report_problem</mat-icon>
+      <mat-icon *ngIf="al.hasFile">thumb_up</mat-icon>
+    </td>
   </ng-container>
     <!-- Active? -->
     <ng-container matColumnDef="ltActive">
@@ -63,6 +66,7 @@
       <td mat-cell *matCellDef="let al" style="text-align:center" fxLayoutAlign="start stretch">
         <button mat-raised-button (click)="uploadFile(al.id)" *ngIf="editable(al.UserId)">Upload Berkas {{al.assignFileId}}</button>
         <button mat-raised-button [disabled]="al.isCalculated" (click)="openForm(al)" *ngIf="editable(al.UserId)">Ubah Data</button>
+
       </td>
     </ng-container>
     <!-- Pembuat? -->
@@ -81,3 +85,7 @@
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons></mat-paginator>
 ﻿
+<h2>Informasi:</h2>
+<ol>
+  <li *ngFor="let rule of rules">{{rule}}</li>
+</ol>

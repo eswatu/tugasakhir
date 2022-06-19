@@ -16,7 +16,7 @@ import { SubmissionComponentComponent } from '../submission-component/submission
 export class ValuationTableComponent implements OnInit {
   isAdmin;
 
-  public displayedColumns = ['nomor','subOwner','subName','subDate','subNote','subScore'];
+  public displayedColumns = ['nomor','subName','subDate','subOwner','subNote','subScore'];
   public aspenSubmissions: MatTableDataSource<submission>;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;

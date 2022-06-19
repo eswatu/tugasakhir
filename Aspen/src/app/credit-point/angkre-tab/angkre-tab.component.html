@@ -1,20 +1,20 @@
-<mat-tab-group>
-    <mat-tab label="Pekerjaan">
-        <ng-template matTabContent>
-            <credit-point-table></credit-point-table>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Surat Tugas">
-        <ng-template matTabContent>
-            <assign-letter-table></assign-letter-table>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Pengajuan">
+<mat-tab-group mat-stretch-tabs>
+    <mat-tab label="Pengajuan" *ngIf="!isAdmin">
         <ng-template matTabContent>
             <submission-list ></submission-list>
         </ng-template>
     </mat-tab>
-    <mat-tab label="Penilaian">
+    <mat-tab label="Pekerjaan" *ngIf="!isAdmin">
+        <ng-template matTabContent>
+            <credit-point-table></credit-point-table>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Surat Tugas" *ngIf="!isAdmin">
+        <ng-template matTabContent>
+            <assign-letter-table></assign-letter-table>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Penilaian" *ngIf="isAdmin">
         <ng-template matTabContent>
             <valuation-table></valuation-table>
         </ng-template>

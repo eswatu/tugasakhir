@@ -141,7 +141,7 @@ setButir(id:number) {
 
           console.log("isi dari act form keluar: ");
           console.log(this.act);
-          const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
+          const dialogRef2 = this.dialog.open(CreditPointFormComponent, dialogConfig);
           this.dialogRef.close();
       }
   }

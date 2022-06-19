@@ -48,9 +48,7 @@ export class SubmissionFormComponent implements OnInit {
       this.submission.subDate = this.formInput.get('subDate').value;
       this.submission.subNote = this.formInput.get('subNote').value;
       this.subService.put(this.submission).subscribe(res => {
-        Swal.fire(
-          res
-        )
+        if (res) Swal.fire(res.message)
       });
     } else {
       this.submission = <submission>{}
@@ -58,9 +56,7 @@ export class SubmissionFormComponent implements OnInit {
         this.submission.subDate = this.formInput.get('subDate').value;
         this.submission.subNote = this.formInput.get('subNote').value;
         this.subService.post(this.submission).subscribe(res => {
-          Swal.fire(
-            res
-          )
+          if (res) Swal.fire(res)
         }, error => {
           console.error(error);
           Swal.fire({

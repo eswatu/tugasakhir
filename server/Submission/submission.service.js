@@ -137,7 +137,10 @@ async function approveSubmission(id, params, headers) {
     const sub = await getSubmissionById(id);
     if (sub && adm === 'Admin') {
         Object.assign(sub, params);
-        await sub.update({dateApproved: new Date(), isActive: false});
+        await sub.update({dateApproved: new Date(), isActive: false, isSubmitted: false});
+        await db.Act.update(
+            {isCalculated: true, calculatedDate: new Date(), updatedAt: new Date()},
+             { where: {SubId: id}});
         await sub.save();
         return 'berhasil menerima pengajuan';
     } else {

@@ -1,6 +1,7 @@
 const db = require('../_helpers/db');
 const subService = require('../Submission/submission.service');
 const pagination = require('../_helpers/pagination');
+const actfileService = require('../Acts/actFile.service');
 
 module.exports = {
     getAll,
@@ -49,11 +50,11 @@ async function createAct(req) {
             ButirId: params.butirId,
             butirVolume: params.butirVolume,
             actDate: params.actDate,
+            AssignLetterId: params.AssignLetterId
         }
     })) {
-        throw 'Act itu "' + params.id + '" sudah terdaftar';
+        throw 'Entry data sudah ada, ';
     }
-    let result;
     // save Act
     await db.Act.create({
         //required
@@ -69,11 +70,8 @@ async function createAct(req) {
         calculatedDate: null,
         createdAt: new Date(),
         updatedAt: new Date()
-    }).then(us => {
-        result = us; 
-        console.log("act " + us + "berhasil dibuat");
     });
-    return result;
+    return 'Berhasil Input data';
 }
 async function propose(req) {
     let act = await getActById(parseInt(req.params.id));
@@ -97,24 +95,45 @@ async function propose(req) {
         await act.save();
         result = msg;
     } else {
-        result = 'gagal mengajukan. tidak ada pengajuan';
+        result = 'Gagal: Tidak ada pengajuan, silakan buat di menu Pengajuan';
     }
     return result;
 }
 
 
-async function updateAct(id, params) {
-    const act = await getActById(id);
-    params.updatedAt = new Date();
+async function updateAct(req) {
+    const uid = parseInt(req.headers.userid);
+    const act = await getActById(req.params.id);
+    let body = req.body;
+    body.updatedAt = new Date();
+    console.log(body);
+    //cek duplikasi
+    if (await db.Act.findOne({
+        where: {
+            UserId : uid,
+            ButirId: body.ButirId,
+            butirVolume: body.butirVolume,
+            actDate: body.actDate,
+            AssignLetterId: body.AssignLetterId
+        }
+    })) {
+        throw 'Entry data sudah ada, ubah nilai input ke yang lain';
+    }
     // copy params to user and save
-    Object.assign(act, params);
+    Object.assign(act, body);
     await act.save();
-    return act;
+    return 'Sukses mengubah data';
 }
 
 async function _delete(id) {
     const act = await getActById(id);
-    await act.destroy();
+    console.log(act);
+    if (act) {
+        await act.destroy();
+        return 'Berhasil menghapus data';
+    } else {
+        throw 'id tidak valid';
+    }
 }
 
 // helper functions
@@ -132,7 +151,7 @@ async function getActByDate(ds,de) {
 }
 async function getActBySubId(sid) {
     const acts = await db.Act.findAll(
-        {   where: { SubId: sid, isProposed: true, isCalculated: false},
+        {   where: { SubId: sid, isProposed: true},
             include: [{model: db.AssignLetter}, {model: db.Butir} ]
         });
     if (acts) {

@@ -146,7 +146,6 @@ export class FileUploadDialogComponent implements OnInit {
             } else if (event instanceof HttpResponse) {
               this.closeDialog(event.body);
             }
-            console.log(event);
           },
           error: (err: any) => {
             console.log(err);

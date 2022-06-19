@@ -23,10 +23,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 
 const modules = [
+  MatProgressSpinnerModule,
   MatToolbarModule,
   MatProgressBarModule,
   MatCardModule,

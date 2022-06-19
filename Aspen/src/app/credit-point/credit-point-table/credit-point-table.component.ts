@@ -19,7 +19,7 @@ import { AuthenticationService } from '@env/services';
 })
 
 export class CreditPointTableComponent implements OnInit {
-  activeSubmission
+  activeSubmission;
 
   public displayedColumns: string[];
   public jobs: MatTableDataSource<act>;
@@ -56,7 +56,6 @@ export class CreditPointTableComponent implements OnInit {
     this.paginator._intl.itemsPerPageLabel = "item per halaman";
   }
   loadData(query: string = null) {
-    this.jobs = null;
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
@@ -65,8 +64,9 @@ export class CreditPointTableComponent implements OnInit {
     }
     this.getData(pageEvent);
   }
-
+  
   getData(event: PageEvent) { 
+    this.jobs = null;
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
@@ -109,8 +109,7 @@ export class CreditPointTableComponent implements OnInit {
       dialogRef.afterClosed().subscribe(()=> this.loadData(null));
     } else {
       dialogConfig.data = { jenis: jenis };
-      const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(()=> this.loadData(null));
+      this.dialog.open(ButirTreeComponent, dialogConfig);
     }
   }
   

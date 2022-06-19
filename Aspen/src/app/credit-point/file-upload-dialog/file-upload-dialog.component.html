@@ -11,7 +11,7 @@
             <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
         </div>
         <br>
-        <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png"/>
+        <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png" >
         <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
             Upload
         </button>
@@ -20,26 +20,29 @@
 <div>
     <table *ngIf="currentLetterInfos">
         <div *ngIf="mode === 'ST'">
-            <tr><strong>Mengunggah file hanya akan mengubah file yang tersimpan di server</strong></tr>
+            <tr colspan="2"><strong>- Mengunggah file hanya akan mengubah file yang tersimpan di server</strong></tr>
+            <tr><strong>- Tutup tampilan ketika sudah mencapai 100%</strong></tr>
             <tr>
-                <th>Nama File</th>
+                <th class="tleft" >Nama File</th>
                 <td>{{currentLetterInfos.name}}</td>
             </tr>
             <tr>
-                <th>Jenis File</th>
+                <th class="tleft">Jenis File</th>
                 <td>{{currentLetterInfos.type}}</td>
             </tr>
             <tr>
-                <th>Waktu Update</th>
+                <th class="tleft">Waktu Update</th>
                 <td>{{currentLetterInfos.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
             </tr>
             <tr>
-                <th>Catatan</th>
+                <th class="tleft">Catatan</th>
                 <td>{{currentLetterInfos.notes}}</td>
             </tr>
             <tr>
                 <th>Aksi</th>
-                <td><button (click)="download(currentLetterInfos.id, currentLetterInfos.name)">Download</button></td>
+                <td><button (click)="download(currentLetterInfos.id, currentLetterInfos.name)" mat-raised-button color="primary">
+                    <mat-icon>download</mat-icon>Unduh
+                </button></td>
             </tr>
         </div>
         <div *ngIf="mode === 'LAP'">
@@ -57,8 +60,12 @@
                     <td>{{item.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
                     <td>{{item.notes}}</td>
                     <td *ngIf="item">
-                        <button *ngIf="mode === 'LAP'" (click)="confirmDelete(item.id)">Hapus</button>
-                        <button (click)="download(item.id, item.name)">Download</button>
+                        <button mat-raised-button *ngIf="mode === 'LAP'" (click)="confirmDelete(item.id)" color="warn"w>
+                            <mat-icon>delete</mat-icon> HAPUS
+                        </button>
+                        <button mat-raised-button (click)="download(item.id, item.name)" color="primary">
+                            <mat-icon>download</mat-icon>Unduh
+                        </button>
                     </td>
                 </tr>
             </div>

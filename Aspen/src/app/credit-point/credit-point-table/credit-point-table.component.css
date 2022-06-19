@@ -8,7 +8,6 @@ td , th {
     text-overflow: ellipsis;
     overflow: hidden;
     border-right: 1px solid;
-
 }
 .mat-paginator {
     display: flex;
@@ -24,4 +23,7 @@ td , th {
 }
 .action {
     max-width: fit-content;
+}
+#tblajukan {
+    background-color:rgb(62, 199, 11);
 }

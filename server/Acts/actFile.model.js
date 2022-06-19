@@ -14,7 +14,7 @@ function model(sequelize) {
         }, scopes: {
             //untuk expose data
             withData: {}
-        }
+        },
     };
     
     return sequelize.define("ActFile", attributes, options);

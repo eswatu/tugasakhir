@@ -12,7 +12,7 @@ function model(sequelize) {
         proposeDate:{type: DataTypes.DATE, allowNull: true},
         isCalculated: { type: DataTypes.BOOLEAN, allowNull: false},
         calculatedDate: {type: DataTypes.DATE, allowNull: true},
-        actDate: {type:DataTypes.DATE, allowNull: true}
+        actDate: {type:DataTypes.DATEONLY, allowNull: true}
         //besok tambahin file upload
     };
     return sequelize.define('Act', attributes);

@@ -18,3 +18,8 @@ mat-form-field {
     width: 90%;
     margin-left: 4%;
   }
+#isdone {
+font-size: 18;
+font-weight: bold;
+color: brown;
+}

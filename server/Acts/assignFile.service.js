@@ -6,7 +6,6 @@ const uploadFiles = async (req, res) => {
           if (req.file == undefined) {
             return res.send(`You must select a file.`);
           }
-          console.log('isi dari assign file' + JSON.stringify(req.params.id));
           let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
           let uid = parseInt(req.params.id);
           let assignFile = await db.AssignFile.findOne({where: {AssignLetterId: uid}});      
@@ -19,7 +18,7 @@ const uploadFiles = async (req, res) => {
                 name: req.file.originalname,
                 notes: req.body.notes,
               },{where: {id : assignFile.id} });
-              return "Sukses update file";
+              return res.json("Sukses update file");
             } else {
                 db.AssignFile.create({
                 type: req.file.mimetype,
@@ -31,7 +30,7 @@ const uploadFiles = async (req, res) => {
                 AssignLetterId: uid
                 });
                   //fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
-                  return `Sukses menambahkan File.`;
+                  return res.json(`Sukses menambahkan File.`);
                 };
       } catch (error) {
       if (error.code == "LIMIT_FILE_SIZE") {

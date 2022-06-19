@@ -19,7 +19,7 @@ export class CreditPointFormComponent {
   formInput : FormGroup;
 
   //ini untuk st terpilih
-  surattugas ;
+  surattugas;
 
   id; //untuk mode edit dari tabel
   job : act; //untuk mode create dari butir
@@ -131,21 +131,33 @@ createJob() {
       this.job.id = this.id;
       this.actService.put<act>(this.job).subscribe(
         result => {
-          if (result) {
-            Swal.fire(result.message);
-            }
-        }, error => console.error(error));
+          Swal.fire(result);
+          this.closeDialog();
+        }, error => Swal.fire({title:error, icon:'error'}));
     } else {
       //create mode
       this.actService.post<act>(this.job).subscribe(
         result => {
-          if (result) {
-            Swal.fire(result.message).then(() => {
-              this.closeDialog();
-            });
-            }
-        }, error => console.error(error));
+            Swal.fire(result);
+            this.closeDialog();
+          }, error => Swal.fire({title:error, icon:'error'}));
     }
+  }
+  hapusPekerjaan(){
+    Swal.fire({
+      title: 'Yakin Menghapus entry?',
+      text: "Data terhapus akan hilang permanen",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Hapus!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.actService.delete(this.id).subscribe(r => Swal.fire({title:r, icon:'success'}));
+        this.closeDialog();
+      }
+    })
   }
 
   closeDialog(){

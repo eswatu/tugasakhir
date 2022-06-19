@@ -39,7 +39,7 @@ async function initialize() {
     db.Act.belongsTo(db.Butir, {foreignKey: "ButirId"});
     db.Act.belongsTo(db.User, {foreignKey: "UserId"});
     db.Act.belongsTo(db.AssignLetter, {foreignKey: "AssignLetterId"});
-    db.Act.hasMany(db.ActFile, {foreignKey: "ActId"});
+    db.Act.hasMany(db.ActFile, {foreignKey: 'ActId', as:'Acts', onDelete:'cascade', hooks: true});
     //db.ActFile.belongsTo(db.Act, {foreignKey: "ActId"});
     //relasi AssignLetter
     db.AssignLetter.belongsTo(db.User, {foreignKey:"UserId"});
@@ -50,5 +50,5 @@ async function initialize() {
     db.Submission.belongsToMany(db.AssignLetter, {through: 'SubAssign', timestamps: false });
 
     //sync model dengan database
-    await sequelize.sync({alter: false});
+    await sequelize.sync({alter: true});
 }

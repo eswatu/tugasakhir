@@ -1,6 +1,5 @@
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
-import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, Injector, Input, OnInit , Output, EventEmitter} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act } from '@env/model';
 import { submission } from '@env/model/submission';
@@ -9,6 +8,7 @@ import { SubmissionService } from '@env/services/submission.service';
 import Swal from 'sweetalert2';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 import { SubmissionFormComponent } from '../submission-form/submission-form.component';
+
 
 @Component({
   selector: 'submission-component',
@@ -20,6 +20,11 @@ export class SubmissionComponentComponent implements OnInit {
   @Input() submission: submission;
   @Input() isAdmin: boolean;
   @Input() target: number;
+  //untuk ke parent
+  @Output() dosubmit = new EventEmitter<boolean>();
+  doingsubmit(){
+    this.dosubmit.emit(true);
+  }
 
   allAct;
   defaultActs;
@@ -43,8 +48,7 @@ export class SubmissionComponentComponent implements OnInit {
         this.target = this.dialogData.target;
         this.isAdmin = true;
       }
-      console.log(this.submission);
-    }
+  }
 
   ngOnInit(){
     this.loadAll();
@@ -121,10 +125,23 @@ lihatFile(nomor: Number){
 }
 
 submitSub(){
-this.subMService.submitSub(this.submission.id).subscribe(res => {
-  Swal.fire(res);
-}, error => console.error(error));
-this.loadAll();
+  Swal.fire({
+    title: 'Konfirmasi Pengajuan?',
+    text: `Anda mengajukan ${this.totalValue} dari ${this.defaultActs.length} pekerjaan`,
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ajukan'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.subMService.submitSub(this.submission.id).subscribe(res => {
+        Swal.fire(res);
+        this.doingsubmit();
+        this.loadAll();
+      }, error => console.error(error));
+    }
+  })
 }
 
 rejectAct(id:number){
@@ -160,7 +177,7 @@ approve(id) {
     confirmButtonText: 'Ya, Terima!'
   }).then((result) => {
     if (result.isConfirmed) {
-      const aksi :act = this.defaultActs.find(item => item.id == id);
+      const aksi:act = this.defaultActs.find(item => item.id == id);
       this.approveValue += this.getPoinCredit(aksi.Butir.jmlPoin, aksi.butirVolume);
       aksi['approved'] = true;
       this.defaultActs = this.defaultActs.map(obj => {

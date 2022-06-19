@@ -8,3 +8,15 @@
 .undone {
     background-color:crimson
 }
+td, th {
+    border-right: 1px solid;
+}
+.tleft {
+    text-align: left;
+}
+.tcenter {
+    text-align: center;
+}
+.tright {
+    text-align: right;
+}

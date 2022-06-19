@@ -11,14 +11,14 @@
 
   <!-- Num Column -->
   <ng-container matColumnDef="nomor">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nomor</th>
-    <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:4em">Nomor</th>
+    <td mat-cell *matCellDef="let i = index" class="tcenter"> {{i + 1}} </td>
   </ng-container>
 
   <!-- Nama Submission -->
   <ng-container matColumnDef="subName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Pengajuan</th>
-    <td mat-cell *matCellDef="let sub" >
+    <td mat-cell *matCellDef="let sub" class="tcenter">
       {{sub.subName}}
     </td>
   </ng-container>
@@ -32,7 +32,7 @@
   <!-- Nama yang mengajukan -->
   <ng-container matColumnDef="subOwner">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Pegawai</th>
-    <td mat-cell *matCellDef="let sub"  > {{sub.User.name}} </td>
+    <td mat-cell *matCellDef="let sub" class="tcenter" > {{sub.User.name}} </td>
   </ng-container>
 
   <!-- Catatan -->
@@ -45,7 +45,7 @@
     <!-- Nilai Diterima -->
     <ng-container matColumnDef="subScore">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Diterima</th>
-      <td mat-cell *matCellDef="let sub" style="text-align:center"
+      <td mat-cell *matCellDef="let sub" class="tright"
             >{{sub.subScore}}
       </td>
     </ng-container>

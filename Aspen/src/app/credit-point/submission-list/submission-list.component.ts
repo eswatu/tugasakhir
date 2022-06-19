@@ -48,7 +48,9 @@ export class SubmissionListComponent implements OnInit {
         
       });
   }
-
+  childSubmit(b:boolean){
+    this.ngOnInit();
+  }
   ngOnInit(): void {
   this.loadData(null);
   }
