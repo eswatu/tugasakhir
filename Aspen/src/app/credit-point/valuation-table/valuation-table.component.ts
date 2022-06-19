@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SortDirection, MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { act, submission } from '@env/model';
+import { submission } from '@env/model';
 import { ActService, ApiResult, AuthenticationService } from '@env/services';
 import { SubmissionService } from '@env/services/submission.service';
 import { SubmissionComponentComponent } from '../submission-component/submission-component.component';
@@ -15,7 +15,6 @@ import { SubmissionComponentComponent } from '../submission-component/submission
 })
 export class ValuationTableComponent implements OnInit {
   isAdmin;
-
   public displayedColumns = ['nomor','subName','subDate','subOwner','subNote','subScore'];
   public aspenSubmissions: MatTableDataSource<submission>;
   defaultPageIndex: number = 0;

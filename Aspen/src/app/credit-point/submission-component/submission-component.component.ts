@@ -25,7 +25,7 @@ export class SubmissionComponentComponent implements OnInit {
   doingsubmit(){
     this.dosubmit.emit(true);
   }
-
+  actlist = [];
   allAct;
   defaultActs;
   allAssignLetter;
@@ -127,7 +127,7 @@ lihatFile(nomor: Number){
 submitSub(){
   Swal.fire({
     title: 'Konfirmasi Pengajuan?',
-    text: `Anda mengajukan ${this.totalValue} dari ${this.defaultActs.length} pekerjaan`,
+    text: `Anda mengajukan ${this.approveValue} dari ${this.defaultActs.length} pekerjaan`,
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -180,23 +180,36 @@ approve(id) {
       const aksi:act = this.defaultActs.find(item => item.id == id);
       this.approveValue += this.getPoinCredit(aksi.Butir.jmlPoin, aksi.butirVolume);
       aksi['approved'] = true;
+      this.actlist.push(id);
+      console.log(this.actlist);
       this.defaultActs = this.defaultActs.map(obj => {
         if (obj.id == id) {
           return {... obj, approved: true};
         }
         return obj;
       });
-      console.log('id adalah ' + id + ' dan jumlah appove = ' + this.approveValue);
     }
   })
   }
 
 approveSubmission() {
-this.submission.subNote = this.subNote.value;
-this.submission.subScore = this.approveValue;
-this.subMService.approveSub(this.submission).subscribe(res => {
-  console.log(res);
-});
+  this.submission.subScore = this.approveValue;
+  this.submission.subNote = this.subNote.value + ` dan diterima act nomor ${this.actlist}`;
+  Swal.fire({
+    title: 'Konfirmasi Penilaian',
+    text: `Anda Menerima ${this.approveValue} dari ${this.defaultActs.length} pekerjaan`,
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Terima Nilai'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.subMService.approveSub(this.submission).subscribe(res => {
+        Swal.fire(res);
+      }, error => Swal.fire(error));
+    }
+  })
 }
 
 }

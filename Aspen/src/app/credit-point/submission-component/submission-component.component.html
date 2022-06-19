@@ -14,65 +14,65 @@
     <!-- konten ya-->
     <ol>
       <li *ngFor="let st of allAssignLetter">
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{st}}
-        </mat-panel-title>
-        <mat-panel-description>
-          <div fxFlex fxLayout="column">
-            Klik untuk lihat daftar Kegiatan
-          </div>
-          <span fxFlex stretch></span>
-          <div fxLayout="column">
-            <b>{{getPoinPerAssignLetter(st) | number:'0.1-4'}}</b>
-          </div>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <!--isi, daftar kegiatan-->
-      <ol>
-        <li *ngFor="let item of allAct[st]">
-          <div fxLayout="row">
-            <div fxLayout="column" fxFlex="1 0 400px">
-                  {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
-                  sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
-            </div>
-            <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
-                {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
-            </div>
-            <div *ngIf="isAdmin">
-              <button mat-raised-button (click)="rejectAct(item.id)" color="warn">Kembalikan</button>
-              <button mat-raised-button (click)="lihatFile(item.id)">Lihat File</button>
-              <button mat-raised-button (click)="approve(item.id)" color="primary" *ngIf="!item.approved">Terima</button>
-            </div>
-            </div>
-        </li>
-      </ol>
-    </mat-expansion-panel>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{st}}
+              </mat-panel-title>
+              <mat-panel-description>
+                <div fxFlex fxLayout="column">
+                  Klik untuk lihat daftar Kegiatan
+                </div>
+                <span fxFlex stretch></span>
+                <div fxLayout="column">
+                  <b>{{getPoinPerAssignLetter(st) | number:'0.1-4'}}</b>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <!--isi, daftar kegiatan-->
+            <ol>
+              <li *ngFor="let item of allAct[st]">
+                <div fxLayout="row">
+                  <div fxLayout="column" fxFlex="1 0 400px">
+                        {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
+                        sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
+                  </div>
+                  <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
+                      {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
+                  </div>
+                  <div *ngIf="isAdmin && submission.isActive && !submission.dateApproved">
+                    <button mat-raised-button (click)="rejectAct(item.id)" color="warn" *ngIf="!item.approved">Kembalikan</button>
+                    <button mat-raised-button (click)="lihatFile(item.id)" >Lihat File</button>
+                    <button mat-raised-button (click)="approve(item.id)" color="primary" *ngIf="!item.approved">Terima</button>
+                  </div>
+                  </div>
+              </li>
+            </ol>
+          </mat-expansion-panel>
   </li>
 </ol>
   </mat-card-content>
     <div *ngIf="isAdmin == false">
       <div fxLayout="row">
         <!--belum selesai-->
-        <div *ngIf="submission.isActive">
+        <div *ngIf="submission.isActive" style="justify-content:space-between;" fxLayout="column">
           <!--tombol pengajuan bila belum diajukan-->
-          <div fxLayout="column">
+          <div>
             <button mat-raised-button *ngIf="!submission.isSubmitted && !submission.dateApproved" (click)="submitSub()">Ajukan</button>
             <!--tulisan status kalau sudah diajukan-->
             <div *ngIf="submission.isSubmitted && !submission.dateApproved">
                 Sudah diajukan: Menunggu Penilaian
             </div>
           </div>
-          <span fxFlex stretch></span>
-          <div fxLayout="column" *ngIf="!submission.dateApproved">
+          <br>
+          <div *ngIf="!submission.dateApproved">
             <mat-card-subtitle>Jumlah pengajuan saat ini: {{totalValue}}</mat-card-subtitle>
           </div>
         </div>
         <!--sudah selesai-->
         <div fxLayout="column" *ngIf="!submission.isSubmitted && !submission.isActive && submission.dateApproved != null">
-          <div fxLayout="row">
-            <div fxLayout="column">
+          <div fxLayout="column">
+            <div>
               <mat-card-subtitle>
                 <h3>
                   Tanggal penilaian: {{submission.dateApproved | date:'dd-MMM-yyyy'}}
@@ -82,7 +82,7 @@
             <span fxFlex stretch>
               <h1 style="font-weight:bold">Selesai Diproses</h1>
             </span>
-            <div fxLayout="column" >
+            <div >
               <mat-card-subtitle>
                 <h3>
                  <b>Jumlah Diterima: {{submission.subScore}}</b>
@@ -100,8 +100,9 @@
         cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
       </mat-form-field>
       <h2 class="nilai">
-        Jumlah diterima:<b style="color:rgb(16, 196, 16);font-style: bold;"> {{approveValue | number:'0.1-4'}} / {{totalValue | number:'0.1-4'}}</b>
+        Jumlah diterima:<b style="color:rgb(16, 196, 16);font-style: bold;">{{approveValue | number:'0.1-4'}} / {{totalValue | number:'0.1-4'}}</b>
       </h2>
-      <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary" *ngIf="submission.isActive">Terima Pengajuan</button>
+      <button mat-raised-button (click)="approveSubmission()" style="color:chartreuse" color="primary"
+        *ngIf="submission.isActive && !submission.dateApproved">Terima Pengajuan</button>
     </div>
 </mat-card>

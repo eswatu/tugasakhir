@@ -132,16 +132,15 @@ createJob() {
       this.actService.put<act>(this.job).subscribe(
         result => {
           Swal.fire(result);
-          this.closeDialog();
         }, error => Swal.fire({title:error, icon:'error'}));
-    } else {
-      //create mode
-      this.actService.post<act>(this.job).subscribe(
-        result => {
+      } else {
+        //create mode
+        this.actService.post<act>(this.job).subscribe(
+          result => {
             Swal.fire(result);
-            this.closeDialog();
           }, error => Swal.fire({title:error, icon:'error'}));
-    }
+        }
+        this.closeDialog();
   }
   hapusPekerjaan(){
     Swal.fire({

@@ -71,7 +71,7 @@ async function createAct(req) {
         createdAt: new Date(),
         updatedAt: new Date()
     });
-    return 'Berhasil Input data';
+    return 'Berhasil Input data, refresh halaman untuk melihat hasil';
 }
 async function propose(req) {
     let act = await getActById(parseInt(req.params.id));

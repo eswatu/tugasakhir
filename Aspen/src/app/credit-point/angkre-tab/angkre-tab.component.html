@@ -1,9 +1,4 @@
 <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Pengajuan" *ngIf="!isAdmin">
-        <ng-template matTabContent>
-            <submission-list ></submission-list>
-        </ng-template>
-    </mat-tab>
     <mat-tab label="Pekerjaan" *ngIf="!isAdmin">
         <ng-template matTabContent>
             <credit-point-table></credit-point-table>
@@ -19,4 +14,9 @@
             <valuation-table></valuation-table>
         </ng-template>
     </mat-tab>
-  </mat-tab-group>
+    <mat-tab label="Pengajuan" *ngIf="!isAdmin">
+        <ng-template matTabContent>
+            <submission-list ></submission-list>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
