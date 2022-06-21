@@ -1,4 +1,5 @@
 const fs = require("fs");
+const sharp = require("sharp");
 const db = require("../_helpers/db");
 
 const uploadFiles = async (req, res) => {
@@ -6,7 +7,11 @@ const uploadFiles = async (req, res) => {
           if (req.file == undefined) {
             return res.send(`You must select a file.`);
           }
-          let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/" + req.file.filename);
+          await sharp(req.file.path).resize({width: 300})
+                    .jpeg({quality:90})
+                    .toFile(__basedir + "/resources/static/assets/uploads/resize-" + req.file.filename);
+
+          let upldFile = fs.readFileSync(__basedir + "/resources/static/assets/uploads/resize-" + req.file.filename);
           let uid = parseInt(req.headers.userid);
           let user = await db.User.findByPk(uid);      
           if (user.AvatarId) {
@@ -47,9 +52,8 @@ const uploadFiles = async (req, res) => {
 const downloadImage = async (req, res) => {
   let image = await db.Avatar.findByPk(req.params.id);
   if (image) {
-      var base64data = Buffer.from(image.data).toString('base64');
-      let result = {typename: image.type, data: base64data}
-      res.send(result);
+      //var base64data = Buffer.from(image.data).toString('base64');
+      res.type('application/octet-stream').send(image.data);
   } else {
     res.send('file tidak ada');
   }

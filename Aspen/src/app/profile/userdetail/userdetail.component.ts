@@ -6,7 +6,7 @@ import { chpwd, User } from '@env/model/user';
 import { AuthenticationService } from '@env/services';
 import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -44,7 +44,7 @@ export class UserdetailComponent implements OnInit {
     }
 
   ngOnInit(){
-
+    
     this.formAvatar = new FormControl();
     //untuk form tampilan
     this.form = this.fb.group({
@@ -61,21 +61,22 @@ export class UserdetailComponent implements OnInit {
       renewPwd: ['', Validators.required]
     },
     { validator : MustMatch('newPwd', 'renewPwd')});
+    this.form.patchValue(this.userInfo);
     //load data
     this.loadData();
     this.toggleButtonValue = 'Edit Mode';
   }
 
   loadData(){
-      this.form.patchValue(this.userInfo);
-
       if (this.userInfo.AvatarId){
         this.userService.downImage(this.userInfo.AvatarId)
         .subscribe((img) => {
-          let ftype = img['typename'];
-          this.pictureImage = this.sanitizer.bypassSecurityTrustResourceUrl(`data:${ftype};base64,` + img['data']);
-          }, error => console.error(error));
-      }
+          var blob = new Blob([img], {type:'image/jpeg'});
+          var urlimage = URL.createObjectURL(blob);
+          console.log(urlimage);
+          this.pictureImage = this.sanitizer.bypassSecurityTrustResourceUrl(urlimage);
+        }, err => console.log(err));
+    }
       this.form.patchValue({level: this.jenjang});
   }
 

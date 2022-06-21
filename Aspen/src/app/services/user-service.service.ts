@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { chpwd, filetype } from '@env/model/user';
+import { chpwd} from '@env/model/user';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
 
@@ -56,9 +56,9 @@ export class UserService extends BaseService {
     });
     return this.http.request(req);
   }
-  downImage(id:number): Observable<filetype> {
+  downImage(id:number): Observable<any> {
     let myUrl = this.urlava + id;
-    return this.http.get<filetype>(myUrl);
+    return this.http.get(myUrl, {responseType: 'blob'});
   }
 
 }

@@ -20,6 +20,8 @@ export interface avatar {
 export interface filetype {
     typename: string;
     data: string;
+    height: number;
+    width: number;
 }
 
 export interface chpwd {
