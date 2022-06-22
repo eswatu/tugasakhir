@@ -17,13 +17,13 @@ export class UserService extends BaseService {
     this.urlava = baseUrl + 'api/avatar/';
   }  
   getData<ApiResult>(pageIndex: number, pageSize: number,
-    sortColumn: string, sortorder: 'asc' | 'desc',
+    sortColumn: string, sortOrder: 'asc' | 'desc' | '',
     filterColumn: string, filterQuery: string): Observable<ApiResult> {
       var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
       .set("sortColumn", sortColumn)
-      .set("sortOrder", sortorder);
+      .set("sortOrder", sortOrder);
     if (filterQuery) { 
       params = params
         .set("filterColumn", filterColumn)

@@ -47,10 +47,11 @@ function register(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    userService.getAll()
+    userService.getAll(req)
         .then(users => res.json(users))
         .catch(next);
 }
+
 function getCurrent(req, res, next) { 
     res.json(req.user);
 }

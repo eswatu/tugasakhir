@@ -10,7 +10,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-userdetail',
+  selector: 'userdetail',
   templateUrl: './userdetail.component.html',
   styleUrls: ['./userdetail.component.css']
 })

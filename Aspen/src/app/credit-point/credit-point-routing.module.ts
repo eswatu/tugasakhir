@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CreditPointTableComponent } from './credit-point-table/credit-point-table.component';
 import { AngkreTabComponent } from './angkre-tab/angkre-tab.component';
 
 const routes: Routes = [

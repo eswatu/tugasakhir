@@ -2,7 +2,8 @@ const config = require('../config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('../_helpers/db');
-const { json } = require('body-parser');
+const pagination = require('../_helpers/pagination');
+
 
 module.exports = {
     authenticate,
@@ -24,8 +25,20 @@ async function authenticate({ username, password }) {
     return { ...omitHash(user.get()), token };
 }
 
-async function getAll() {
-    return await db.User.findAll();
+async function getAll(rq) {
+    const req = rq.query;
+    const role = rq.headers.userrole;
+
+    var pageIndex = req.pageIndex;
+    var pageSize = req.pageSize;
+    var sortColumn = req.sortColumn;
+    var sortOrder = req.sortOrder;
+    var filterColumn = req.filterColumn;
+    var filterQuery = req.filterQuery;
+    var model = db.User; 
+    if (role === "Admin") {
+        return await pagination.userpaging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+    }
 }
 
 async function getById(id) {
