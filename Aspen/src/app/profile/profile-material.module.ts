@@ -11,12 +11,16 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from "@angular/material/table";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
 
 
 const modules = [
+  MatSelectModule,
+  MatProgressSpinnerModule,
   MatTableModule,
   MatProgressBarModule,
   MatButtonModule,

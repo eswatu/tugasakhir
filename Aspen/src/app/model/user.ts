@@ -5,6 +5,7 @@ export interface User {
     name: string;
     role: string;
     level: string;
+    baseAngkre: number;
     password: string;
     AvatarId: number;
     token?: string;

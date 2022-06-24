@@ -40,12 +40,17 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Jenjang</th>
     <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.baseAngkre | jenjang }}</td>
   </ng-container>
+    <!-- Jenjang -->
+    <ng-container matColumnDef="baseAngkre">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kredit Poin</th>
+      <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.baseAngkre }}</td>
+    </ng-container>
 
     <!-- Kolom tindakan -->
     <ng-container matColumnDef="aksi">
       <th mat-header-cell *matHeaderCellDef>Opsi</th>
       <td mat-cell *matCellDef="let usr" style="text-align:center" fxLayoutAlign="start stretch">
-        <button mat-raised-button >Reset Password</button>
+        <button mat-raised-button (click)="openForm(usr.id)" >Ubah Data</button>
       </td>
     </ng-container>
 

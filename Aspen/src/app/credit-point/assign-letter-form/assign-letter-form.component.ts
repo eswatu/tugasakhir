@@ -46,7 +46,6 @@ export class AssignLetterFormComponent implements OnInit {
   loadData(){
     if (this.idAL) {
       this.als.get<assignLetter>(this.idAL).subscribe(result => {
-        console.log(result);
         this.asgnLetter = result;
 
         this.formInput.patchValue({

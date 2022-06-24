@@ -27,7 +27,6 @@ export class CreditPointFormComponent {
   actMain;
   
   constructor(
-    private router: Router,
     private actService: ActService,
     private assignLetterService: AssignLetterService,
     public dialog: MatDialog,

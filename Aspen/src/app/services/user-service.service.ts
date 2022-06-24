@@ -40,7 +40,7 @@ export class UserService extends BaseService {
     return this.http.put<user>(myUrl, item);
   }
   post<user>(item: user): Observable<user> {
-    return this.http.post<user>(this.url, item);
+    return this.http.post<user>(this.url + 'register', item);
   }
   changePwd(pwd: chpwd): Observable<string> {
     let myUrl = this.url + 'changepassword/' + pwd.id;

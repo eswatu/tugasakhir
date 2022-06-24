@@ -36,7 +36,8 @@ function registerSchema(req, res, next) {
         username: Joi.string().required(),
         role    : Joi.string().required(),
         password: Joi.string().min(6).required(),
-        level   : Joi.string().required()
+        level   : Joi.string().required(),
+        baseAngkre : Joi.number().required(),
     });
     validateRequest(req, next, schema);
 }
@@ -74,6 +75,7 @@ function changePassword(req, res, next) {
     .then(message => res.json(message))
     .catch(next);
 }
+
 function updateSchema(req, res, next) {
     const schema = Joi.object({
         name: Joi.string().required(),

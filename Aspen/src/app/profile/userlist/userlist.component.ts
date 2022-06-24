@@ -32,7 +32,7 @@ export class UserlistComponent implements OnInit {
               private authService: AuthenticationService,
               public dialog: MatDialog) {
                 this.authService.user.subscribe(user => this.isAdmin = (user.role === 'Admin') ? true : false);
-                this.displayedColumns = ["index", "username", "name", "role", "level", 'aksi'];
+                this.displayedColumns = ["index", "username", "name", "role", "level",'baseAngkre', 'aksi'];
               }
 
   ngOnInit(): void {
@@ -73,11 +73,9 @@ export class UserlistComponent implements OnInit {
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if (id) {
-      dialogConfig.data = {  id: id };
-      const dialogRef = this.dialog.open(UserformComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(()=> this.loadData(null));
-    } else {
-      this.dialog.open(UserformComponent, dialogConfig);
+      dialogConfig.data = {id: id} ;
     }
+      const dialogRef = this.dialog.open(UserformComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(()=> this.loadData(null));    
   }
 }
