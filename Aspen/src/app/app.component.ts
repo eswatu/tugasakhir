@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
+import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { User } from './model';
 import { AuthenticationService, UserService } from './services';
 
@@ -13,7 +15,7 @@ export class AppComponent {
 
   user: User;
   
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, public dialog:MatDialog) {
       this.authenticationService.user.subscribe(x => this.user = x);
   }
 
@@ -23,6 +25,15 @@ export class AppComponent {
   get isAuthorized() {
     return this.user;
   }
+  openhelp(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+
+    const dialogRef = this.dialog.open(HelpDialogComponent, dialogConfig); 
+  }
 
   logout() {
       this.authenticationService.logout();
@@ -30,5 +41,5 @@ export class AppComponent {
   ngOnInit() {
     this.loading = true;
     console.log(this.user);
-}
+  }
 }

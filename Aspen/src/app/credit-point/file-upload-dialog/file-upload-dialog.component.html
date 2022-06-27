@@ -5,7 +5,7 @@
     <span class="progress">{{ progress }}%</span>
 </mat-toolbar>
 <div>
-    <div>
+    <div *ngIf="isEditabel">
         <div>           
             <label for="notes">Catatan:</label>
             <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
@@ -41,7 +41,7 @@
             <tr>
                 <th>Aksi</th>
                 <td><button (click)="download(currentLetterInfos.id, currentLetterInfos.name)" mat-raised-button color="primary">
-                    <mat-icon>download</mat-icon>Unduh
+                    <mat-icon>preview</mat-icon>Unduh
                 </button></td>
             </tr>
         </div>
@@ -60,11 +60,11 @@
                     <td>{{item.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
                     <td>{{item.notes}}</td>
                     <td *ngIf="item">
-                        <button mat-raised-button *ngIf="mode === 'LAP'" (click)="confirmDelete(item.id)" color="warn"w>
-                            <mat-icon>delete</mat-icon> HAPUS
+                        <button mat-raised-button *ngIf="mode === 'LAP' && isEditabel == true" (click)="confirmDelete(item.id)" color="warn"w>
+                            <mat-icon>delete_forever</mat-icon> 
                         </button>
                         <button mat-raised-button (click)="download(item.id, item.name)" color="primary">
-                            <mat-icon>download</mat-icon>Unduh
+                            <mat-icon>preview</mat-icon>
                         </button>
                     </td>
                 </tr>

@@ -9,7 +9,7 @@ import { AuthenticationService } from '@env/services';
 export class AngkreTabComponent implements OnInit {
   isAdmin;
   constructor(private authSrvc: AuthenticationService) {
-    this.authSrvc.user.subscribe(x => this.isAdmin = (x.role === "Admin") ? true : false);
+    this.authSrvc.user.subscribe(x => (x.role === "Admin") ? this.isAdmin = true : this.isAdmin = false);
   }
 
   ngOnInit(): void {

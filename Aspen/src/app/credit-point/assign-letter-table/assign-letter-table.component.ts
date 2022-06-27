@@ -119,7 +119,7 @@ export class AssignLetterTableComponent implements OnInit {
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if(nomor) {
-      dialogConfig.data = {id: nomor, title: "Surat Tugas", mode: "ST"};
+      dialogConfig.data = {id: nomor, title: "Surat Tugas", mode: "ST", iseditable: true};
     }
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(()=> {this.loadData(null)});

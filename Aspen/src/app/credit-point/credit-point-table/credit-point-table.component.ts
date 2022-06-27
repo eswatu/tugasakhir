@@ -137,7 +137,18 @@ export class CreditPointTableComponent implements OnInit {
       }
     })
   }
-
+  viewFile(nomor: Number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    if(nomor) {
+      dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP", iseditable: false};
+    }
+    const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(()=> {this.loadData(null)});
+  }
   uploadFile(nomor: Number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -145,7 +156,7 @@ export class CreditPointTableComponent implements OnInit {
     dialogConfig.minWidth = 400;
     dialogConfig.minHeight = 400;
     if(nomor) {
-      dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP"};
+      dialogConfig.data = {id: nomor, title: "Laporan Pelaksanaan", mode: "LAP", iseditable: true};
     }
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(()=> {this.loadData(null)});

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { act } from '@env/model/acts';
@@ -42,7 +42,7 @@ export class CreditPointFormComponent {
          }
       //init form
     this.formInput = new FormGroup({
-          AssignLetterId: new FormControl(''),
+          AssignLetterId: new FormControl('', Validators.required),
           //otomatis
           namaButir: new FormControl(''),
           tkButir: new FormControl(''),
@@ -51,8 +51,8 @@ export class CreditPointFormComponent {
           hasilKerja: new FormControl(''),
           userId: new FormControl(''),
 
-          actDate: new FormControl({value: new Date()}),
-          butirVolume: new FormControl(''),
+          actDate: new FormControl({value: new Date()},Validators.required),
+          butirVolume: new FormControl('', Validators.required),
           actNote: new FormControl('')
       });
      }

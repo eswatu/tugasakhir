@@ -67,11 +67,21 @@
         <td mat-cell *matCellDef="let job" fxLayoutGap="8px" fxLayoutAlign="start stretch"
           style="padding-right:5px; padding-left:5px;" >
           <button mat-raised-button (click)="uploadFile(job.id)" *ngIf="!job.isProposed"
-            matTooltip="Klik untuk unggah laporan" style="background-color:rgb(83, 191, 157)">Upload</button>
+            matTooltip="Klik untuk unggah laporan" style="background-color:rgb(83, 191, 157)">
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
           <button mat-raised-button (click)="openForm(job,job.actType)" *ngIf="!job.isProposed && !job.isCalculated"
-            matTooltip="Klik untuk mengubah data laporan" color="accent">Ubah/Hapus</button>
+            matTooltip="Klik untuk mengubah data laporan" color="accent">
+            <mat-icon>edit</mat-icon>
+          </button>
           <button mat-raised-button (click)="propose(job.id)" *ngIf="!job.isProposed && job.hasFile"
-            matTooltip="Klik untuk ajukan berkas" id="tblajukan">Ajukan</button>
+            matTooltip="Klik untuk ajukan berkas" id="tblajukan">
+          <mat-icon>send</mat-icon>
+        </button>
+          <button mat-raised-button (click)="viewFile(job.id)" *ngIf="job.isProposed && job.hasFile"
+            matTooltip="Klik untuk melihat Berkas" id="tblLihat" color="primary">
+            <mat-icon>preview</mat-icon>
+          </button>
         </td>
       </ng-container>
       <!-- Khusus admin lihat si pembuat Column -->

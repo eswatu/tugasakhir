@@ -13,7 +13,10 @@
       Profil
     </button>
     <button mat-button>
-      {{user.name}}
+      Andal Login Sebagai {{user.name}}
+    </button>
+    <button mat-button (click)="openhelp()">
+      <mat-icon>help</mat-icon>
     </button>
     <button mat-button fxFlex (click)="logout()">
       <mat-icon>logout</mat-icon>

@@ -10,11 +10,14 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoginComponent } from './login/login.component';
 import { ErrorInterceptor, JwtInterceptor } from './_helpers';
+import { HelpDialogComponent } from './help-dialog/help-dialog.component';
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HelpDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,8 @@ import { ErrorInterceptor, JwtInterceptor } from './_helpers';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     {provide: "BASE_URL", useValue: environment.apiUrl},

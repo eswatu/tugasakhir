@@ -23,6 +23,8 @@ export class FileUploadDialogComponent implements OnInit {
   currentLetterInfos;
   title: string;
   mode: string;
+  isEditabel;
+
   constructor(private dialogRef: MatDialogRef<FileUploadDialogComponent>,
     private assignLetterService: AssignLetterService,
     private actService: ActService,
@@ -31,6 +33,7 @@ export class FileUploadDialogComponent implements OnInit {
         this.id = data.id;
         this.title = data.title;
         this.mode = data.mode;
+        this.isEditabel = data.iseditable;
       }
       this.notes = new FormControl('');
      }

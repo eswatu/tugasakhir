@@ -127,7 +127,7 @@ lihatFile(nomor: Number){
 submitSub(){
   Swal.fire({
     title: 'Konfirmasi Pengajuan?',
-    text: `Anda mengajukan ${this.approveValue} dari ${this.defaultActs.length} pekerjaan`,
+    text: `Anda mengajukan ${this.defaultActs.length} dari ${this.defaultActs.length} pekerjaan`,
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
