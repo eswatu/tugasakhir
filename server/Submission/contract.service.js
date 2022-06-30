@@ -65,7 +65,9 @@ async function createContract(req) {
         contractDate: params.contractDate,
         contractYear: params.contractYear,
         contractValue: params.contractValue ?? 5,
-        UserId: uid
+        UserId: uid,
+        createdAt: new Date(),
+        updatedAt: new Date()
     }).then(us => {
         result = 'Berhasil membuat Kontrak Kinerja'; 
         console.log("Kontrak " + us + "berhasil dibuat");
@@ -81,6 +83,7 @@ async function updateContract(id, params, headers) {
     if (parseInt(userid) == ctr.UserId || role === 'Admin') {
         // copy params to user and save
         Object.assign(ctr, params);
+        ctr.updatedAt = new Date();
         await ctr.save();
         return 'Berhasil mengubah Kontrak';
     } else {
@@ -115,11 +118,11 @@ async function toggleContract(id) {
     const ctr = await db.Contract.findByPk(id);
     if (ctr) {
         if (ctr.isActive) {
-            await ctr.update({isActive : false});
+            await ctr.update({isActive : false, updatedAt: new Date()});
             await ctr.save();
             return 'Berhasil Menutup Kontrak';
         } else {
-            await ctr.update({isActive : true});
+            await ctr.update({isActive : true, updatedAt: new Date()});
             await ctr.save();
             return 'Berhasil Membuka Kontrak';
         }

@@ -13,3 +13,11 @@ export interface submission {
     isSubmitted: boolean;
     subScoreApproved: number;
 }
+export interface contract {
+    id: number;
+    contractName: string;
+    contractDate: Date;
+    contractYear: number;
+    contractValue: number;
+    isActive: boolean;
+}
