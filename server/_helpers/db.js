@@ -29,6 +29,7 @@ async function initialize() {
     db.AssignLetter  = require('../Acts/assignLetter.model')(sequelize);
     db.AssignFile    = require('../Acts/assignFile.model')(sequelize, DataTypes);
     db.Submission    = require('../Submission/submission.model')(sequelize);
+    db.Contract      = require('../Submission/contract.model')(sequelize);
     //relasi khusus - mandatory
     db.Butir.belongsTo(db.SubUnsur, {foreignKey: "SubUnsurId"});
     db.Butir.belongsTo(db.Aktivitas, {foreignKey: "AktivitaId"});
@@ -48,6 +49,9 @@ async function initialize() {
     db.Submission.belongsTo(db.User, {foreignKey: "UserId"});
     db.Submission.hasMany(db.Act, {foreignKey: 'SubId'});
     db.Submission.belongsToMany(db.AssignLetter, {through: 'SubAssign', timestamps: false });
+    db.Submission.belongsTo(db.Contract, {foreignKey: "ContractId"});
+    //relasi kontrak
+    db.Contract.belongsTo(db.User, {foreignKey: "UserId"})
 
     //sync model dengan database
     await sequelize.sync({alter: true});

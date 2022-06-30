@@ -1,11 +1,11 @@
 .textarea {
-    min-width:800px;
+    min-width:400px;
 }
 .mat-card {
     border: 1px solid
 }
 .listedact {
-    width:50em;
+    width:40em;
     word-break: break-word;
 }
 #wait {

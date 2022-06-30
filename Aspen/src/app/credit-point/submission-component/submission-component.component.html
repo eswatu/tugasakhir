@@ -1,12 +1,12 @@
 <mat-card [ngClass]="{'normal': submission.isSubmitted, 'selesai': !submission.isActive && submission.dateApproved}">
   <div fxLayout="row">
-    <div fxLayout="column" fxLayoutAlign="center start">
+    <div fxLayoutAlign="center start">
       <mat-card-title>{{submission.subName}}</mat-card-title>
       <mat-card-subtitle>{{submission.subDate | date:'dd-MM-yyyy'}}</mat-card-subtitle>
       <mat-card-subtitle *ngIf="isAdmin" color="yellow">{{submission.User.name}}</mat-card-subtitle>
     </div>
     <span fxFlex></span>
-    <div fxLayout="column" fxLayoutAlign="center end">
+    <div fxLayoutAlign="center end">
       <button mat-stroked-button color="accent" *ngIf="!submission.isSubmitted && submission.isActive && submission.dateApproved == null" (click)="edit()">Ubah</button>
     </div>
   </div>
@@ -33,7 +33,7 @@
             <ol>
               <li *ngFor="let item of allAct[st]">
                 <div fxLayout="row">
-                  <div fxLayout="column" fxFlex="1 0 400px">
+                  <div fxLayout="column" fxFlex="1 0 200px">
                         {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
                         sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
                   </div>

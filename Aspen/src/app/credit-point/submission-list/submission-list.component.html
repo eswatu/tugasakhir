@@ -2,7 +2,7 @@
 <div fxLayout="row" *ngIf="submissions">
     <ul fxLayoutGap="10px">
         <li *ngFor="let item of submissions;">
-            <div fxLayout="column">
+            <div fxLayout="row">
                     <submission-component  [submission]="item" [isAdmin]="adminstatus" [target]="target" (dosubmit)="childSubmit($event)"></submission-component>
             </div>
         </li>

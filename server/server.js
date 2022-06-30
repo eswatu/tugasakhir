@@ -24,6 +24,8 @@ app.use('/api/avatar', require('./Users/avatar.controller'));
 app.use('/api/assignLetter', require('./Acts/assignLetter.controller'));
 app.use('/api/assignfile', require('./Acts/assignFile.controller'));
 app.use('/api/subm', require('./Submission/submission.controller'))
+app.use('/api/contract', require('./Submission/contract.controller'))
+
 //global error handler
 app.use(errorHandler);
 
