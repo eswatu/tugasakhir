@@ -23,6 +23,7 @@ function createSchema(req, res, next) {
         contractDate : Joi.date().required(),
         contractYear : Joi.number().required(),
         contractValue: Joi.number().required(),
+        contractNote: Joi.string().allow(null,''),
         isActive: Joi.boolean().required()
     });
     validateRequest(req, next, schema);
@@ -51,6 +52,7 @@ function updateSchema(req, res, next) {
         contractDate : Joi.date().required(),
         contractYear : Joi.number().required(),
         contractValue: Joi.number().required(),
+        contractNote: Joi.string().allow(null,''),
         isActive: Joi.boolean().required()
     });
     validateRequest(req, next, schema);

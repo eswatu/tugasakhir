@@ -11,7 +11,7 @@ export class ContractService extends BaseService {
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string) {
       super(http, baseUrl);
-      this.url = baseUrl + 'api/contract';
+      this.url = baseUrl + 'api/contract/';
     }
   getData<ApiResult>(pageIndex: number, pageSize: number,
                     sortColumn: string, sortOrder: 'asc' | 'desc' | '',

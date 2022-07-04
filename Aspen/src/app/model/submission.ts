@@ -19,5 +19,6 @@ export interface contract {
     contractDate: Date;
     contractYear: number;
     contractValue: number;
+    contractNote: string;
     isActive: boolean;
 }

@@ -65,6 +65,7 @@ async function createContract(req) {
         contractDate: params.contractDate,
         contractYear: params.contractYear,
         contractValue: params.contractValue ?? 5,
+        contractNote: params.contractNote,
         UserId: uid,
         createdAt: new Date(),
         updatedAt: new Date()

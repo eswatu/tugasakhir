@@ -84,7 +84,6 @@ export class AssignLetterFormComponent implements OnInit {
       al.ltDateEnd = new Date(this.formInput.get('ltDateEnd').value);
       al.ltActive = this.formInput.get('ltActive').value;
     
-    console.log(al);
     this.als.post<assignLetter>(al).subscribe(
       result => {
       if (result) {

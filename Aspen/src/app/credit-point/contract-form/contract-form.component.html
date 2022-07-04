@@ -1,0 +1,43 @@
+<form [formGroup]="formInput" (ngSubmit)="onSubmit()">
+    <mat-form-field fxLayout="column">
+        <mat-label>Nomor Kontrak</mat-label>
+        <input formControlName="contractName" id="contractName" matInput placeholder="Nomor Kontrak">
+        <mat-hint>Misalnya: KI-xx/yy/zzz</mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" fxLayout="column">
+        <mat-label>Tanggal Kontrak</mat-label>
+        <input formControlName="contractDate" id="contractDate" matInput [matDatepicker]="picking">
+        <mat-hint>Tanggal Kontrak (dd/MM/yyyy)</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picking"></mat-datepicker-toggle>
+        <mat-datepicker #picking></mat-datepicker>
+    </mat-form-field>
+    
+    <mat-form-field fxLayout="column">
+        <mat-label>Tahun Kontrak</mat-label>
+        <input matInput type='number' formControlName="contractYear" id="contractYear" placeholder="Tahun Kontrak min 2022" >
+        <mat-hint>Contoh: 2022</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxLayout="column">
+        <mat-label>Jumlah Target</mat-label>
+        <input matInput type='number' formControlName="contractValue" id="contractValue" placeholder="Nilai Target" >
+        <mat-hint>Contoh: 5, 10, 12.5 </mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field fxLayout="column">
+        <mat-label>Catatan</mat-label>
+        <input matInput formControlName="contractNote" id="contractNote" placeholder="Catatan Kontrak" >
+        <mat-hint>Contoh: Dimulai semester 2</mat-hint>
+    </mat-form-field>
+    
+    <mat-slide-toggle formControlName="isActive" ngDefaultControl>Aktif?</mat-slide-toggle>
+    
+    <div fxLayoutGap="12px">
+        <button type="submit" mat-raised-button color="primary" fxFlex="30" *ngIf="!id"
+        class="btn btn-success" [disabled]="formInput.invalid" [hidden]="formInput.invalid">Buat Baru</button>
+        <button type="submit" mat-raised-button color="primary" fxFlex="30" *ngIf="id"
+       class="btn btn-success" [disabled]="formInput.invalid" [hidden]="formInput.invalid">Simpan</button>
+        <button type="cancel" mat-raised-button fxFlex="10" color="warn"(click)='closeDialog()' >Batal</button>
+    </div>
+</form>

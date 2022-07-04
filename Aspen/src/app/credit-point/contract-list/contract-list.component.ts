@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SortDirection, MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { contract } from '@env/model';
 import { ApiResult } from '@env/services';
 import { ContractService } from '@env/services/contract.service';
+import { ContractFormComponent } from '../contract-form/contract-form.component';
 
 @Component({
   selector: 'contract-list',
@@ -29,7 +30,7 @@ export class ContractListComponent implements OnInit {
 
   constructor(private contractService: ContractService,
     public dialog: MatDialog) {
-      this.displayedColumns = ['nama','tanggal','tahun', 'target','aktif'];
+      this.displayedColumns = ['id', 'nama','tanggal','tahun', 'target','aktif', 'catatan', 'aksi'];
     }
 
   ngOnInit(): void {
@@ -63,6 +64,18 @@ export class ContractListComponent implements OnInit {
         this.contracts = new MatTableDataSource<contract>(result.data);
 
       }, error => console.error(error));
+  }
+  openForm(nomor: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.restoreFocus; true;
+    dialogConfig.minWidth = 400;
+    dialogConfig.minHeight = 400;
+    if (nomor) {
+      dialogConfig.data = {  id: nomor};
+    }
+    const dialogRef = this.dialog.open(ContractFormComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => this.loadData(null) );
   }
 
 }

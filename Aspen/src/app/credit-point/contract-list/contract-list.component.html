@@ -1,1 +1,89 @@
-<p>contract-list works!</p>
+<div *ngIf="!contracts" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div>
+    <div class="commands text-right" *ngIf="contracts" class="tomboltambah">
+      <button mat-raised-button color="primary" matTooltip="Tambah Target" (click)="openForm(null)">
+          Tambah Target
+      </button>
+    </div>
+    
+    <table mat-table [dataSource]="contracts" class="mat-elevation-z16" [hidden]="!contracts"
+        matSort (matSortChange)="loadData()"
+        matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder" >
+    
+      <!-- Nomor Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1%;">Nomor</th>
+        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+      </ng-container>
+    
+      <!-- Nomor kontrak Column -->
+      <ng-container matColumnDef="nama">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header >Nomor Kontrak</th>
+        <td mat-cell *matCellDef="let contract" style="padding-left:5px; padding-right:5px">
+          {{contract.contractName}}
+        </td>
+      </ng-container>
+    
+      <!-- Tanggal Kontrak Column -->
+      <ng-container matColumnDef="tanggal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Kontrak</th>
+        <td mat-cell *matCellDef="let contract" style="text-align:center;">{{contract.contractDate | date:'dd-MM-yyyy'}} </td>
+      </ng-container>
+    
+      <!-- Tahun Kontrak-->
+      <ng-container matColumnDef="tahun">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tahun Kontrak</th>
+        <td mat-cell *matCellDef="let contract" class="numeric" style="padding-right:5px"> {{contract.contractYear}}</td>
+      </ng-container>
+    
+      <!-- Kolom Target kontrak-->
+      <ng-container matColumnDef="target">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Target</th>
+        <td mat-cell *matCellDef="let contract" class="numeric" style="padding-right:5px">{{contract.contractValue}}
+        </td>
+      </ng-container>
+
+      <!-- Kolom catatan -->
+      <ng-container matColumnDef="aktif">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header >Aktif?</th>
+          <td mat-cell *matCellDef="let contract" style="text-align:left;">{{contract.isActive ?? '-'}}
+        </td>
+    </ng-container>
+    
+    <!-- Catatan kontrak-->
+    <ng-container matColumnDef="catatan">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan Target</th>
+        <td mat-cell *matCellDef="let contract" style="padding-right:5px">{{contract.contractNote}}
+        </td>
+        </ng-container>
+    
+        <!-- Kolom tindakan -->
+        <ng-container matColumnDef="aksi" >
+          <th mat-header-cell *matHeaderCellDef style="width:180px;">Opsi</th>
+          <td mat-cell *matCellDef="let contract" fxLayoutGap="8px" fxLayoutAlign="start stretch"
+            style="padding-right:5px; padding-left:5px;" >
+            <button mat-raised-button (click)="openForm(contract.id)" matTooltip="Klik untuk mengubah target" color="accent">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- Khusus admin lihat si pembuat Column -->
+        <ng-container matColumnDef="user" *ngIf="isAdmin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+          <td mat-cell *matCellDef="let contract">{{contract.User.name}} 
+          </td>
+        </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color:rgb(234, 234, 234);"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <!-- Pagination directive -->
+    <mat-paginator [hidden]="!contracts"
+        (page)="getData($event)"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 20, 50]"
+        showFirstLastButtons></mat-paginator>
+  </div>

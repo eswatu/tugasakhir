@@ -22,6 +22,7 @@ import { SubmissionComponentComponent } from './submission-component/submission-
 import { SubmissionFormComponent } from './submission-form/submission-form.component';
 import { ValuationTableComponent } from './valuation-table/valuation-table.component';
 import { ContractListComponent } from './contract-list/contract-list.component';
+import { ContractFormComponent } from './contract-form/contract-form.component';
 
 
 export const MY_FORMATS = {
@@ -49,6 +50,7 @@ export const MY_FORMATS = {
     SubmissionFormComponent,
     ValuationTableComponent,
     ContractListComponent,
+    ContractFormComponent,
     ],
   imports: [
     CommonModule,

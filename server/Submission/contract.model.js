@@ -8,6 +8,7 @@ function model(sequelize) {
         contractDate: {type: DataTypes.DATE, allowNull: false},
         contractYear: {type: DataTypes.SMALLINT, allowNull: false},
         contractValue: {type: DataTypes.TINYINT, allowNull: false},
+        contractNote: {type: DataTypes.STRING, allowNull: true},
         isActive: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue:true}
     };
     return sequelize.define('Contract', attributes);
