@@ -100,9 +100,7 @@ async function _delete(req) {
 
 // helper functions
 async function getContractById(id) {
-    const ctr = await db.Contract.findByPk(id, {
-        include: [{all: true}]
-    });
+    const ctr = await db.Contract.findByPk(id);
     if (!ctr) throw 'Kontrak tidak ditemukan';
     return ctr;
 }

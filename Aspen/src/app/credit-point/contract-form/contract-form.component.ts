@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, MaxValidator, MinValidator, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { contract } from '@env/model';
 import { ContractService } from '@env/services/contract.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contract-form',
@@ -23,12 +22,12 @@ export class ContractFormComponent implements OnInit {
           this.id = data.id;
       }
       this.formInput = fb.group({
-        contractName: [''],
-        contractDate: [new Date()],
-        contractYear: ['2022'],
-        contractValue: [''],
+        contractName: ['', Validators.required],
+        contractDate: [new Date(),Validators.required],
+        contractYear: [2022,[Validators.required, Validators.min(2022)]],
+        contractValue: ['',Validators.required],
         contractNote: [''],
-        isActive: [true]
+        isActive: [true,Validators.required]
       });
     }
 
@@ -57,6 +56,7 @@ export class ContractFormComponent implements OnInit {
   onSubmit(){
     if (this.id) {
       this.contract = this.getFormValue();
+      this.contract.id = this.id;
       this.ctrService.put<contract>(this.contract).subscribe(res => {
         console.log(res);
       }, error => console.error(error));
