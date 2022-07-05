@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, MaxValidator, MinValidator, Validators } from '
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { contract } from '@env/model';
 import { ContractService } from '@env/services/contract.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contract-form',
@@ -58,15 +59,14 @@ export class ContractFormComponent implements OnInit {
       this.contract = this.getFormValue();
       this.contract.id = this.id;
       this.ctrService.put<contract>(this.contract).subscribe(res => {
-        console.log(res);
+        Swal.fire(res);
       }, error => console.error(error));
       this.closeDialog();
     } else {
     let ctrct = this.getFormValue();
     this.ctrService.post<contract>(ctrct).subscribe(result => {
-      console.log(result);
+      Swal.fire(result);
     }, error => console.error(error));
-    this.closeDialog();
     }
     }
 

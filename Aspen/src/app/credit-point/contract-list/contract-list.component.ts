@@ -19,7 +19,7 @@ export class ContractListComponent implements OnInit {
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
-  public defaultSortColumn: string = "id";
+  public defaultSortColumn: string = "contractYear";
   public defaultSortOrder: SortDirection = 'desc';
 
   defaultFilterColumn: string = null;

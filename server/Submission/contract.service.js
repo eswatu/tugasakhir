@@ -52,7 +52,7 @@ async function createContract(req) {
     // validate
     let result;
     if (await db.Contract.findOne({
-        where: {isActive : true,
+        where: {contractYear: params.contractYear,
             UserId: uid
         }
     })) {

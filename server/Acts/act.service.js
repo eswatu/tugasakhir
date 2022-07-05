@@ -161,3 +161,37 @@ async function getActBySubId(sid) {
     }
 }
 
+async function calcYear(req) {
+    const targetYear = req.params.year;
+    const mains = await db.Act.findAll({where: { actMain: true, actDate: {[Op.between]: [new Date(01,01,targetYear), new Date(31,12,targetYear)]}}, include: db.Butir});
+    const sides = await db.Act.findAll({where: { actMain: false, actDate: {[Op.between]: [new Date(01,01,targetYear), new Date(31,12,targetYear)]}}, include: db.Butir});
+    let totalmain;
+    let realized = 0;
+    let unrealized = 0;
+    mains.forEach(act => {
+        if (act.isCalculated) {
+            realized += act.butirVolume * parseFloat(act.Butir.jmlPoin); 
+        } else {
+            unrealized += act.butirVolume * parseFloat(act.Butir.jmlPoin);
+        }
+    });
+    totalmain = realized + unrealized;
+
+    const specialB = await db.SpecialButir.findAll();
+    const sb = specialB.map(function(item) {
+        return item["ButirId"];
+    });
+    
+    let totalSides;
+    let siderealized = 0;
+    let sideunrealized = 0;
+    sides.forEach(act => {
+        if (act.isCalculated) {
+            realized += act.butirVolume * parseFloat(act.Butir.jmlPoin); 
+        } else {
+            unrealized += act.butirVolume * parseFloat(act.Butir.jmlPoin);
+        }
+    });
+    
+    
+}

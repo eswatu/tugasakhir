@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-title>{{year}}</mat-card-title>
+<mat-card-content>
+    <section>
+        <h2>Target: 5 </h2>
+        <div fxLayout="row">
+            <div fxFlex="85">
+                <div style="border:2px solid black;">
+                    <div style="height:24px; width:10%; background-color:red;">
+                    </div>
+                </div>
+                <div>
+                    <p>Angka Kredit Utama</p>
+                    <p>Angka Kredit Penunjang</p>
+                </div>
+            </div>
+            <div fxFlex="15">
+                <h1>{{pencapaian / target * 100}} %</h1>
+            </div>
+        </div>
+    </section>
+</mat-card-content>
+</mat-card>

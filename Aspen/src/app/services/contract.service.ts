@@ -32,11 +32,11 @@ export class ContractService extends BaseService {
     const myUrl = this.url + id;
     return this.http.get<contract>(myUrl);
   }
-  put<contract>(item: any): Observable<contract> {
+  put<contract>(item: any): Observable<any> {
     var myUrl = this.url + item.id;
     return this.http.put<contract>(myUrl, item);
   }
-  post<contract>(item: contract): Observable<contract> {
+  post<contract>(item: contract): Observable<any> {
     return this.http.post<contract>(this.url, item);
   }
   toggleContract<contract>(item:any): Observable<contract> {
