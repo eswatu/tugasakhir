@@ -2,6 +2,8 @@ const db = require('../_helpers/db');
 const subService = require('../Submission/submission.service');
 const pagination = require('../_helpers/pagination');
 const actfileService = require('../Acts/actFile.service');
+const Op = require('sequelize');
+const { DATEONLY } = require('sequelize');
 
 module.exports = {
     getAll,
@@ -11,7 +13,8 @@ module.exports = {
     propose,
     updateAct,
     deleteAct: _delete,
-    getActBySubId
+    getActBySubId,
+    calcYear
 };
 
 async function getAll(rq) {
@@ -163,35 +166,79 @@ async function getActBySubId(sid) {
 
 async function calcYear(req) {
     const targetYear = req.params.year;
-    const mains = await db.Act.findAll({where: { actMain: true, actDate: {[Op.between]: [new Date(01,01,targetYear), new Date(31,12,targetYear)]}}, include: db.Butir});
-    const sides = await db.Act.findAll({where: { actMain: false, actDate: {[Op.between]: [new Date(01,01,targetYear), new Date(31,12,targetYear)]}}, include: db.Butir});
-    let totalmain;
-    let realized = 0;
-    let unrealized = 0;
-    mains.forEach(act => {
-        if (act.isCalculated) {
-            realized += act.butirVolume * parseFloat(act.Butir.jmlPoin); 
-        } else {
-            unrealized += act.butirVolume * parseFloat(act.Butir.jmlPoin);
-        }
-    });
-    totalmain = realized + unrealized;
-
+    const usr = db.User.findByPk(parseInt(req.headers.userid));
+    const sd = `${targetYear}-01-01`;
+    const ed = `${targetYear}-12-31`;
+    //ambil semua act dari satu user dalam satu tahun
+    const acts = await db.Act.findAll(
+        {where: { UserId: usr.id,
+                  actDate: {[Op.between]: [sd, ed]}
+                 }});
     const specialB = await db.SpecialButir.findAll();
     const sb = specialB.map(function(item) {
         return item["ButirId"];
     });
-    
-    let totalSides;
+
+    let total = 0;
+    let totalMain = 0;
+    let mainrealized = 0;
+    let mainunrealized = 0;
+    let totalSide = 0;
+    let sideunrealized =0;
     let siderealized = 0;
-    let sideunrealized = 0;
-    sides.forEach(act => {
-        if (act.isCalculated) {
-            realized += act.butirVolume * parseFloat(act.Butir.jmlPoin); 
+
+    for (let ac in acts) {
+        const butir = await db.Butir.findByPk(acts[ac].ButirId);
+        //cek apakah sudah dihitung atau belum, diajukan atau belum.
+        if (!sb.includes(butir.id)) {
+                let modifier = 0;
+                switch (butir.levelReq) {
+                    case 1:
+                    modifier = (level == 1 ) ? 1 : (level == 2 ) ? 0.8 : 0 ;     
+                        break;
+                    case 2:
+                        modifier = (level == 2 ) ? 1 : 0.8;
+                        break;
+                    case 3:
+                        modifier = (level < 3) ? 1 : 0.8;
+                        break;
+                    case 4:
+                        modifier = (level == 1) ? 0 : (level == 2) ? 0.8 : 1;
+                        break;
+                    case 6:
+                        modifier = (level == 1) ? 0.8 : 1;
+                        break;
+                    case 7:
+                        modifier = 1;
+                        break;  
+                    default:
+                        break;
+                }
+                if (ac.actMain) {
+                    if (ac.isCalculated) {
+                        mainrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    } else {
+                        mainunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    }
+                } else {
+                    if (ac.isCalculated) {
+                        siderealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    } else {
+                        sideunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    }
+                }
         } else {
-            unrealized += act.butirVolume * parseFloat(act.Butir.jmlPoin);
+            const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
+            console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
+            const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01) * gap; 
+            total += acts[ac].butirVolume * gapPoint;
         }
-    });
-    
+        totalMain = mainunrealized + mainrealized;
+        totalSide = sideunrealized + siderealized;
+    }
+    sub.subScore = total;
+
+    console.log('nilai subscore adalah: ' + sub.subScore);
+        return mains;
     
 }

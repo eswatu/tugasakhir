@@ -13,6 +13,7 @@ router.put('/:id', authorize(), updateSchema, update);
 router.get('/propose/:id', authorize(), propose);
 router.delete('/:id', authorize(), _delete);
 router.get('/sub/:id', authorize(), getBySubId);
+router.get('/calcYear/:year', calculateYear);
 
 module.exports = router;
 
@@ -79,6 +80,11 @@ function _delete(req, res, next) {
 }
 function getBySubId(req, res, next){
     actService.getActBySubId(req.params.id)
+    .then(result => res.json(result))
+    .catch(next);
+}
+function calculateYear(req, res, next){
+    actService.calcYear(req)
     .then(result => res.json(result))
     .catch(next);
 }
