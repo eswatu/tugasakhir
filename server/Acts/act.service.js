@@ -2,8 +2,7 @@ const db = require('../_helpers/db');
 const subService = require('../Submission/submission.service');
 const pagination = require('../_helpers/pagination');
 const actfileService = require('../Acts/actFile.service');
-const Op = require('sequelize');
-const { DATEONLY } = require('sequelize');
+const Op = require('sequelize').Op;
 
 module.exports = {
     getAll,
@@ -166,32 +165,38 @@ async function getActBySubId(sid) {
 
 async function calcYear(req) {
     const targetYear = req.params.year;
-    const usr = db.User.findByPk(parseInt(req.headers.userid));
-    const sd = `${targetYear}-01-01`;
-    const ed = `${targetYear}-12-31`;
+    const uid = parseInt(req.headers.userid);
+    const user = await db.User.findByPk(uid);
+    const level = parseInt(user.level);
+    const sd = new Date(targetYear,0,1);
+    // `${targetYear}-01-01`;
+    const ed = new Date(targetYear,11,31);
+    //`${targetYear}-12-31`;
     //ambil semua act dari satu user dalam satu tahun
     const acts = await db.Act.findAll(
-        {where: { UserId: usr.id,
-                  actDate: {[Op.between]: [sd, ed]}
+        {where: { UserId: uid,
+                  actDate: { [Op.between] : [sd, ed]}
                  }});
     const specialB = await db.SpecialButir.findAll();
     const sb = specialB.map(function(item) {
         return item["ButirId"];
     });
 
-    let total = 0;
     let totalMain = 0;
     let mainrealized = 0;
     let mainunrealized = 0;
     let totalSide = 0;
-    let sideunrealized =0;
+    let sideunrealized = 0;
     let siderealized = 0;
 
     for (let ac in acts) {
+        console.log(ac);
+        //cari butirnya
         const butir = await db.Butir.findByPk(acts[ac].ButirId);
-        //cek apakah sudah dihitung atau belum, diajukan atau belum.
+        //cek apakah butir masuk spesial? ada persentase
         if (!sb.includes(butir.id)) {
                 let modifier = 0;
+                //untuk melihat limpah atas atau bawah
                 switch (butir.levelReq) {
                     case 1:
                     modifier = (level == 1 ) ? 1 : (level == 2 ) ? 0.8 : 0 ;     
@@ -214,31 +219,37 @@ async function calcYear(req) {
                     default:
                         break;
                 }
-                if (ac.actMain) {
-                    if (ac.isCalculated) {
+                
+                //perhitungan tugas utama
+                if (acts[ac].actMain) {
+                    if (acts[ac].isCalculated) {
                         mainrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
                     } else {
                         mainunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
                     }
                 } else {
-                    if (ac.isCalculated) {
+                    //perhitungan tugas tambahan
+                    if (acts[ac].isCalculated) {
                         siderealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
                     } else {
                         sideunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
                     }
                 }
         } else {
+            //kalkulasi butir spesial, ambil digit depan persentase
             const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
-            console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
             const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01) * gap; 
-            total += acts[ac].butirVolume * gapPoint;
+            if (acts[ac].isCalculated) {
+                siderealized += acts[ac].butirVolume * gapPoint;
+            } else {
+                sideunrealized += acts[ac].butirVolume * gapPoint;
+            }
         }
         totalMain = mainunrealized + mainrealized;
         totalSide = sideunrealized + siderealized;
     }
-    sub.subScore = total;
 
-    console.log('nilai subscore adalah: ' + sub.subScore);
-        return mains;
+    return {'mainUnrealized': mainunrealized, 'mainRealized': mainrealized, 'maintotal': totalMain,
+            'sideUnrealized': sideunrealized, 'sideRealized': siderealized, 'sidetotal': totalSide};
     
 }
