@@ -50,6 +50,11 @@ export class ActService extends BaseService {
     var myUrl = this.url + 'propose/' + id;
     return this.http.get(myUrl);
   }
+  getProgress() : Observable<progresponse>{
+    const year = 2022;
+    var myUrl = this.url + 'calcYear/' + year;
+    return this.http.get<progresponse>(myUrl);
+  }
   uploadFile(file: File, actId:string, notes: string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('actFile', file);
@@ -84,4 +89,13 @@ export class ActService extends BaseService {
     this.url = baseUrl + 'api/acts/';
     this.urlFile = baseUrl + 'api/actfile/';
   }
+}
+
+export interface progresponse {
+  mainRealized: number;
+mainUnrealized: number;
+maintotal: number;
+sideRealized: number;
+sideUnrealized: number;
+sidetotal: number;
 }

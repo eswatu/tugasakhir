@@ -13,7 +13,7 @@ router.put('/:id', authorize(), updateSchema, update);
 router.get('/propose/:id', authorize(), propose);
 router.delete('/:id', authorize(), _delete);
 router.get('/sub/:id', authorize(), getBySubId);
-router.get('/calcYear/:year', calculateYear);
+router.get('/calcYear/:year', authorize(), calculateYear);
 
 module.exports = router;
 
