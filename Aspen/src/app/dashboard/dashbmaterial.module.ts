@@ -19,8 +19,6 @@ const modules = [
   MatDividerModule
   ];
 
-
-
 @NgModule({
   declarations: [],
   imports: modules,

@@ -10,8 +10,38 @@
                     </div>
                 </div>
                 <div>
-                    <p>Angka Kredit Utama     : {{utama}} + {{utamaunrealise}}</p>
-                    <p>Angka Kredit Penunjang : {{penunjang}} + {{penunjangunrealise}}</p>
+                    <table>
+                        <tr>
+                            <td>Main</td>
+                            <td>:</td>
+                            <td>{{utama}}</td>
+                            <td>(</td>
+                            <td>{{mainrealised}}</td>
+                            <td> + </td>
+                            <td>{{mainunrealised}}</td>
+                            <td>)</td>
+                        </tr>
+                        <tr>
+                            <td>Side</td>
+                            <td>:</td>
+                            <td>{{penunjang}}</td>
+                            <td>(</td>
+                            <td>{{siderealised}}</td>
+                            <td> + </td>
+                            <td>{{sideunrealised}}</td>
+                            <td>)</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td> : </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <p>Main: {{utama}} + {{utamaunrealise}}</p>
+                    <p>Side: {{penunjang}} + {{penunjangunrealise}}</p>
+                    <p>Realized:</p>
+                    <p>Unrealized:</p>
                 </div>
             </div>
             <div fxFlex="15">
