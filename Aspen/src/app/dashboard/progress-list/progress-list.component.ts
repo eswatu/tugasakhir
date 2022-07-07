@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./progress-list.component.css']
 })
 export class ProgressListComponent implements OnInit {
-
+  currentYear;
   constructor() { }
 
   ngOnInit(): void {
+    this.currentYear = new Date().getFullYear();
   }
 
 }

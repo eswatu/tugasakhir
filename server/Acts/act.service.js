@@ -97,7 +97,7 @@ async function propose(req) {
         await act.save();
         result = msg;
     } else {
-        result = 'Gagal: Tidak ada pengajuan, silakan buat di menu Pengajuan';
+        result = 'Gagal: Tidak ada pengajuan Aktif, silakan buat di menu Pengajuan';
     }
     return result;
 }

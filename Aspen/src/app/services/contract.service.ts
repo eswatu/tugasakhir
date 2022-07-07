@@ -47,4 +47,8 @@ export class ContractService extends BaseService {
     var myUrl = this.url + 'toggle/' + item.id;
     return this.http.put<contract>(myUrl, item);
   }
+  getYearList(): Observable<any> {
+    var myUrl = this.url + '/getyearlist';
+    return this.http.get(myUrl);
+  }
 }

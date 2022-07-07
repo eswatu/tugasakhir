@@ -13,6 +13,7 @@ router.put('/:id', authorize(), updateSchema, update);
 router.put('/toggle/:id', authorize(), toggleContract);
 router.delete('/:id', authorize(), _delete);
 router.get('/ctrByYear/:year', authorize(), contractByYear);
+router.get('/getYearlist', getYearList);
 
 module.exports = router;
 
@@ -79,5 +80,11 @@ function contractByYear(req, res, next) {
     contractService.getContractByYear(req)
     .then(result => res.json(result))
     .catch(next);
+}
+
+function getYearList(req, res, next) {
+    contractService.getYears(req)
+        .then(result => res.send(result))
+        .catch(next);
 }
 

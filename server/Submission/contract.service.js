@@ -10,7 +10,8 @@ module.exports = {
     deleteAct: _delete,
     getActiveContract,
     toggleContract,
-    getContractByYear
+    getContractByYear,
+    getYears
 };
 
 
@@ -45,7 +46,6 @@ async function getContractByUserId(id) {
     });
     return ctr ?? null;
 }
-
 
 async function createContract(req) {
     const params = req.body;
@@ -87,7 +87,7 @@ async function updateContract(id, params, headers) {
         Object.assign(ctr, params);
         ctr.updatedAt = new Date();
         await ctr.save();
-        return 'Berhasil mengubah Kontrak';
+        return 'Berhasil mengubah Kontrak Kinerja';
     } else {
         return "anda tidak berhak melakukan perubahan";
     }
@@ -112,6 +112,7 @@ async function _delete(req) {
 
 // helper functions
 async function getContractById(id) {
+    console.log('id called');
     const ctr = await db.Contract.findByPk(id);
     if (!ctr) throw 'Kontrak tidak ditemukan';
     return ctr;
@@ -139,6 +140,19 @@ async function toggleContract(id) {
         }
     } else {
         throw 'Kontrak tidak valid id';
+    }
+}
+async function getYears(req){
+    console.log('this is called');
+    if (req.headers.userrole === 'Admin') {
+        const ctrs = await db.Contract.findAll({attributes: ['contractYear'],
+                                                group: ['contractYear']});
+        return ctrs;
+    } else {
+        const uid = parseInt(req.params.userid);
+        const ctrs = await db.Contract.findAll({attributes: ['contractYear'],
+                                        group: ['contractYear'], where: {UserId: uid}});
+        return ctrs;
     }
 }
 

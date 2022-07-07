@@ -6,6 +6,11 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./_middleware/error-handler');
 
 const userService = require('./Users/user.service');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 global.__basedir = __dirname;
 
 //parse app/x-www-form-urlencoded

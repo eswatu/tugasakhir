@@ -1,4 +1,7 @@
 <mat-toolbar color="primary" fxLayout="row" *ngIf="isAuthorized">
+  <button mat-button>
+    Andal Login Sebagai {{user.name}}
+  </button>
     <button  mat-button fxFlex  routerLink="dashboard">
       <mat-icon>dashboard</mat-icon>
       Dashboard
@@ -11,9 +14,6 @@
     <button  mat-button fxFlex routerLink="profile">
       <mat-icon>badge</mat-icon>
       Profil
-    </button>
-    <button mat-button>
-      Andal Login Sebagai {{user.name}}
     </button>
     <button mat-button (click)="openhelp()">
       <mat-icon>help</mat-icon>

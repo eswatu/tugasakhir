@@ -59,13 +59,13 @@ export class ContractFormComponent implements OnInit {
       this.contract = this.getFormValue();
       this.contract.id = this.id;
       this.ctrService.put<contract>(this.contract).subscribe(res => {
-        Swal.fire(res);
+        Swal.fire(res.message);
       }, error => console.error(error));
       this.closeDialog();
     } else {
     let ctrct = this.getFormValue();
     this.ctrService.post<contract>(ctrct).subscribe(result => {
-      Swal.fire(result);
+      Swal.fire(result.message);
     }, error => console.error(error));
     }
     }

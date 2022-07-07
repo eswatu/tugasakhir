@@ -35,7 +35,7 @@
                 <div fxLayout="row">
                   <div fxLayout="column" fxFlex="1 0 200px">
                         {{item.Butir.namaButir}}  pada {{ item.actDate | date:'dd-MM-yyyy'}}
-                        sejumlah {{item.butirVolume}} nilai {{ item.Butir.jmlPoin }} total:
+                        nilai {{ item.Butir.jmlPoin }} sejumlah {{item.butirVolume}} total:
                   </div>
                   <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
                       {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
