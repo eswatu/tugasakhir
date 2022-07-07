@@ -39,6 +39,10 @@ export class ContractService extends BaseService {
   post<contract>(item: contract): Observable<any> {
     return this.http.post<contract>(this.url, item);
   }
+  contractByYear<contract>(year: number): Observable<any> {
+    var myUrl = this.url + 'ctrByYear/' + year;
+    return this.http.get(myUrl);
+  }
   toggleContract<contract>(item:any): Observable<contract> {
     var myUrl = this.url + 'toggle/' + item.id;
     return this.http.put<contract>(myUrl, item);

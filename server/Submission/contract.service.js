@@ -10,6 +10,7 @@ module.exports = {
     deleteAct: _delete,
     getActiveContract,
     toggleContract,
+    getContractByYear
 };
 
 
@@ -89,6 +90,17 @@ async function updateContract(id, params, headers) {
         return 'Berhasil mengubah Kontrak';
     } else {
         return "anda tidak berhak melakukan perubahan";
+    }
+}
+
+async function getContractByYear(req) {
+    const year = parseInt(req.params.year);
+    const uid = parseInt(req.headers.userid);
+    const ctr = await db.Contract.findOne({where: {contractYear:year, UserId: uid}});
+    if (ctr) {
+        return ctr;
+    } else { 
+        throw 'Kontrak tidak ditemukan';
     }
 }
 
