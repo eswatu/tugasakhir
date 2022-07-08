@@ -1,1 +1,8 @@
+<mat-form-field>
+    <mat-label>Pilih Tahun</mat-label>
+    <mat-select (selectionChange)="onChangeSelect($event)">
+        <mat-option  *ngFor="let item of yearlist" [value]="item">{{item}}</mat-option>
+    </mat-select>
+</mat-form-field>
+
 <progress-block [year]="currentYear"></progress-block>

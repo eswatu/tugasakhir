@@ -13,7 +13,7 @@ router.put('/:id', authorize(), updateSchema, update);
 router.put('/toggle/:id', authorize(), toggleContract);
 router.delete('/:id', authorize(), _delete);
 router.get('/ctrByYear/:year', authorize(), contractByYear);
-router.get('/getYearlist', getYearList);
+router.get('/yearlist/:year', getYearList);
 
 module.exports = router;
 

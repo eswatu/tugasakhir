@@ -112,7 +112,7 @@ async function _delete(req) {
 
 // helper functions
 async function getContractById(id) {
-    console.log('id called');
+    console.log('by id called');
     const ctr = await db.Contract.findByPk(id);
     if (!ctr) throw 'Kontrak tidak ditemukan';
     return ctr;
@@ -149,7 +149,7 @@ async function getYears(req){
                                                 group: ['contractYear']});
         return ctrs;
     } else {
-        const uid = parseInt(req.params.userid);
+        const uid = parseInt(req.headers.userid);
         const ctrs = await db.Contract.findAll({attributes: ['contractYear'],
                                         group: ['contractYear'], where: {UserId: uid}});
         return ctrs;

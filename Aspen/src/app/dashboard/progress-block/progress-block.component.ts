@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActService } from '@env/services';
 import { ContractService } from '@env/services/contract.service';
 
@@ -7,7 +7,7 @@ import { ContractService } from '@env/services/contract.service';
   templateUrl: './progress-block.component.html',
   styleUrls: ['./progress-block.component.css']
 })
-export class ProgressBlockComponent implements OnInit {
+export class ProgressBlockComponent implements OnInit, OnChanges {
   @Input() year;
   kontrak;
   pencapaian = 0;
@@ -27,6 +27,9 @@ export class ProgressBlockComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+      this.ngOnInit();
   }
   loadData(){
     //load kontrak kinerja

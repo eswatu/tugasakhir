@@ -6,10 +6,6 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./_middleware/error-handler');
 
 const userService = require('./Users/user.service');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 global.__basedir = __dirname;
 
@@ -33,6 +29,7 @@ app.use('/api/contract', require('./Submission/contract.controller'))
 
 //global error handler
 app.use(errorHandler);
+
 
 //start server
 const port = process.env.Node_ENV === 'production' ? (process.env.PORT || 80) : 4000;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { AuthenticationService } from '@env/services';
 
 @Component({
@@ -7,6 +8,7 @@ import { AuthenticationService } from '@env/services';
   styleUrls: ['./angkre-tab.component.css']
 })
 export class AngkreTabComponent implements OnInit {
+  background: ThemePalette = 'accent';
   isAdmin;
   constructor(private authSrvc: AuthenticationService) {
     this.authSrvc.user.subscribe(x => (x.role === "Admin") ? this.isAdmin = true : this.isAdmin = false);

@@ -1,5 +1,5 @@
-<mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Pekerjaan" *ngIf="!isAdmin">
+<mat-tab-group mat-stretch-tabs [backgroundColor]="background" >
+    <mat-tab label="Pekerjaan" *ngIf="!isAdmin" >
         <ng-template matTabContent>
             <credit-point-table></credit-point-table>
         </ng-template>
