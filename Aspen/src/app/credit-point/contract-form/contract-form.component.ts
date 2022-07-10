@@ -25,7 +25,7 @@ export class ContractFormComponent implements OnInit {
       this.formInput = fb.group({
         contractName: ['', Validators.required],
         contractDate: [new Date(),Validators.required],
-        contractYear: [2022,[Validators.required, Validators.min(2022)]],
+        contractYear: [2022,[Validators.required, Validators.min(2022), Validators.pattern('/^(20)[\d]{2,2}$/')]],
         contractValue: ['',Validators.required],
         contractNote: [''],
         isActive: [true,Validators.required]
@@ -65,7 +65,7 @@ export class ContractFormComponent implements OnInit {
     } else {
     let ctrct = this.getFormValue();
     this.ctrService.post<contract>(ctrct).subscribe(result => {
-      Swal.fire(result.message);
+      Swal.fire(result);
     }, error => console.error(error));
     }
     }

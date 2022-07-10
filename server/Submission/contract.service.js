@@ -57,7 +57,7 @@ async function createContract(req) {
             UserId: uid
         }
     })) {
-        result = 'Sudah ada Kontrak aktif';
+        result = 'Sudah ada Target tahun tersebut';
     } else {
     // save Act
     await db.Contract.create({
