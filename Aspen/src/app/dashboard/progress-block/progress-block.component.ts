@@ -9,6 +9,9 @@ import { ContractService } from '@env/services/contract.service';
 })
 export class ProgressBlockComponent implements OnInit, OnChanges {
   @Input() year;
+  @Input() userId;
+  
+  user;
   kontrak;
   pencapaian = 0;
 
@@ -37,7 +40,8 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
       this.kontrak = res;
     });
     //loadprogress
-    this.actService.getProgress().subscribe(res => {
+    this.actService.getProgress(this.year, this.userId).subscribe(res => {
+      this.user = res.user;
       this.pencapaian = res.mainRealized + res.sideRealized;
       this.utama = res.maintotal;
       this.penunjang = res.sidetotal;

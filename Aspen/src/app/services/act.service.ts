@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { act } from '@env/model';
+import { act, User } from '@env/model';
 import { fileInfo } from '@env/model/fileType';
 import { Observable } from 'rxjs';
 import { BaseService } from './base.service';
@@ -50,9 +50,9 @@ export class ActService extends BaseService {
     var myUrl = this.url + 'propose/' + id;
     return this.http.get(myUrl);
   }
-  getProgress() : Observable<progresponse>{
-    const year = 2022;
-    var myUrl = this.url + 'calcYear/' + year;
+  getProgress(thisyear:Number, userId: Number) : Observable<progresponse>{
+    const year = thisyear ?? new Date().getFullYear();
+    var myUrl = this.url + 'calcYear/' + year + '/forUser/' + userId;
     return this.http.get<progresponse>(myUrl);
   }
   uploadFile(file: File, actId:string, notes: string): Observable<HttpEvent<any>> {
@@ -92,6 +92,7 @@ export class ActService extends BaseService {
 }
 
 export interface progresponse {
+  user: User;
   mainRealized: number;
 mainUnrealized: number;
 maintotal: number;

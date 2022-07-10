@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService} from '@env/services';
+import { AuthenticationService, UserService} from '@env/services';
 import { ContractService } from '@env/services/contract.service';
 
 @Component({
@@ -9,10 +9,14 @@ import { ContractService } from '@env/services/contract.service';
 })
 export class ProgressListComponent implements OnInit {
   user;
-  yearlist = [String];
+  mainData;
   currentYear;
-  constructor(private ctrService: ContractService, private authService: AuthenticationService) {
+  userIdList;
+  contractNameList;
+  constructor(private ctrService: ContractService,
+    private authService: AuthenticationService) {
     this.authService.user.subscribe(usr => this.user = usr);
+    this.currentYear = new Date().getFullYear();
   }
 
   ngOnInit(): void {
@@ -20,15 +24,23 @@ export class ProgressListComponent implements OnInit {
   }
   
   loadData(){
-    this.currentYear = new Date().getFullYear();
-    this.ctrService.getYearList().subscribe(result => {
-      this.yearlist = result.map(a => a.contractYear);
-      console.log(this.yearlist);
-    }, error => console.error(error));
 
+    this.ctrService.getYearList().subscribe(result => {
+      this.mainData = result.reduce((group, userId) => {
+        const {contractYear} = userId;
+        group[contractYear] = group[contractYear] ?? [];
+        group[contractYear].push(userId);
+
+        return group;
+      },{});
+      this.userIdList = result.map(a => a.UserId);
+      this.contractNameList = result.map(a => a.contractName);
+      console.log('isi yearlist',this.mainData);
+      console.log('isi userIdList',this.userIdList);
+    }, error => console.error(error));
   }
+
   onChangeSelect(ev){
-    console.log('iam called');
     this.currentYear = ev.value;
   }
 }

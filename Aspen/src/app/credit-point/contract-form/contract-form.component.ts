@@ -25,7 +25,7 @@ export class ContractFormComponent implements OnInit {
       this.formInput = fb.group({
         contractName: ['', Validators.required],
         contractDate: [new Date(),Validators.required],
-        contractYear: [2022,[Validators.required, Validators.min(2022), Validators.pattern('/^(20)[\d]{2,2}$/')]],
+        contractYear: [2022,[Validators.required, Validators.min(2022)]],
         contractValue: ['',Validators.required],
         contractNote: [''],
         isActive: [true,Validators.required]

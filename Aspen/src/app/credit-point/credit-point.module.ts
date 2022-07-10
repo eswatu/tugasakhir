@@ -7,7 +7,6 @@ import { cpMaterialModule } from './cpmaterial.module';
 import { HttpClientModule } from "@angular/common/http";
 import { ButirTreeComponent } from './butir-tree/butir-tree.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DatePipe } from '@angular/common';
 import { AssignLetterTableComponent } from './assign-letter-table/assign-letter-table.component';
 import { AssignLetterFormComponent } from './assign-letter-form/assign-letter-form.component';
@@ -59,7 +58,6 @@ export const MY_FORMATS = {
     FormsModule,
     ReactiveFormsModule,
     cpMaterialModule,
-    SweetAlert2Module,
     MatFormFieldModule,
     MatInputModule
   ],

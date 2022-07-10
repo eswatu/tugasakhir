@@ -58,13 +58,6 @@ function getCurrent(req, res, next) {
 }
 
 function getById(req, res, next) {
-    const id = parseInt(req.params.id);
-    console.log('isi id: ' + id + ' dan isi header: ' + req.headers.userid)
-    //allow only admin untuk akses semua record
-    if (id != parseInt(req.headers.userid) && req.headers.userrole !== "Admin") {
-        return res.status(401).json({message: 'Unauthorized'});
-    }
-
     userService.getById(req.params.id)
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));

@@ -14,7 +14,7 @@ import { ProgressListComponent } from './progress-list/progress-list.component';
   imports: [
     CommonModule,
     dashbMaterialModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
   ]
 })
 export class DashboardModule { }

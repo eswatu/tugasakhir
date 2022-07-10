@@ -95,8 +95,14 @@ async function updateContract(id, params, headers) {
 
 async function getContractByYear(req) {
     const year = parseInt(req.params.year);
+    let ctr;
+    if (req.headers.userrole === 'User') {
     const uid = parseInt(req.headers.userid);
-    const ctr = await db.Contract.findOne({where: {contractYear:year, UserId: uid}});
+    ctr = await db.Contract.findAll({where: {contractYear:year, UserId: uid}});
+    } else if (req.headers.userrole === 'Admin') {
+        ctr = await db.Contract.findAll({where: {contractYear:year}});
+    }
+
     if (ctr) {
         return ctr;
     } else { 
@@ -143,15 +149,13 @@ async function toggleContract(id) {
     }
 }
 async function getYears(req){
-    console.log('this is called');
     if (req.headers.userrole === 'Admin') {
-        const ctrs = await db.Contract.findAll({attributes: ['contractYear'],
-                                                group: ['contractYear']});
+        const ctrs = await db.Contract.findAll({attributes: ['contractYear', 'UserId']});
         return ctrs;
-    } else {
+    } else if (req.headers.userrole === 'User'){
         const uid = parseInt(req.headers.userid);
-        const ctrs = await db.Contract.findAll({attributes: ['contractYear'],
-                                        group: ['contractYear'], where: {UserId: uid}});
+        const ctrs = await db.Contract.findAll({attributes: ['contractYear', 'UserId'],
+                                        where: {UserId: uid}});
         return ctrs;
     }
 }

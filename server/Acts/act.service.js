@@ -13,7 +13,7 @@ module.exports = {
     updateAct,
     deleteAct: _delete,
     getActBySubId,
-    calcYear
+    calcPerUser
 };
 
 async function getAll(rq) {
@@ -163,10 +163,10 @@ async function getActBySubId(sid) {
     }
 }
 
-async function calcYear(req) {
-    const targetYear = req.params.year;
-    const uid = parseInt(req.headers.userid);
-    const user = await db.User.findByPk(uid);
+
+async function calcPerUser(targetYear, userId) {
+    const user = await db.User.findByPk(userId);
+
     const level = parseInt(user.level);
     const sd = new Date(targetYear,0,1);
     // `${targetYear}-01-01`;
@@ -174,21 +174,21 @@ async function calcYear(req) {
     //`${targetYear}-12-31`;
     //ambil semua act dari satu user dalam satu tahun
     const acts = await db.Act.findAll(
-        {where: { UserId: uid,
+        {where: { UserId: userId,
                   actDate: { [Op.between] : [sd, ed]}
                  }});
     const specialB = await db.SpecialButir.findAll();
     const sb = specialB.map(function(item) {
         return item["ButirId"];
     });
-
+    
     let totalMain = 0;
     let mainrealized = 0;
     let mainunrealized = 0;
     let totalSide = 0;
     let sideunrealized = 0;
     let siderealized = 0;
-
+    
     for (let ac in acts) {
         console.log(ac);
         //cari butirnya
@@ -248,8 +248,7 @@ async function calcYear(req) {
         totalMain = mainunrealized + mainrealized;
         totalSide = sideunrealized + siderealized;
     }
-
-    return {'mainUnrealized': mainunrealized, 'mainRealized': mainrealized, 'maintotal': totalMain,
-            'sideUnrealized': sideunrealized, 'sideRealized': siderealized, 'sidetotal': totalSide};
     
-}
+    return {'user': user, 'mainUnrealized': mainunrealized, 'mainRealized': mainrealized, 'maintotal': totalMain,
+            'sideUnrealized': sideunrealized, 'sideRealized': siderealized, 'sidetotal': totalSide};
+ } //end of calcPerUser
