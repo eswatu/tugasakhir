@@ -17,8 +17,9 @@ export class ProgressListComponent implements OnInit {
   constructor(private ctrService: ContractService,
     private authService: AuthenticationService) {
     this.authService.user.subscribe(usr => this.user = usr);
-    this.isAdmin = this.user.role === 'Admin';
-
+    if (this.user) {
+      this.isAdmin = this.user.role === 'Admin';
+    }
   }
   
   ngOnInit(): void {

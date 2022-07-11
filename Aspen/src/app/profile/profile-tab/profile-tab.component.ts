@@ -8,8 +8,14 @@ import { AuthenticationService } from '@env/services';
 })
 export class ProfileTabComponent implements OnInit {
   isAdmin;
+  user;
   constructor(private authSrvc: AuthenticationService) {
-    this.authSrvc.user.subscribe(x => this.isAdmin = (x.role === "Admin") ? true : false);
+    this.authSrvc.user.subscribe(x => {
+      this.user = x;
+      if (this.user) {
+        this.isAdmin = (x.role === "Admin") ? true : false;
+      }
+    }, error => console.error(error));
   }
 
   ngOnInit(): void {

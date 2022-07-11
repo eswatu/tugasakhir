@@ -36,16 +36,17 @@ export class SubmissionListComponent implements OnInit {
     public dialog: MatDialog) {
       this.authService.user.subscribe( x => {
         this.user = x;
-        this.adminstatus = (x.role === "Admin") ? true : false;
-        const lvl = parseInt(x.level);
-        if (lvl == 1 ){
-          this.target = 20;
-        } else if (lvl == 2) {
-          this.target = 50;
-        } else if(lvl == 4) {
-          this.target = 100;
+        if (this.user) {
+          this.adminstatus = (x.role === "Admin") ? true : false;
+          const lvl = parseInt(x.level);
+          if (lvl == 1 ){
+            this.target = 20;
+          } else if (lvl == 2) {
+            this.target = 50;
+          } else if(lvl == 4) {
+            this.target = 100;
+          }
         }
-        
       });
   }
   

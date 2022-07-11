@@ -27,7 +27,7 @@ export class AssignLetterTableComponent implements OnInit {
 
   authUserId: number;
   isAdmin: boolean;
-  
+  user;
   defaultPageIndex: number = 0;
   defaultPageSize: number = 5;
   public defaultSortColumn: string = "id";
@@ -43,9 +43,11 @@ export class AssignLetterTableComponent implements OnInit {
     private authService: AuthenticationService,
     public dialog: MatDialog) {
       this.authService.user.subscribe(u => {
-        this.authUserId = u.id;
-        this.isAdmin = ( u.role === "Admin") ? true : false;
-
+        this.user = u;
+        if (this.user) {
+          this.authUserId = u.id;
+          this.isAdmin = ( u.role === "Admin") ? true : false;
+        }
         if (this.isAdmin) {
             this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi', 'user'];
          } else {

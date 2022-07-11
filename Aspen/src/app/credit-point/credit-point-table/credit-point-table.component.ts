@@ -21,7 +21,7 @@ import { AuthenticationService } from '@env/services';
 export class CreditPointTableComponent implements OnInit {
   activeSubmission;
 
-  public displayedColumns: string[];
+  public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
   public jobs: MatTableDataSource<act>;
 
   defaultPageIndex: number = 0;
@@ -35,18 +35,19 @@ export class CreditPointTableComponent implements OnInit {
   @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isAdmin;
+  user;
   //  filterTextChanged: Subject<string> = new Subject<string>();
   constructor(
     private actService: ActService,
     private authService: AuthenticationService,
     public dialog: MatDialog) {
       this.authService.user.subscribe(x => {
-        this.isAdmin = ( x.role === "Admin") ? true : false ;
-
+        this.user = x;
+        if (this.user) {
+          this.isAdmin = ( x.role === "Admin") ? true : false ;
+        }
         if (this.isAdmin){
-        this.displayedColumns = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'user', 'aksi'];
-        } else {
-          this.displayedColumns = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
+        this.displayedColumns.push('user');
         }
       });
   }

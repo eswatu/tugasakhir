@@ -39,7 +39,9 @@ export class UserdetailComponent implements OnInit {
     private fb: FormBuilder) {
       this.authService.user.subscribe(x => {
         this.userInfo = x;
-        this.userId = x.id;
+        if (this.userInfo) {
+          this.userId = x.id;
+        }
       });
     }
 
