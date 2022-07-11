@@ -4,22 +4,21 @@
         <mat-option  *ngFor="let item of mainData | keyvalue" [value]="item.key">{{item.key}}</mat-option>
     </mat-select>
 </mat-form-field>
-
 <div *ngIf="isAdmin">
-    <mat-list>
-        <div mat-subheader>{{currentYear}}</div>
-        <mat-list-item *ngFor="let item of userIdList">
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h3>{{item}}</h3>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <progress-block [year]="currentYear" [userId]="item"></progress-block>
-            </mat-expansion-panel>    
-        </mat-list-item>
-    </mat-list>
+    <div *ngFor="let item of currentData">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3>{{item.User.name}}</h3>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <progress-block [contract]="item" [user]="item.User"></progress-block>
+        </mat-expansion-panel>    
+    </div>
 </div>
+
 <div *ngIf="!isAdmin">
-    <progress-block [year]="currentYear" [userId]="user.id"></progress-block>
+    <div *ngIf="currentData">
+        <progress-block [contract]="currentData[0]" [user]="currentData[0].User"></progress-block>
+    </div>
 </div>

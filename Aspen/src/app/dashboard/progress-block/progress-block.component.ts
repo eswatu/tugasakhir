@@ -8,11 +8,9 @@ import { ContractService } from '@env/services/contract.service';
   styleUrls: ['./progress-block.component.css']
 })
 export class ProgressBlockComponent implements OnInit, OnChanges {
-  @Input() year;
-  @Input() userId;
-  
-  user;
-  kontrak;
+  @Input() contract;
+  @Input() user;
+    
   pencapaian = 0;
 
   utama = 0;
@@ -25,8 +23,7 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
 
   persentase = 0;
   warna = '#A93226';
-  constructor(private actService: ActService,
-    private ctrService: ContractService) {
+  constructor(private actService: ActService) {
   }
 
   ngOnInit(): void {
@@ -36,12 +33,8 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
       this.ngOnInit();
   }
   loadData(){
-    //load kontrak kinerja
-    this.ctrService.contractByYear(this.year).subscribe(res => {
-      this.kontrak = res[0];
-    });
     //loadprogress
-    this.actService.getProgress(this.year, this.userId).subscribe(res => {
+    this.actService.getProgress(this.contract.contractYear, this.user.Id).subscribe(res => {
       this.user = res.user;
       this.pencapaian = res.mainRealized + res.sideRealized;
       this.utama = res.maintotal;
@@ -50,7 +43,7 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
       this.utamarealise = res.mainRealized;
       this.penunjangunrealise = res.sideUnrealized;
       this.penunjangrealise = res.sideRealized;
-      this.persentase = this.pencapaian / this.kontrak.contractValue * 100;
+      this.persentase = this.pencapaian / this.contract.contractValue * 100;
       
       if (this.persentase < 30) {
         this.warna = '#A93226';
@@ -61,6 +54,7 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
       }
 
     }, error => console.error(error));
+
   }
 
 }

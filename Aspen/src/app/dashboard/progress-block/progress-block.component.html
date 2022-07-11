@@ -1,9 +1,9 @@
-<mat-card *ngIf="kontrak">
+<mat-card *ngIf="contract">
     <mat-card-title>{{year}}</mat-card-title>
 <mat-card-content>
     <section>
-        <h2>Nomor Kontrak: {{ kontrak.contractName}} tanggal: {{kontrak.contractDate | date:'dd-MM-yyyy'}}</h2>
-        <h2>Target: {{kontrak.contractValue}} </h2>
+        <h2>Nomor Kontrak: {{ contract.contractName}} tanggal: {{contract.contractDate | date:'dd-MM-yyyy'}}</h2>
+        <h2>Target: {{contract.contractValue}} </h2>
         <div fxLayout="row">
             <div fxFlex="85">
                 <div style="border:2px solid black;">
@@ -36,7 +36,7 @@
                             <td>Total</td>
                             <td> : </td>
                             <td>{{pencapaian}}</td>
-                            <td> / {{kontrak.contractValue}}</td>
+                            <td> / {{contract.contractValue}}</td>
                         </tr>
                     </table>
                 </div>
@@ -48,6 +48,6 @@
     </section>
 </mat-card-content>
 </mat-card>
-<div *ngIf="!kontrak">
+<div *ngIf="!contract">
     <mat-spinner></mat-spinner>
 </div>

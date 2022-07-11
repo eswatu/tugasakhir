@@ -12,21 +12,20 @@ export class ProgressListComponent implements OnInit {
   isAdmin;
   mainData;
   currentYear;
-  userIdList;
+  currentData;
   contractNameList;
   constructor(private ctrService: ContractService,
     private authService: AuthenticationService) {
     this.authService.user.subscribe(usr => this.user = usr);
     this.isAdmin = this.user.role === 'Admin';
-    this.currentYear = new Date().getFullYear();
-  }
 
+  }
+  
   ngOnInit(): void {
-  this.loadData();
+    this.loadData();
   }
   
   loadData(){
-
     this.ctrService.getYearList().subscribe(result => {
       this.mainData = result.reduce((group, userId) => {
         const {contractYear} = userId;
@@ -34,15 +33,16 @@ export class ProgressListComponent implements OnInit {
         group[contractYear].push(userId);
         return group;
       },{});
-
-      this.userIdList = result.map(a => a.UserId);
-      this.contractNameList = result.map(a => a.contractName);
-      console.log('isi yearlist',this.mainData);
-      console.log('isi userIdList',this.userIdList);
+      this.currentYear = new Date().getFullYear();
+      this.currentData = this.mainData[this.currentYear];
+      console.log('isi dari currentData', this.currentData);
+      console.log('isi dari mainData', this.mainData);
     }, error => console.error(error));
+    
   }
 
   onChangeSelect(ev){
     this.currentYear = ev.value;
+    this.currentData = this.mainData[this.currentYear];
   }
 }
