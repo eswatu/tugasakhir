@@ -12,7 +12,8 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    changepassword
+    changepassword,
+    isTrueAdmin
 };
 
 async function authenticate({ username, password }) { 
@@ -115,6 +116,11 @@ async function getUser(id) {
     const user = await db.User.findByPk(id);
     if (!user) throw 'User tidak ditemukan';
     return user;
+}
+
+async function isTrueAdmin(userId) {
+    const user = await db.User.findByPk(userId);
+    return user.role === 'Admin';
 }
 
 function omitHash(user) { 

@@ -25,7 +25,8 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
 
   persentase = 0;
   warna = '#A93226';
-  constructor(private actService: ActService, private ctrService: ContractService) {
+  constructor(private actService: ActService,
+    private ctrService: ContractService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +38,7 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
   loadData(){
     //load kontrak kinerja
     this.ctrService.contractByYear(this.year).subscribe(res => {
-      this.kontrak = res;
+      this.kontrak = res[0];
     });
     //loadprogress
     this.actService.getProgress(this.year, this.userId).subscribe(res => {

@@ -9,6 +9,7 @@ import { ContractService } from '@env/services/contract.service';
 })
 export class ProgressListComponent implements OnInit {
   user;
+  isAdmin;
   mainData;
   currentYear;
   userIdList;
@@ -16,6 +17,7 @@ export class ProgressListComponent implements OnInit {
   constructor(private ctrService: ContractService,
     private authService: AuthenticationService) {
     this.authService.user.subscribe(usr => this.user = usr);
+    this.isAdmin = this.user.role === 'Admin';
     this.currentYear = new Date().getFullYear();
   }
 
@@ -30,9 +32,9 @@ export class ProgressListComponent implements OnInit {
         const {contractYear} = userId;
         group[contractYear] = group[contractYear] ?? [];
         group[contractYear].push(userId);
-
         return group;
       },{});
+
       this.userIdList = result.map(a => a.UserId);
       this.contractNameList = result.map(a => a.contractName);
       console.log('isi yearlist',this.mainData);

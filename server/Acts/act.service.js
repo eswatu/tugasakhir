@@ -2,6 +2,7 @@ const db = require('../_helpers/db');
 const subService = require('../Submission/submission.service');
 const pagination = require('../_helpers/pagination');
 const actfileService = require('../Acts/actFile.service');
+const uservice = require('../Users/user.service');
 const Op = require('sequelize').Op;
 
 module.exports = {
@@ -28,7 +29,7 @@ async function getAll(rq) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Act; 
-    if (role === "Admin") {
+    if (role === "Admin" && uservice.isTrueAdmin(uid)) {
         return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else {
         return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);

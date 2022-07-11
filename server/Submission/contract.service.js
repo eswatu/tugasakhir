@@ -1,5 +1,6 @@
 const db = require('../_helpers/db');
 const pagination = require('../_helpers/pagination');
+const uservice = require('../Users/user.service');
 
 module.exports = {
     getAll,
@@ -28,7 +29,7 @@ async function getAll(q) {
     var filterQuery = req.filterQuery;
     var model = db.Contract;
     
-    if (role === "Admin") {
+    if (role === "Admin" && uservice.isTrueAdmin(uid)) {
         return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else {
         return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
@@ -82,7 +83,7 @@ async function updateContract(id, params, headers) {
     const userid = headers.userid;
     const role = headers.userrole;
     const ctr = await getContractById(id);
-    if (parseInt(userid) == ctr.UserId || role === 'Admin') {
+    if (parseInt(userid) == ctr.UserId || role === 'Admin' && uservice.isTrueAdmin(parseInt(userid))) {
         // copy params to user and save
         Object.assign(ctr, params);
         ctr.updatedAt = new Date();
@@ -99,7 +100,7 @@ async function getContractByYear(req) {
     if (req.headers.userrole === 'User') {
     const uid = parseInt(req.headers.userid);
     ctr = await db.Contract.findAll({where: {contractYear:year, UserId: uid}});
-    } else if (req.headers.userrole === 'Admin') {
+    } else if (req.headers.userrole === 'Admin' && uservice.isTrueAdmin(uid)) {
         ctr = await db.Contract.findAll({where: {contractYear:year}});
     }
 
@@ -149,7 +150,7 @@ async function toggleContract(id) {
     }
 }
 async function getYears(req){
-    if (req.headers.userrole === 'Admin') {
+    if (req.headers.userrole === 'Admin' && uservice.isTrueAdmin(parseInt(req.headers.userid))) {
         const ctrs = await db.Contract.findAll({attributes: ['contractYear', 'UserId']});
         return ctrs;
     } else if (req.headers.userrole === 'User'){

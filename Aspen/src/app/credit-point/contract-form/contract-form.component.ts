@@ -67,6 +67,7 @@ export class ContractFormComponent implements OnInit {
     this.ctrService.post<contract>(ctrct).subscribe(result => {
       Swal.fire(result);
     }, error => console.error(error));
+    this.closeDialog();
     }
     }
 
