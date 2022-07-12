@@ -8,8 +8,6 @@ function model(sequelize) {
         ltNumber: { type: DataTypes.STRING, allowNull: false },
         //tanggal surat
         ltDate: { type: DataTypes.DATE, allowNull: false },
-        //credit value untuk nilai
-        ltShare : {type: DataTypes.BOOLEAN, allowNull: false},
         //tanggal mulai - default sama dengan tgl surat 
         ltDateStart : { type: DataTypes.DATE, allowNull: false },
         //tanggal selesai

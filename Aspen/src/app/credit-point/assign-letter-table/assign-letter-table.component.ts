@@ -49,9 +49,9 @@ export class AssignLetterTableComponent implements OnInit {
           this.isAdmin = ( u.role === "Admin") ? true : false;
         }
         if (this.isAdmin) {
-            this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi', 'user'];
+            this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltActive', 'ltNote', 'aksi', 'user'];
          } else {
-           this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltShare', 'ltActive', 'ltNote', 'aksi']
+           this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltActive', 'ltNote', 'aksi']
          }
       });
     }

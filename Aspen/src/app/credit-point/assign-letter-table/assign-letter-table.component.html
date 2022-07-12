@@ -41,14 +41,6 @@
     <td mat-cell *matCellDef="let al" class="tcenter">{{al.ltDateEnd | date:'dd-MM-yy'}}</td>
   </ng-container>
 
-  <!-- Shared? -->
-  <ng-container matColumnDef="ltShare">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-    <td mat-cell *matCellDef="let al" class="tcenter" >
-      <mat-icon *ngIf="!al.hasFile">report_problem</mat-icon>
-      <mat-icon *ngIf="al.hasFile">thumb_up</mat-icon>
-    </td>
-  </ng-container>
     <!-- Active? -->
     <ng-container matColumnDef="ltActive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Aktif?</th>

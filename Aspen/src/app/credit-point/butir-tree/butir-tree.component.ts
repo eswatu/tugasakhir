@@ -17,6 +17,7 @@ import { AuthenticationService } from '@env/services';
 
 
 export class ButirTreeComponent implements OnInit {
+  
   private _transformer = (node: treeNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -25,6 +26,7 @@ export class ButirTreeComponent implements OnInit {
       id: node.id
     };
   };
+
   selectedNode = new SelectionModel<FlateNode>(true);
   treeControl = new FlatTreeControl<FlateNode>(
     (node) => node.level,

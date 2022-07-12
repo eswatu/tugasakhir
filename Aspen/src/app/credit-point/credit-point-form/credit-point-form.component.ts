@@ -105,9 +105,10 @@ changeButir(){
   dialogConfig.restoreFocus; true;
   dialogConfig.minWidth = 400;
   dialogConfig.minHeight = 400;
+  const utama = this.actMain == true ? 1 : 0;
   this.createJob();
   if (this.job) {
-    dialogConfig.data = {  act: this.job, jenis: this.actMain };
+    dialogConfig.data = {act: this.job, jenis: utama};
     const dialogRef = this.dialog.open(ButirTreeComponent, dialogConfig);
     this.closeDialog();
   }

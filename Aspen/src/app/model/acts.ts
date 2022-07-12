@@ -24,7 +24,6 @@ export interface assignLetter {
     id: number;
     ltNumber: string;
     ltDate: Date;
-    ltShare: boolean;
     ltDateStart: Date;
     ltDateEnd: Date;
     ltNote: string;

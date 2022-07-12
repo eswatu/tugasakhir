@@ -21,7 +21,6 @@ function createSchema(req, res, next) {
         ltDate  : Joi.date().required(),
         ltDateStart : Joi.date().required(),
         ltDateEnd   : Joi.date().required(),
-        ltShare: Joi.boolean(),
         ltNote: Joi.string().allow(null,''),
         ltActive: Joi.boolean()
     });

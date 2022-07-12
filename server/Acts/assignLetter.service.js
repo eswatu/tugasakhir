@@ -17,8 +17,6 @@ async function getAllAL(req) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.AssignLetter;
-    console.log(' isi kolom ' + filterColumn + ' dan query '+ filterQuery);
-    console.log('jenis ' + typeof(filterColumn) + ' dan ' + typeof(filterQuery));
     return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn , filterQuery);
 }
 async function getALById(id) {
@@ -30,14 +28,14 @@ async function createAL(req) {
     let result;
     if (await db.AssignLetter.findOne({
         where: {  ltNumber: body.ltNumber,
-                ltDate: body.ltDate
+                ltDate: body.ltDate,
+                UserId: uid
         }})) {
         throw "sudah ada entry "+ body.ltNumber + " dengan tanggal " + body.ltDate;
     } else {
         db.AssignLetter.create({
             ltNumber: body.ltNumber,
             ltDate  : body.ltDate,
-            ltShare : body.ltShare,
             ltDateStart : body.ltDateStart,
             ltDateEnd   : body.ltDateEnd,
             ltNote: body.ltNote,

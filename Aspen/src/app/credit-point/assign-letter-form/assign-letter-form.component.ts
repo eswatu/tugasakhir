@@ -32,7 +32,6 @@ export class AssignLetterFormComponent implements OnInit {
       this.formInput = fb.group({
         ltNumber: ['', Validators.required],
         ltDate: [new Date(), Validators.required],
-        ltShare: [this.shared],
         ltDateStart: ['', Validators.required],
         ltDateEnd: ['', Validators.required],
         ltNote: [''],
@@ -51,7 +50,6 @@ export class AssignLetterFormComponent implements OnInit {
         this.formInput.patchValue({
           ltNumber: this.asgnLetter.ltNumber,
           ltDate: new Date(this.asgnLetter.ltDate),
-          ltShare: this.asgnLetter.ltShare,
           ltNote: this.asgnLetter.ltNote,
           ltActive: this.asgnLetter.ltActive,
           ltDateStart: new Date(this.asgnLetter.ltDateStart),
@@ -78,7 +76,6 @@ export class AssignLetterFormComponent implements OnInit {
     let al = <assignLetter>{};
       al.ltNumber = this.formInput.get('ltNumber').value;
       al.ltDate = this.formInput.get('ltDate').value;
-      al.ltShare = this.formInput.get('ltShare').value;
       al.ltNote = this.formInput.get('ltNote').value;
       al.ltDateStart = new Date(this.formInput.get('ltDateStart').value);
       al.ltDateEnd = new Date(this.formInput.get('ltDateEnd').value);
