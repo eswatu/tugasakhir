@@ -1,26 +1,32 @@
-<mat-toolbar color="primary" fxLayout="row" *ngIf="isAuthorized" class="my-alternate-theme">
-  <button mat-button color="accent">
-    Hai {{user.name}}
-  </button>
-    <button  mat-button fxFlex  routerLink="dashboard">
-      <mat-icon>dashboard</mat-icon>
-      Dashboard
-    </button>
-    <button  mat-button fxFlex routerLink="angkakredit">
-      <mat-icon>business_center</mat-icon>
-      Angka Kredit
-    </button>
-  
-    <button  mat-button fxFlex routerLink="profile">
-      <mat-icon>badge</mat-icon>
-      Profil
-    </button>
-    <button mat-button (click)="openhelp()">
-      <mat-icon>help</mat-icon>
-    </button>
-    <button mat-button fxFlex (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      LogOut
-    </button>
-</mat-toolbar>
+<div *ngIf="!user">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="user">
+  <mat-toolbar color="primary" fxLayout="row" *ngIf="isAuthorized" class="my-alternate-theme">
+    <div mat-button>
+      <mat-icon>person</mat-icon>
+      Hai, {{user.name}}
+    </div>
+      <button  mat-button fxFlex  routerLink="dashboard">
+        <mat-icon>dashboard</mat-icon>
+        Dashboard
+      </button>
+      <button  mat-button fxFlex routerLink="angkakredit">
+        <mat-icon>business_center</mat-icon>
+        Angka Kredit
+      </button>
+    
+      <button  mat-button fxFlex routerLink="profile">
+        <mat-icon>badge</mat-icon>
+        Profil
+      </button>
+      <button mat-button (click)="openhelp()">
+        <mat-icon>help</mat-icon>
+      </button>
+      <button mat-button fxFlex (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        LogOut
+      </button>
+  </mat-toolbar>
+</div>
 <router-outlet></router-outlet>

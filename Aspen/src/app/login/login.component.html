@@ -1,23 +1,36 @@
 
-<div fxLayoutAlign="center center" fxLayout="column" class="login" >
+<div fxLayoutAlign="center center" fxLayout="column" class="login" fxLayoutGap="5px">
+    <h1>Aplikasi Logbook</h1>
+    <h1>Asisten Penyuluh Pajak</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input type="text" matInput formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                <mat-icon matSuffix>person_filled</mat-icon>
+                <mat-hint>Username untuk login</mat-hint>
+            </mat-form-field>
             <div *ngIf="submitted && f.username.errors">
-                <div *ngIf="f.username.errors.required">Username is required</div>
+                <div *ngIf="f.username.errors.required">Username harus diisi</div>
             </div>
         </div>
+        <br />
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <mat-icon matSuffix>key</mat-icon>
+                <mat-hint>Password login</mat-hint>
+            </mat-form-field>
             <div *ngIf="submitted && f.password.errors" >
-                <div *ngIf="f.password.errors.required">Password is required</div>
+                <div *ngIf="f.password.errors.required">Password harus diisi</div>
             </div>
         </div>
-        <button [disabled]="loading" color="primary" mat-flat-button>
+        <br />
+        <button [disabled]="loading" color="primary" mat-raised-button style="width:100%">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Login
+            <mat-icon>login</mat-icon>
+            Masuk
         </button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
     </form>

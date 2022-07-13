@@ -1,4 +1,12 @@
 .login {
     display:table; height:100%;
     margin: 0 auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    height: 20%;
+    min-height: 400px;
+    min-width: 200px;
+    max-width: 25%;
+    margin-top: 0;
+    margin-bottom: 0;
 }
