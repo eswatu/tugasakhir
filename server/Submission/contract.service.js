@@ -83,12 +83,19 @@ async function updateContract(id, params, headers) {
     const userid = headers.userid;
     const role = headers.userrole;
     const ctr = await getContractById(id);
-    if (parseInt(userid) == ctr.UserId || role === 'Admin' && uservice.isTrueAdmin(parseInt(userid))) {
-        // copy params to user and save
-        Object.assign(ctr, params);
-        ctr.updatedAt = new Date();
-        await ctr.save();
-        return 'Berhasil mengubah Kontrak Kinerja';
+    if (parseInt(userid) == ctr.UserId || (role === 'Admin' && uservice.isTrueAdmin(parseInt(userid)))) {
+        if (ctr) {
+            //cegah user mengubah ke tahun yang sama, hindari duplikasi
+            if (params.contractYear != ctr.contractYear) {
+                // copy params to user and save
+                Object.assign(ctr, params);
+                ctr.updatedAt = new Date();
+                await ctr.save();
+                return 'Berhasil mengubah Kontrak Kinerja';
+            } else {
+                return "Kontrak tidak dapat diubah ke tahun yang sudah ada";
+            }
+        }
     } else {
         return "anda tidak berhak melakukan perubahan";
     }

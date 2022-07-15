@@ -8,7 +8,7 @@ const routes: Routes = [
   {path:'dashboard', loadChildren:() => import('./dashboard/dashboard.module').then(m => m.DashboardModule), canActivate: [AuthGuard]},
   {path:'angkakredit', loadChildren:() => import('./credit-point/credit-point.module').then(m => m.CreditPointModule), canActivate: [AuthGuard]},
   {path:'profile', loadChildren:() => import('./profile/profile.module').then(m => m.ProfileModule),canActivate: [AuthGuard]},
-  {path: '**', redirectTo: 'angkakredit'}
+  {path: '**', redirectTo: 'dashboard'}
 ];
 
 @NgModule({
