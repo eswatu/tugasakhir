@@ -8,6 +8,7 @@
             <mat-select name="AssignLetterId" formControlName="AssignLetterId">
                 <mat-option *ngFor="let st of surattugas" [value]="st.id">{{st.ltNumber}} Tanggal: {{st.ltDate | date:'dd-MM-yyyy'}}/r Note: {{st.ltNote}}</mat-option>
             </mat-select>
+            <mat-error>{{ErrorMessageAssignLetter}}</mat-error>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">
@@ -47,6 +48,7 @@
             <mat-label>Jumlah Kegiatan</mat-label>
             <input type="number" matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah hasil Pekerjaan yang dilaporkan">
             <mat-hint>Diisi jumlah dokumen hasil pekerjaan</mat-hint>
+            <mat-error>{{ErrorMessageButirVolume}}</mat-error>
         </mat-form-field>
     
         <mat-form-field appearance="fill" fxLayout="column">
@@ -55,6 +57,7 @@
             <mat-hint>Tanggal pelaksanaan Kegiatan (dd/MM/yyyy)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error>{{ErrorMessageActDate}}</mat-error>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">

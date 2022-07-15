@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -50,5 +50,9 @@ export class ContractService extends BaseService {
   getYearList(): Observable<any> {
     var myUrl = this.url + 'yearlist/1';
     return this.http.get(myUrl);
+  }
+  isDupeYear(item): Observable<boolean> {
+    var myUrl = this.url + 'isDupeYear/' + item.year + '/forId/' + item.userid;
+    return this.http.post<boolean>(myUrl, item);
   }
 }

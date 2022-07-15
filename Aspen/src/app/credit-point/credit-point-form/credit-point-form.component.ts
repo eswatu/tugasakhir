@@ -51,11 +51,25 @@ export class CreditPointFormComponent {
           userId: new FormControl(''),
 
           actDate: new FormControl({value: new Date()},Validators.required),
-          butirVolume: new FormControl('', Validators.required),
+          butirVolume: new FormControl('', [Validators.required, Validators.min(1)]),
           actNote: new FormControl('')
       });
      }
 
+  //error message
+  get ErrorMessageAssignLetter() : string{
+    const c: FormControl = (this.formInput.get('AssignLetterId') as FormControl);
+    return c.hasError('required') ? 'Silakan pilih dari daftar surat, atau buat baru di tab Surat Tugas': '';
+  } 
+  get ErrorMessageActDate() : string{
+    const c: FormControl = (this.formInput.get('actDate') as FormControl);
+    return c.hasError('required') ? 'Tanggal pelaksanaan harus diisi': '';
+  }    
+  get ErrorMessageButirVolume() : string{
+    const c: FormControl = (this.formInput.get('butirVolume') as FormControl);
+    return c.hasError('required') ? 'Tanggal pelaksanaan harus diisi':
+            c.hasError('min') ? 'Jumlah Pekerjaan minimal ' + c.errors.min.min: '';
+  }   
 ngOnInit() {
   this.getAssignLetterList(); //ambil daftar surat tugas aktif
   this.loadData();

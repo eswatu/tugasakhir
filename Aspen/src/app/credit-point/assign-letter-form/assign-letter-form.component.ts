@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { assignLetter } from '@env/model/acts';
 import { AssignLetterService } from '@env/services/assign-letter.service';
@@ -38,6 +38,22 @@ export class AssignLetterFormComponent implements OnInit {
         ltActive: [this.active]
       });
  }
+ //error message
+ get ErrorMessageltNumber() : string{
+  const c: FormControl = (this.formInput.get('ltNumber') as FormControl);
+  return c.hasError('required') ? 'Nomor Surat Harus diisi': '';
+}
+get ErrorMessageltDate() : string{
+  const c: FormControl = (this.formInput.get('ltDate') as FormControl);
+  return c.hasError('required') ? 'Tanggal Surat Tugas Harus diisi': '';
+}
+get ErrorMessageltDatePeriod() : string{
+  const c: FormControl = (this.formInput.get('ltDateStart') as FormControl);
+  const d: FormControl = (this.formInput.get('ltDateEnd') as FormControl);
+
+  return c.hasError('required') ? 'Tanggal Mulai Surat Tugas Harus diisi': 
+          d.hasError('required') ? 'Tanggal Selesai Surat Tugas Harus diisi': '';
+}
 
   ngOnInit() {
     this.loadData();

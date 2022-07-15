@@ -2,6 +2,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Nama / Nomor Pengajuan</mat-label>
         <input formControlName="subName" id="subName" matInput placeholder="nomor pengajuan">
+        <mat-error>{{ErrorMessageSubName}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" fxLayout="column">
@@ -10,6 +11,7 @@
         <mat-hint>Tanggal Pengajuan (dd/MM/yyyy)</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error>{{ErrorMessageSubDate}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">

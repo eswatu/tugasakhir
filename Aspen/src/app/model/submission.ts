@@ -21,4 +21,5 @@ export interface contract {
     contractValue: number;
     contractNote: string;
     isActive: boolean;
+    userid: number;
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { submission } from '@env/model/submission';
 import { SubmissionService } from '@env/services/submission.service';
@@ -25,9 +25,18 @@ export class SubmissionFormComponent implements OnInit {
       this.formInput = fb.group({
         subName: ['', Validators.required],
         subDate: [new Date(), Validators.required],
-        subNote: ['', Validators.required]
+        subNote: ['']
       });
      }
+  //error message
+  get ErrorMessageSubName() : string{
+    const c: FormControl = (this.formInput.get('subName') as FormControl);
+    return c.hasError('required') ? 'Nomor/Nama Pengajuan tidak boleh kosong': '';
+  }
+  get ErrorMessageSubDate() : string{
+    const c: FormControl = (this.formInput.get('subDate') as FormControl);
+    return c.hasError('required') ? 'Tanggal Pengajuan tidak boleh kosong': '';
+  } 
 
   ngOnInit(): void {
     //cek apakah ada id

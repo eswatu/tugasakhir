@@ -12,8 +12,9 @@ router.get('/:id', authorize(), getById);
 router.put('/:id', authorize(), updateSchema, update);
 router.put('/toggle/:id', authorize(), toggleContract);
 router.delete('/:id', authorize(), _delete);
-router.get('/ctrByYear/:year', contractByYear);
-router.get('/yearlist/:year', getYearList);
+router.get('/ctrByYear/:year', authorize(), contractByYear);
+router.get('/yearlist/:year', authorize(), getYearList);
+router.post('/isDupeYear/:year/forId/:userid', authorize(), isDupeYear);
 
 module.exports = router;
 
@@ -63,6 +64,11 @@ function updateSchema(req, res, next) {
 function update(req, res, next) {
     contractService.updateContract(req.params.id, req.body, req.headers)
         .then(() => res.json({ message: 'Kontrak Berhasil Diubah' }))
+        .catch(next);
+}
+function isDupeYear(req, res, next) {
+    contractService.isDupeYear(req.params)
+        .then(result => res.send(result))
         .catch(next);
 }
 

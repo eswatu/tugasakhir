@@ -1,8 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, MaxValidator, MinValidator, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, FormGroupDirective, MaxValidator, MinValidator, NgForm, ValidationErrors, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { contract } from '@env/model';
+import { AuthenticationService, UserService } from '@env/services';
 import { ContractService } from '@env/services/contract.service';
+import { map, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,22 +17,26 @@ export class ContractFormComponent implements OnInit {
   formInput: FormGroup;
   id;
   contract;
+  userid;
 
-  constructor(private ctrService: ContractService,
+  constructor(private uservice: AuthenticationService,
+    private ctrService: ContractService,
     private dialogRef: MatDialogRef<ContractFormComponent>,
     public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
+      this.uservice.user.subscribe(x => this.userid = x.id);
+
       if (data) {
           this.id = data.id;
       }
       this.formInput = fb.group({
         contractName: ['', Validators.required],
         contractDate: [new Date(),Validators.required],
-        contractYear: [2022,[Validators.required, Validators.min(2022)]],
-        contractValue: ['',Validators.required],
+        contractYear: [2022,[Validators.required, Validators.min(2022)],[this.isDupeYear()]],
+        contractValue: ['',[Validators.required, Validators.min(1)]],
         contractNote: [''],
         isActive: [true,Validators.required]
-      });
+      }, {updateOn: 'blur'} );
     }
 
   ngOnInit() {
@@ -43,6 +50,7 @@ export class ContractFormComponent implements OnInit {
       }, error => console.error(error));
     }
   }
+  
   getFormValue(): contract{
     let ctc = <contract>{};
 
@@ -73,5 +81,43 @@ export class ContractFormComponent implements OnInit {
 
   closeDialog(){
     this.dialogRef.close();
+  }
+  isDupeYear(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      var ctr = <any>{};
+      ctr.year = parseInt(control.value);
+      ctr.userid = this.userid;
+
+      return this.ctrService.isDupeYear(ctr)
+        .pipe(map(result => {
+              return (result ? { isDupeYear: true} : null);
+      }));
+    }
+  }
+  matcher = new MyErrorStateMatcher();
+  //error message
+  get ErrorMessageCY() : string{
+    const cy: FormControl = (this.formInput.get('contractYear') as FormControl);
+    return cy.hasError('required') ? 'Tahun Tidak boleh kosong':
+    cy.hasError('min') ? 'Tahun Tidak boleh kurang dari ' + cy.errors.min.min :
+    cy.hasError('isDupeYear') ? 'Tidak boleh mengubah ke tahun kontrak yang sudah ada!' : '';
+    }
+    get ErrorMessageCV() : string{
+      const c: FormControl = (this.formInput.get('contractValue') as FormControl);
+      return c.hasError('required') ? 'Target Harus diisi':
+      c.hasError('min') ? 'Tahun Tidak boleh kurang dari ' + c.errors.min.min : '';
+    }
+    get ErrorMessageCN() : string{
+      const c: FormControl = (this.formInput.get('contractName') as FormControl);
+      return c.hasError('required') ? 'Nama Kontrak tidak boleh kosong': '';
+    }
+
+}
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }

@@ -3,6 +3,7 @@
                 <mat-label>Nomor Surat</mat-label>
                 <input formControlName="ltNumber" id="ltNumber" matInput placeholder="Nomor Surat">
                 <mat-hint>Misalnya: ST-xx/yy/zzz</mat-hint>
+                <mat-error>{{ErrorMessageltNumber}}</mat-error>
             </mat-form-field>
             
             <mat-form-field appearance="fill" fxLayout="column">
@@ -11,17 +12,19 @@
                 <mat-hint>Tanggal Surat (dd/MM/yyyy)</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picking"></mat-datepicker-toggle>
                 <mat-datepicker #picking></mat-datepicker>
+                <mat-error>{{ErrorMessageltDate}}</mat-error>
             </mat-form-field>
-
+            
             <mat-form-field appearance="fill" fxLayout="column" >
                 <mat-label>Masukkan periode penugasan (Awal s.d Akhir)</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input matStartDate placeholder="Tanggal Mulai" #dateRangeStart formControlName="ltDateStart">
-                  <input matEndDate placeholder="Tanggal Selesai" #dateRangeEnd formControlName="ltDateEnd">
+                    <input matStartDate placeholder="Tanggal Mulai" #dateRangeStart formControlName="ltDateStart">
+                    <input matEndDate placeholder="Tanggal Selesai" #dateRangeEnd formControlName="ltDateEnd">
                 </mat-date-range-input>
                 <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error>{{ErrorMessageltDatePeriod}}</mat-error>
               </mat-form-field>
             
             <mat-slide-toggle formControlName="ltActive" ngDefaultControl>Aktif?</mat-slide-toggle>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@env/services';
 import { first } from 'rxjs';
@@ -34,7 +34,15 @@ export class LoginComponent implements OnInit {
           password: ['', Validators.required]
       });
   }
-
+//error message
+get ErrorMessageUsername() : string{
+    const c: FormControl = (this.loginForm.get('username') as FormControl);
+    return c.hasError('required') ? 'Username tidak boleh kosong': '';
+}
+get ErrorMessagePassword() : string{
+    const c: FormControl = (this.loginForm.get('password') as FormControl);
+    return c.hasError('required') ? 'Password tidak boleh kosong': '';
+}
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 

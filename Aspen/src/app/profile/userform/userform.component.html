@@ -3,19 +3,21 @@
         <mat-label>Username</mat-label>
         <input formControlName="username" id="username" matInput placeholder="Username untuk login" [readonly]="id">
         <mat-hint>Usahakan tanpa spasi atau tanda baca lain</mat-hint>
-        <mat-error *ngIf="username.hasError('required')">Huruf atau dengan angka tanpa spasi dan tanda baca lain</mat-error>
+        <mat-error>{{ErrorMessageUsername}}</mat-error>
     </mat-form-field>
     
     <mat-form-field fxLayout="column">
         <mat-label>Nama</mat-label>
         <input matInput formControlName="name" id="name" placeholder="Nama Pengguna">
         <mat-hint>Nama Pengguna</mat-hint>
+        <mat-error>{{ErrorMessageName}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
         <mat-label>Angka Kredit</mat-label>
         <input matInput type='number' formControlName="baseAngkre" id="baseAngkre" placeholder="Jumlah angka kredit">
         <mat-hint>Angka kredit pengguna misalnya: 60,80,100,150</mat-hint>
+        <mat-error>{{ErrorMessageBaseAngkre}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
@@ -24,12 +26,14 @@
             <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
         </mat-select>
         <mat-hint>Daftar kewenangan yang bisa diberikan pada pengguna</mat-hint>
+        <mat-error>{{ErrorMessageRole}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
         <mat-label>Password</mat-label>
         <input matInput type='password' formControlName="password" id="password" >
         <mat-hint>huruf dan atau angka tanpa titik atau tanda baca lain </mat-hint>
+        <mat-error>{{ErrorMessagePassword}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
