@@ -4,13 +4,14 @@
     justify-content: flex-start;
     background-color: DodgerBlue;
     font-size: 14px;
+    font-weight: 600;
     line-height: 15px;
     flex-direction: column;
     padding: 0 0px!important;
 }
 
 .mat-button-toggle-label-content {
-    padding: 0 4px;
+    padding: 0 0px;
     line-height: 28px;
     display: inline-block;
 }
