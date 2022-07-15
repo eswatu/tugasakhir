@@ -61,7 +61,6 @@ export class SubmissionComponentComponent implements OnInit {
     this.actService.getBySub(this.submission.id).subscribe(result => {
           result.forEach(item => item['approved'] = false);
           this.defaultActs = result;
-          console.log(result);
           this.allAct = this.groupItemBy(result, 'AssignmentLetter.ltNumber');
           this.allAssignLetter = this.getTitle(this.allAct);
           this.totalValue = 0;

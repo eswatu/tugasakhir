@@ -1,5 +1,6 @@
 <h2 align="center">{{title}}</h2>
 <br>
+<h3>FIle yang diunggah berukuan maksimal MB dengan jenis file .pdf, .jpeg, .jpg, .png</h3>
 <mat-toolbar *ngIf="currentFile" class="progress-bar">
     <mat-progress-bar color="primary" [value]="progress"></mat-progress-bar>
     <span class="progress">{{ progress }}%</span>
@@ -11,7 +12,7 @@
             <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
         </div>
         <br>
-        <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png" >
+        <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png" maxFileSize="">
         <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
             Upload
         </button>

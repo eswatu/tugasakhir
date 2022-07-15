@@ -26,7 +26,7 @@ const uploadFiles = async (req, res) => {
               }
               console.log("File deleted successfully");
           });
-            return res.json(`Sukses menambahkan File.`);
+            return res.json(`Sukses menambahkan File Pekerjaan.`);
       } catch (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');

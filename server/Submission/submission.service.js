@@ -89,7 +89,7 @@ async function updateSubmission(id, params, headers) {
         // copy params to user and save
         Object.assign(sub, params);
         await sub.save();
-        return 'Berhasil mengubah pengajuan';
+        return 'Sukses mengubah pengajuan';
     } else {
         return "anda tidak berhak melakukan perubahan";
     }

@@ -86,7 +86,6 @@ export class AssignLetterTableComponent implements OnInit {
         result.data.forEach(d => {
           if (d.ltActive == true) {
             this.alService.getFileInfo(d.id).subscribe(r => {
-              console.log(r);
               if (r) {
                 d.hasFile = true;
               } else {

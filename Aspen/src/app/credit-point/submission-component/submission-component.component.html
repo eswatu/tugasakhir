@@ -40,6 +40,9 @@
                   <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
                       {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
                   </div>
+                  <div *ngIf="!isAdmin">
+                    <button mat-raised-button (click)="lihatFile(item.id)" >Lihat File</button>
+                  </div>
                   <div *ngIf="isAdmin && submission.isActive && !submission.dateApproved">
                     <button mat-raised-button (click)="rejectAct(item.id)" color="warn" *ngIf="!item.approved">Kembalikan</button>
                     <button mat-raised-button (click)="lihatFile(item.id)" >Lihat File</button>

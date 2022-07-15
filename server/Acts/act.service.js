@@ -74,7 +74,7 @@ async function createAct(req) {
         createdAt: new Date(),
         updatedAt: new Date()
     });
-    return 'Berhasil Input data, refresh halaman untuk melihat hasil';
+    return 'Berhasil Input data, Refresh Halaman untuk melihat Hasil';
 }
 async function propose(req) {
     let act = await getActById(parseInt(req.params.id));
@@ -120,7 +120,7 @@ async function updateAct(req) {
             AssignLetterId: body.AssignLetterId
         }
     })) {
-        throw 'Entry data sudah ada, ubah nilai input ke yang lain';
+        throw 'Gagal Menyimpan, ubah nilai input ke yang lain';
     }
     // copy params to user and save
     Object.assign(act, body);

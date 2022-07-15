@@ -28,7 +28,7 @@ function createSchema(req, res, next) {
 }
 function createAssignLetter(req, res, next) {
     alservice.createAL(req)
-        .then(() => res.json({message : "Sukses menambahkan data"}))
+        .then(() => res.json({message : "Sukses menambahkan Surat Tugas"}))
         .catch(next);
 }
 function getAllAL(req, res,next) {

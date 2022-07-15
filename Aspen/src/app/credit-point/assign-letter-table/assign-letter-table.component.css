@@ -33,3 +33,12 @@ td, th {
     align-items: flex-start;
     padding-left: 100px;
 }
+.nofile {
+    background-color: rgb(255, 46, 99)
+}
+.normal {
+    background-color: rgb(234, 234, 234);
+}
+.selesai {
+    background-color:rgb(71, 181, 255)
+}
