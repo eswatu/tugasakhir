@@ -1,4 +1,6 @@
-<p *ngIf="!asgnLtrs"><em>Loading...</em></p>
+<div *ngIf="!asgnLtrs" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div>
 
 <div class="commands text-right" *ngIf="asgnLtrs" class="tomboltambah">
   <button mat-raised-button color="primary" (click)="openForm(null)"
