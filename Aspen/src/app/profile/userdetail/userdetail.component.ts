@@ -66,7 +66,7 @@ export class UserdetailComponent implements OnInit {
     this.form.patchValue(this.userInfo);
     //load data
     this.loadData();
-    this.toggleButtonValue = 'Edit Mode';
+    this.toggleButtonValue = 'Edit Profil';
   }
 
   loadData(){
@@ -84,7 +84,7 @@ export class UserdetailComponent implements OnInit {
 
   toggleEdit(){
     this.isEditing = !this.isEditing;
-    this.toggleButtonValue = this.isEditing ? 'Stop Edit' : 'Edit Mode';
+    this.toggleButtonValue = this.isEditing ? 'Stop Edit' : 'Edit Profil';
   }
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
