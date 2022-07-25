@@ -24,3 +24,12 @@ font-size: 18;
 font-weight: bold;
 color: brown;
 }
+.nofile {
+    background-color: rgb(255, 46, 99)
+}
+.normal {
+    background-color: rgb(234, 234, 234);
+}
+.selesai {
+    background-color:rgb(71, 181, 255)
+}

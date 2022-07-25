@@ -145,6 +145,7 @@ createJob() {
       this.actService.put<act>(this.job).subscribe(
         result => {
           Swal.fire(result);
+          this.closeDialog();
         }, error => Swal.fire({title:error, icon:'error'}));
       } else {
         //create mode
@@ -153,7 +154,6 @@ createJob() {
             Swal.fire(result);
           }, error => Swal.fire({title:error, icon:'error'}));
         }
-        this.closeDialog();
   }
   hapusPekerjaan(){
     Swal.fire({

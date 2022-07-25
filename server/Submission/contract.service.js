@@ -74,7 +74,7 @@ async function createContract(req) {
         updatedAt: new Date()
     }).then(us => {
         result = 'Berhasil membuat Kontrak Kinerja'; 
-        console.log("Kontrak " + us + "berhasil dibuat");
+        //console.log("Kontrak " + us + "berhasil dibuat");
     });
     }
     return result;
@@ -128,7 +128,7 @@ async function _delete(req) {
 
 // helper functions
 async function getContractById(id) {
-    console.log('by id called');
+    //console.log('by id called');
     const ctr = await db.Contract.findByPk(id);
     if (!ctr) throw 'Kontrak tidak ditemukan';
     return ctr;

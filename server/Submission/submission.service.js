@@ -75,7 +75,7 @@ async function createSubmission(req) {
         UserId: uid
     }).then(us => {
         result = 'Berhasil membuat Pengajuan'; 
-        console.log("Pengajuan " + us + "berhasil dibuat");
+        //console.log("Pengajuan " + us + "berhasil dibuat");
     });
     }
     return result;
@@ -202,17 +202,17 @@ async function calcSubScore(id){
                 total += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
             } else {
                 const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
-                console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
+                //console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
                 const gapPoint = parseFloat(butir.jmlPoin.trim().substring(0,2) * 0.01) * gap; 
                 total += acts[ac].butirVolume * gapPoint;
             }
             acts[ac].calculatedDate = new Date();
-            console.log('tanggal perhitungan adalah: ' + acts[ac].calculatedDate);
+            //console.log('tanggal perhitungan adalah: ' + acts[ac].calculatedDate);
             acts[ac].save();
         }
         sub.subScore = total;
 
-        console.log('nilai subscore adalah: ' + sub.subScore);
+        //console.log('nilai subscore adalah: ' + sub.subScore);
     }
     sub.save();
 }

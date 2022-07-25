@@ -38,7 +38,7 @@
                         nilai {{ item.Butir.jmlPoin }} sejumlah {{item.butirVolume}} total:
                   </div>
                   <div fxLayout="column" fxFlex="1 0 10px" class="tright" class="nilai">
-                      {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) }}
+                      {{ getPoinCredit(item.Butir.jmlPoin,item.butirVolume) | number:'0.1-4'}}
                   </div>
                   <div *ngIf="!isAdmin">
                     <button mat-raised-button (click)="lihatFile(item.id)" >Lihat File</button>

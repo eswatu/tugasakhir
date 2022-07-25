@@ -15,7 +15,7 @@ const uploadFiles = async (req, res) => {
           let uid = parseInt(req.headers.userid);
           let user = await db.User.findByPk(uid);      
           if (user.AvatarId) {
-            console.log('ava id: ' + user.AvatarId);
+            //console.log('ava id: ' + user.AvatarId);
             //update exist
              db.Avatar.update({
                 data : upldFile,
@@ -44,7 +44,7 @@ const uploadFiles = async (req, res) => {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');
       }
-      console.log(error);
+      //console.log(error);
       return res.send(`Error when trying upload images: ${error}`);
     }
   }

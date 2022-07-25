@@ -24,14 +24,14 @@ const uploadFiles = async (req, res) => {
                   console.error(err.message);
                   return;
               }
-              console.log("File deleted successfully");
+              //console.log("File deleted successfully");
           });
             return res.json(`Sukses menambahkan File Pekerjaan.`);
       } catch (error) {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');
       }
-      console.log(error);
+      //console.log(error);
       return res.send(`Error when trying upload File ST: ${error}`);
     }
   }
@@ -60,7 +60,7 @@ const downloadFile = async (req, res) => {
           console.error(err.message);
           return;
       }
-      console.log("File deleted successfully");
+      //console.log("File deleted successfully");
   });
   } else {
     res.send('file tidak ada');
@@ -76,7 +76,7 @@ const getdocument = async (req, res) => {
 
 const getFiles = async (req, res) => {
   const filelist = await db.ActFile.findAll({where: { ActId: req.params.id}});
-  console.log(filelist);
+  //console.log(filelist);
   if (filelist) {
     res.send(filelist);
   } else {

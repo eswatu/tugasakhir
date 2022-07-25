@@ -15,7 +15,7 @@ router.delete('/:id', authorize(), deleteAL);
 module.exports = router;
 
 function createSchema(req, res, next) {
-    console.log(req.body);
+    //console.log(req.body);
     const schema = Joi.object({
         ltNumber: Joi.string().required(),
         ltDate  : Joi.date().required(),

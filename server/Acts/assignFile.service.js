@@ -36,7 +36,7 @@ const uploadFiles = async (req, res) => {
       if (error.code == "LIMIT_FILE_SIZE") {
         return res.send('file terlalu besar');
       }
-      console.log(error);
+      //console.log(error);
       return res.send(`Error when trying upload File ST: ${error}`);
     }
   }
@@ -44,7 +44,7 @@ const uploadFiles = async (req, res) => {
 const downloadFile = async (req, res) => {
   let uid = parseInt(req.params.id);
   const file = await db.AssignFile.scope('withData').findByPk(uid);
-  console.log(file.name);
+  //console.log(file.name);
   if (file) {
     let pathQ = String(__basedir + "/resources/static/assets/download/" + file.name);
     fs.writeFileSync(pathQ, file.data);
@@ -56,7 +56,7 @@ const downloadFile = async (req, res) => {
           console.error(err.message);
           return;
       }
-      console.log("File deleted successfully");
+      //console.log("File deleted successfully");
   });
   } else {
     res.send('file tidak ada');
@@ -65,7 +65,7 @@ const downloadFile = async (req, res) => {
 const getdocument = async (req, res) => {
   let uid = parseInt(req.params.id);
   const datadoc = await db.AssignFile.unscoped().findOne({ where: {id: uid}});
-  console.log(datadoc);
+  //console.log(datadoc);
   if (datadoc) {
     res.type('application/octet-stream').send(datadoc.data);
   }

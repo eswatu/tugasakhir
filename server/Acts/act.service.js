@@ -46,35 +46,37 @@ async function getByDate(ds, de) {
 async function createAct(req) {
     const params = req.body;
     const uid = parseInt(req.headers.userid);
+    //console.log(new Date(params.actDate));
     // validate
     if (await db.Act.findOne({
         where: {
             UserId : uid,
             ButirId: params.butirId,
             butirVolume: params.butirVolume,
-            actDate: params.actDate,
+            actDate: {[Op.lt]: params.actDate},
             AssignLetterId: params.AssignLetterId
         }
     })) {
-        throw 'Entry data sudah ada, ';
-    }
-    // save Act
-    await db.Act.create({
-        //required
-        UserId : uid,
-        ButirId: params.butirId,
-        butirVolume: params.butirVolume,
-        actDate: params.actDate,
-        actNote: params.actNote,
-        AssignLetterId: params.AssignLetterId,
-        actMain: params.actMain,
-        //auto
-        isCalculated: false,
-        calculatedDate: null,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    });
-    return 'Berhasil Input data, Refresh Halaman untuk melihat Hasil';
+        throw 'Data Pekerjaan sudah ada, gunakan data yang lain';
+    } else {
+            // save Act
+            await db.Act.create({
+                //required
+                UserId : uid,
+                ButirId: params.butirId,
+                butirVolume: params.butirVolume,
+                actDate: params.actDate,
+                actNote: params.actNote,
+                AssignLetterId: params.AssignLetterId,
+                actMain: params.actMain,
+                //auto
+                isCalculated: false,
+                calculatedDate: null,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            });
+            return 'Berhasil Input data, Refresh Halaman untuk melihat Hasil';
+}
 }
 async function propose(req) {
     let act = await getActById(parseInt(req.params.id));
@@ -103,13 +105,11 @@ async function propose(req) {
     return result;
 }
 
-
 async function updateAct(req) {
     const uid = parseInt(req.headers.userid);
     const act = await getActById(req.params.id);
     let body = req.body;
     body.updatedAt = new Date();
-    console.log(body);
     //cek duplikasi
     if (await db.Act.findOne({
         where: {
@@ -120,7 +120,7 @@ async function updateAct(req) {
             AssignLetterId: body.AssignLetterId
         }
     })) {
-        throw 'Gagal Menyimpan, ubah nilai input ke yang lain';
+        throw 'Gagal Menyimpan, ubah data ke yang lain (duplikasi)';
     }
     // copy params to user and save
     Object.assign(act, body);
@@ -130,7 +130,7 @@ async function updateAct(req) {
 
 async function _delete(id) {
     const act = await getActById(id);
-    console.log(act);
+    //console.log(act);
     if (act) {
         await act.destroy();
         return 'Berhasil menghapus data';
@@ -191,7 +191,7 @@ async function calcPerUser(targetYear, userId) {
     let siderealized = 0;
     
     for (let ac in acts) {
-        console.log(ac);
+        //console.log(ac);
         //cari butirnya
         const butir = await db.Butir.findByPk(acts[ac].ButirId);
         //cek apakah butir masuk spesial? ada persentase
