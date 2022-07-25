@@ -18,6 +18,14 @@ const uploadFiles = async (req, res) => {
                 name: req.file.originalname,
                 notes: req.body.notes,
               },{where: {id : assignFile.id} });
+              fs.rm(__basedir + "/resources/static/assets/uploads/" + req.file.filename, {force: true}, (err) => {
+                if(err){
+                    // File deletion failed
+                    console.error(err.message);
+                    return;
+                }
+                //console.log("File deleted successfully");
+            });
               return res.json("Sukses update file");
             } else {
                 db.AssignFile.create({
@@ -29,16 +37,25 @@ const uploadFiles = async (req, res) => {
                 updatedAt: new Date(),
                 AssignLetterId: uid
                 });
+                fs.rm(__basedir + "/resources/static/assets/uploads/" + req.file.filename, {force: true}, (err) => {
+                  if(err){
+                      // File deletion failed
+                      console.error(err.message);
+                      return;
+                  }
+                  //console.log("File deleted successfully");
+              });
                   //fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + af.name, af.data);
                   return res.json(`Sukses menambahkan File Surat Tugas.`);
-                };
-      } catch (error) {
-      if (error.code == "LIMIT_FILE_SIZE") {
-        return res.send('file terlalu besar');
-      }
-      //console.log(error);
-      return res.send(`Error when trying upload File ST: ${error}`);
-    }
+                }
+                
+              } catch (error) {
+                if (error.code == "LIMIT_FILE_SIZE") {
+                  return res.send('file terlalu besar');
+                }
+                //console.log(error);
+                return res.send(`Error when trying upload File ST: ${error}`);
+              }
   }
 
 const downloadFile = async (req, res) => {
