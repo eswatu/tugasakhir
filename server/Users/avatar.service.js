@@ -23,7 +23,23 @@ const uploadFiles = async (req, res) => {
                 type: req.file.mimetype,
                 name: req.file.originalname
               },{where: {id : user.AvatarId} });
-              return "Sukses update file";
+              fs.rm(__basedir + "/resources/static/assets/uploads/resize-" + req.file.filename, {force: true}, (err) => {
+                if(err){
+                    // File deletion failed
+                    console.error(err.message);
+                    return;
+                }
+                //console.log("File deleted successfully");
+            });
+            fs.rm(__basedir + "/resources/static/assets/uploads/" + req.file.filename, {force: true}, (err) => {
+              if(err){
+                  // File deletion failed
+                  console.error(err.message);
+                  return;
+              }
+              //console.log("File deleted successfully");
+          });
+              return 'Sukses Update Gambar.';
             } else {
                 db.Avatar.create({
                 type: req.file.mimetype,
@@ -33,8 +49,8 @@ const uploadFiles = async (req, res) => {
                 updatedAt: new Date()
                 }).then((ava) => {
                   user.update({AvatarId: ava.id});
-                  fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
-                  );
+                  // fs.writeFileSync(__basedir + "/resources/static/assets/tmp/" + ava.name, ava.data
+                  // );
                   return `Sukses menambahkan profil.`;
                 });
                 await user.save();

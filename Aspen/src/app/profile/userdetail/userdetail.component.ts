@@ -2,6 +2,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { chpwd, User } from '@env/model/user';
 import { AuthenticationService } from '@env/services';
 import { MustMatch } from '@env/services/mustmatch';
@@ -33,7 +34,9 @@ export class UserdetailComponent implements OnInit {
   message = '';
   fileInfos?: Observable<any>;
   
-  constructor(private userService: UserService,
+  constructor(
+    private router: Router,
+    private userService: UserService,
     private authService: AuthenticationService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder) {
@@ -114,9 +117,9 @@ export class UserdetailComponent implements OnInit {
             this.currentFile = undefined;
           }
         });
+       // this.router.navigate(['/profile']).then(() => { window.location.reload(); });
       }
       this.selectedFiles = undefined;
-      this.ngOnInit();
     }
   }
   changePassword() {
