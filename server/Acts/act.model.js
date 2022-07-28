@@ -4,8 +4,8 @@ module.exports = model;
 
 function model(sequelize) { 
     const attributes = {
-        butirVolume: { type: DataTypes.INTEGER, allowNull: false},
-        actNote: {type: DataTypes.STRING, allowNull: true},
+        butirVolume: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false},
+        actNote: {type: DataTypes.STRING(100), allowNull: true},
         //bawah ini untuk server
         actMain: {type: DataTypes.BOOLEAN, allowNull: false},
         isProposed: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},

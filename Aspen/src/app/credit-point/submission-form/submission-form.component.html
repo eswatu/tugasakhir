@@ -2,6 +2,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Nama / Nomor Pengajuan</mat-label>
         <input formControlName="subName" id="subName" matInput placeholder="nomor pengajuan">
+        <mat-hint>{{input.value?.length || 0}} / 30</mat-hint>
         <mat-error>{{ErrorMessageSubName}}</mat-error>
     </mat-form-field>
 
@@ -17,6 +18,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Catatan</mat-label>
         <input formControlName="subNote" id="subNote" matInput placeholder="Catatan Pengajuan">
+        <mat-hint>{{input.value?.length || 0}} / 100</mat-hint>
     </mat-form-field>
 
     <div fxLayoutGap="12px">

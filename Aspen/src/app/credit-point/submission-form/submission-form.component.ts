@@ -23,9 +23,9 @@ export class SubmissionFormComponent implements OnInit {
       if (data) {this.id = data;}
       //buat form
       this.formInput = fb.group({
-        subName: ['', Validators.required],
+        subName: ['', Validators.required, Validators.maxLength(30)],
         subDate: [new Date(), Validators.required],
-        subNote: ['']
+        subNote: ['', Validators.maxLength(100)]
       });
      }
   //error message

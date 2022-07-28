@@ -30,11 +30,12 @@ export class ContractFormComponent implements OnInit {
           this.id = data.id;
       }
       this.formInput = fb.group({
-        contractName: ['', Validators.required],
+        contractName: ['', Validators.required, Validators.maxLength(40)],
         contractDate: [new Date(),Validators.required],
-        contractYear: [2022,[Validators.required, Validators.min(2022)],[this.isDupeYear()]],
-        contractValue: ['',[Validators.required, Validators.min(1)]],
-        contractNote: [''],
+        contractYear: [2022,[Validators.required, Validators.min(2022),
+                        Validators.minLength(4), Validators.maxLength(4)],[this.isDupeYear()]],
+        contractValue: ['',[Validators.required, Validators.min(1), Validators.maxLength(3)]],
+        contractNote: ['', Validators.maxLength(100)],
         isActive: [true,Validators.required]
       }, {updateOn: 'blur'} );
     }

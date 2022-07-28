@@ -3,10 +3,10 @@ const {DataTypes} = require('sequelize');
 module.exports = model;
 function model(sequelize) {
     const attributes = {
-        type    : { type: DataTypes.STRING},
-        name    : { type: DataTypes.STRING},
+        type    : { type: DataTypes.STRING(20)},
+        name    : { type: DataTypes.STRING(60)},
         data    : { type: DataTypes.BLOB("long") },
-        notes   : { type: DataTypes.STRING, allowNull: true}
+        notes   : { type: DataTypes.STRING(100), allowNull: true}
     };
     const options = {
         defaultScope: {

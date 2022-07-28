@@ -52,7 +52,7 @@ export class CreditPointFormComponent {
 
           actDate: new FormControl({value: new Date()},Validators.required),
           butirVolume: new FormControl('', [Validators.required, Validators.min(1)]),
-          actNote: new FormControl('')
+          actNote: new FormControl('', [Validators.maxLength(100)])
       });
      }
 

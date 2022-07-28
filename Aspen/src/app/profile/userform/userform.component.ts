@@ -24,13 +24,13 @@ export class UserformComponent implements OnInit {
         this.id = data.id;
       }
       this.formInput = this.fb.group({
-        username: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]],
-        name: ['', Validators.required],
+        username: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(6), Validators.maxLength(20)]],
+        name: ['', Validators.required, Validators.minLength(5), Validators.maxLength(60)],
         role: ['', Validators.required],
         level: [''],
-        baseAngkre:['', Validators.required, Validators.min(60)],
-        password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]],
-        repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]]
+        baseAngkre:['', Validators.required, Validators.min(60), Validators.minLength(2), Validators.maxLength(2)],
+        password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)],
+        repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)]
       },{ validator : MustMatch('password', 'repassword')})
     }
   //error message
