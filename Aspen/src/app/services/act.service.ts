@@ -19,13 +19,33 @@ export class ActService extends BaseService {
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
       .set("sortColumn", sortColumn)
-      .set("sortOrder", sortOrder);
+      .set("sortOrder", sortOrder)
     if (filterQuery) { 
       params = params
         .set("filterColumn", filterColumn)
         .set("filterQuery", filterQuery);
     }
     return this.http.get<ApiResult>(this.url, {params});
+  }
+  getDataS<ApiResultWork>(
+    pageIndex: number, pageSize: number,
+    sortColumn: string, sortOrder: 'asc' | 'desc' | '',
+    filterColumn: string, filterQuery: string,
+    filterStatus: string, filterSDate: string, filterEDate:string): Observable<ApiResultWork> {
+    var params = new HttpParams()
+      .set("pageIndex", pageIndex.toString())
+      .set("pageSize", pageSize.toString())
+      .set("sortColumn", sortColumn)
+      .set("sortOrder", sortOrder)
+      .set("filterStatus", filterStatus)
+      .set("filterSDate", filterSDate)
+      .set("filterEDate",filterEDate);
+    if (filterQuery) { 
+      params = params
+        .set("filterColumn", filterColumn)
+        .set("filterQuery", filterQuery);
+    }
+    return this.http.get<ApiResultWork>(this.url, {params});
   }
   get<act>(id: number): Observable<act> {
     var myUrl = this.url + id;

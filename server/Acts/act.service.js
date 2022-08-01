@@ -19,6 +19,7 @@ module.exports = {
 
 async function getAll(rq) {
     const req = rq.query;
+    console.log(req);
     const role = rq.headers.userrole;
     let uid = parseInt(rq.headers.userid);
 
@@ -28,11 +29,17 @@ async function getAll(rq) {
     var sortOrder = req.sortOrder;
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
+
+    var fStatus = req.filterStatus;
+    var fsDate = req.filterSDate;
+    var feDate = req.filterEDate;
     var model = db.Act; 
     if (role === "Admin" && uservice.isTrueAdmin(uid)) {
         return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
-    } else {
-        return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
+    } else{
+        return await pagination.paginateACTNew(model, pageIndex, pageSize,
+            sortColumn, sortOrder, filterColumn, filterQuery, uid,
+            fStatus, fsDate, feDate);
     }
 }
 

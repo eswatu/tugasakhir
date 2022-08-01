@@ -64,7 +64,8 @@ export const MY_FORMATS = {
   providers: [ DatePipe,
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-//    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    //    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+
   ]
 })
 export class CreditPointModule { }

@@ -7,11 +7,11 @@ function model(sequelize) {
         //kode unsur
         kodeUnsur: { type: DataTypes.INTEGER, allowNull: false},
         //nama unsur
-        namaUnsur: {type: DataTypes.STRING, allowNull: false},
+        namaUnsur: {type: DataTypes.STRING(150), allowNull: false},
         //name diisi butir kegiatan
-        kodeSub: { type: DataTypes.CHAR, allowNull: false },
+        kodeSub: { type: DataTypes.CHAR(1), allowNull: false },
         //level untuk jenjang
-        namaSubUnsur: { type: DataTypes.STRING, allowNull: false },
+        namaSubUnsur: { type: DataTypes.STRING(150), allowNull: false },
     };
     return sequelize.define('SubUnsur', attributes, {timestamps: false, freezeTableName: true});
 }

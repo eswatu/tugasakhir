@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from "@angular/material/sort";
-import { ApiResult } from '@env/services/base.service';
+import { ApiResultWork } from '@env/services/base.service';
 import { ActService } from '@env/services/act.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
@@ -11,6 +11,8 @@ import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dia
 import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 import Swal from 'sweetalert2';
 import { AuthenticationService } from '@env/services';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'credit-point-table',
@@ -21,6 +23,17 @@ import { AuthenticationService } from '@env/services';
 export class CreditPointTableComponent implements OnInit {
   activeSubmission;
 
+  filtColumn = new FormControl('');
+  filterStatus = new FormControl('all');
+  filterQ = new FormControl();
+
+  dateFilter = new FormGroup({
+    startDate: new FormControl(''),
+    endDate: new FormControl('')
+  });
+
+  filterTextChanged: Subject<string> = new Subject<string>();
+
   public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
   public jobs: MatTableDataSource<act>;
 
@@ -29,15 +42,17 @@ export class CreditPointTableComponent implements OnInit {
   public defaultSortColumn: string = "actDate";
   public defaultSortOrder: SortDirection = 'desc';
 
-  defaultFilterColumn: string = null;
+  defaultFilterColumn: string = 'actNote';
   filterQuery: string = null;
+  fstatus: string = null;
+  sdate: string = null;
+  edate: string = null;
 
   @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isAdmin;
   user;
-  //  filterTextChanged: Subject<string> = new Subject<string>();
-  constructor(
+   constructor(
     private actService: ActService,
     private authService: AuthenticationService,
     public dialog: MatDialog) {
@@ -62,7 +77,15 @@ export class CreditPointTableComponent implements OnInit {
     pageEvent.pageSize = this.defaultPageSize;
     if (query) { 
       this.filterQuery = query;
+      this.defaultFilterColumn = this.filtColumn.value;
     }
+
+    if (this.dateFilter.value) {
+      this.sdate = this.formatDate(this.dateFilter.value['startDate']);
+      this.edate = this.formatDate(this.dateFilter.value['endDate']);
+    }
+    // let item = this.dateFilter.value['startDate'];
+    // console.log(item['_i'])
     this.getData(pageEvent);
   }
   
@@ -71,13 +94,18 @@ export class CreditPointTableComponent implements OnInit {
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
-    var filterQuery = (this.filterQuery) ? this.filterQuery : null;
+    var filterQry = (this.filterQuery) ? this.filterQuery : null;
+    //filter status
+    var filterS = (this.filterStatus.value) ?? null;
+    var filterSDate = (this.sdate) ?? null;
+    var filterEDate = (this.edate) ?? null;
 
     //use service
-    this.actService.getData<ApiResult<act>>(
+    this.actService.getDataS<ApiResultWork<act>>(
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
-      filterColumn, filterQuery).subscribe(result => {
+      filterColumn, filterQry,
+      filterS, filterSDate, filterEDate).subscribe(result => {
         result.data.forEach(d => {
           if (d.isProposed == false || !d.isCalculated == false) {
             this.actService.getFileInfo(d.id).subscribe(r => {
@@ -162,5 +190,28 @@ export class CreditPointTableComponent implements OnInit {
     const dialogRef = this.dialog.open(FileUploadDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(()=> {this.loadData(null)});
   }
+  onFilterTextChanged(filterText: string) {
+    if (this.filterTextChanged.observers.length === 0) {
+        this.filterTextChanged
+            .pipe(debounceTime(1000), distinctUntilChanged())
+          .subscribe(query => {
+            this.jobs = null;
+              this.loadData(query);
+            });
+    }
+    this.filterTextChanged.next(filterText);
+   }
   
+   //helper 
+  formatDate(md: any) {
+    if (md){
+      return [
+        ("0" + md['_i'].date).slice(-2),
+        ("0" + md['_i'].month).slice(-2),
+        md['_i'].year.toString(),
+      ].join('-');
+    } else {
+      return null;
+    }
+  }
 }

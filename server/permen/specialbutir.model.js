@@ -5,7 +5,7 @@ module.exports = model;
 function model(sequelize) { 
     const attributes = {
         //catatan Khusus
-        noteButir: { type: DataTypes.STRING, allowNull: false }
+        noteButir: { type: DataTypes.STRING(100), allowNull: false }
     };
     return sequelize.define("SpecialButir",attributes, {timestamps: false, freezeTableName: true});
 }

@@ -5,9 +5,9 @@ module.exports = model;
 function model(sequelize){
     const attributes = {
         type    : { type: DataTypes.STRING(30)},
-        name    : { type: DataTypes.STRING(40)},
+        name    : { type: DataTypes.STRING(100)},
         data    : { type: DataTypes.BLOB("long")},
-        notes   : {type: DataTypes.STRING(100), allowNull: true}
+        notes   : {type: DataTypes.STRING(150), allowNull: true}
     };
     const options = {
         defaultScope: {
