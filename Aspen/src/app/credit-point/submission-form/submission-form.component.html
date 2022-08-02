@@ -2,14 +2,14 @@
     <mat-form-field fxLayout="column">
         <mat-label>Nama / Nomor Pengajuan</mat-label>
         <input formControlName="subName" id="subName" matInput placeholder="nomor pengajuan">
-        <mat-hint>{{input.value?.length || 0}} / 30</mat-hint>
+        <mat-hint align="end">{{input?.value?.length || 0}} / 30</mat-hint>
         <mat-error>{{ErrorMessageSubName}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" fxLayout="column">
         <mat-label>Tanggal Pengajuan</mat-label>
         <input formControlName="subDate" id="subDate" matInput [matDatepicker]="picker">
-        <mat-hint>Tanggal Pengajuan (dd/MM/yyyy)</mat-hint>
+        <mat-hint align="start">Tanggal Pengajuan (dd/MM/yyyy)</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error>{{ErrorMessageSubDate}}</mat-error>
@@ -18,7 +18,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Catatan</mat-label>
         <input formControlName="subNote" id="subNote" matInput placeholder="Catatan Pengajuan">
-        <mat-hint>{{input.value?.length || 0}} / 100</mat-hint>
+        <mat-hint align="end">{{input?.value?.length || 0}} / 100</mat-hint>
     </mat-form-field>
 
     <div fxLayoutGap="12px">

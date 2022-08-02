@@ -19,7 +19,7 @@ export class ActService extends BaseService {
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
       .set("sortColumn", sortColumn)
-      .set("sortOrder", sortOrder)
+      .set("sortOrder", sortOrder);
     if (filterQuery) { 
       params = params
         .set("filterColumn", filterColumn)

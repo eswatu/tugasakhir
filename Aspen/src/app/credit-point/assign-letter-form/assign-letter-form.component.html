@@ -2,7 +2,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Nomor Surat</mat-label>
         <input formControlName="ltNumber" id="ltNumber" matInput placeholder="Nomor Surat Misalnya: ST-xx/yy/zzz">
-        <mat-hint>{{input.length?.value || 0}} / 40</mat-hint>
+        <mat-hint align="end">{{input?.length?.value || 0}} / 40</mat-hint>
         <mat-error>{{ErrorMessageltNumber}}</mat-error>
     </mat-form-field>
     
@@ -32,7 +32,7 @@
     <mat-form-field fxLayout="column">
         <mat-label>Catatan</mat-label>
         <input matInput formControlName="ltNote" id="ltNote" placeholder="Catatan Surat Tugas. Contoh: Untuk Jenjang x/y/z saja" >
-        <mat-hint>{{input.length?.value || 0}} / 100</mat-hint>
+        <mat-hint align="end">{{input?.length?.value || 0}} / 100</mat-hint>
     </mat-form-field>
 
     <div fxLayoutGap="12px">

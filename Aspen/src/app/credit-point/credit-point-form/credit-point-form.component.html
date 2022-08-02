@@ -14,31 +14,31 @@
         <mat-form-field fxLayout="column">
             <mat-label>Nama Kegiatan</mat-label>
             <textarea formControlName="namaButir" id="namaButir" matInput placeholder="Nama Butir Kegiatan" [readonly]="true" rows=2></textarea>
-            <mat-hint>Otomatis</mat-hint>
+            <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">
             <mat-label>Tingkat Kegiatan</mat-label>
             <input formControlName="tkButir" id="tkButir" matInput placeholder="Tingkat" [readonly]="true" >
-            <mat-hint>Otomatis</mat-hint>
+            <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">
             <mat-label>Jumlah Poin</mat-label>
             <input formControlName="jmlPoin" id="jmlPoin" matInput placeholder="Jumlah kredit" [readonly]="true">
-            <mat-hint>Otomatis</mat-hint>
+            <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">
             <mat-label>Hasil Pekerjaan</mat-label>
             <input matInput formControlName="hasilKerja" id="hasilKerja" placeholder="Bukti pelaksanaan pekerjaan" [readonly]="true">
-            <mat-hint>Otomatis</mat-hint>
+            <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
         <mat-form-field fxLayout="column">
             <mat-label>Jenjang</mat-label>
             <input matInput  formControlName="levelReq" id="levelReq" placeholder="Kegiatan" [readonly]="true">
-            <mat-hint>Otomatis</mat-hint>
+            <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
         <button mat-raised-button color="primary"
@@ -54,7 +54,7 @@
         <mat-form-field appearance="fill" fxLayout="column">
             <mat-label>Tanggal Pelaksanaan Kegiatan</mat-label>
             <input formControlName="actDate" id="actDate" matInput [matDatepicker]="picker">
-            <mat-hint>Tanggal pelaksanaan Kegiatan (dd/MM/yyyy)</mat-hint>
+            <mat-hint >Tanggal pelaksanaan Kegiatan (dd/MM/yyyy)</mat-hint>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>{{ErrorMessageActDate}}</mat-error>
@@ -62,8 +62,8 @@
     
         <mat-form-field fxLayout="column">
             <mat-label>Catatan</mat-label>
-            <input matInput  formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan. Contoh: Pekerjaan kemarin" >
-            <mat-hint>{{input.length?.value || 0}} / 100</mat-hint>
+            <input matInput formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan. Contoh: Pekerjaan kemarin" >
+            <mat-hint align="end">{{input?.length?.value || 0}} / 100</mat-hint>
         </mat-form-field>
     
     </form>
