@@ -10,12 +10,14 @@ import { AuthenticationService } from '@env/services';
 export class AngkreTabComponent implements OnInit {
   background: ThemePalette = 'accent';
   isAdmin;
+  isPenilai;
   user;
   constructor(private authSrvc: AuthenticationService) {
     this.authSrvc.user.subscribe(x => this.user = x);
     if (this.user) {
         this.isAdmin = this.user.role === 'Admin';
-    }
+        this.isPenilai = this.user.role === 'Penilai';
+    } 
   }
 
   ngOnInit(): void {

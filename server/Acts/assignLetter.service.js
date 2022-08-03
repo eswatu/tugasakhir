@@ -51,7 +51,7 @@ async function createAL(req) {
 }
 async function updateAL(id, body, headers) {
     const st = await db.AssignLetter.findByPk(id);
-    if (headers.userrole === "Admin" || st.UserId == headers.userid) {
+    if (headers.userrole !== "User" || st.UserId == headers.userid) {
         body.updatedAt = new Date();
         Object.assign(st, body);
         await st.save();

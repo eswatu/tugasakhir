@@ -34,7 +34,7 @@ async function getAll(rq) {
     var fsDate = req.filterSDate;
     var feDate = req.filterEDate;
     var model = db.Act; 
-    if (role === "Admin" && uservice.isTrueAdmin(uid)) {
+    if (role !== "User" && uservice.isTrueAdmin(uid)) {
         return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else{
         return await pagination.paginateACTNew(model, pageIndex, pageSize,

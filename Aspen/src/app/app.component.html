@@ -4,11 +4,11 @@
       <mat-icon>person</mat-icon>
       Hai, {{user.name}}
     </div>
-      <button  mat-button fxFlex  routerLink="dashboard">
+      <button  mat-button fxFlex  routerLink="dashboard" *ngIf="!isAdmin">
         <mat-icon>dashboard</mat-icon>
         Dashboard
       </button>
-      <button  mat-button fxFlex routerLink="angkakredit">
+      <button  mat-button fxFlex routerLink="angkakredit" *ngIf="!isAdmin">
         <mat-icon>business_center</mat-icon>
         Angka Kredit
       </button>

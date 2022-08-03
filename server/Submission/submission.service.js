@@ -30,7 +30,7 @@ async function getAll(q) {
     var filterQuery = req.filterQuery;
     var model = db.Submission;
     
-    if (role === "Admin" && uservice.isTrueAdmin(uid)) {
+    if (role === "Penilai" && uservice.isTrueAdmin(uid)) {
         return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     } else {
         return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
@@ -85,7 +85,7 @@ async function updateSubmission(id, params, headers) {
     const userid = headers.userid;
     const role = headers.userrole;
     const sub = await getSubmissionById(id);
-    if (parseInt(userid) == sub.UserId || role === 'Admin' && uservice.isTrueAdmin(userid)) {
+    if (parseInt(userid) == sub.UserId || role === 'Penilai' && uservice.isTrueAdmin(userid)) {
         // copy params to user and save
         Object.assign(sub, params);
         await sub.save();
@@ -136,7 +136,7 @@ async function submitSub(id) {
 async function approveSubmission(id, params, headers) {
     const adm = headers.userrole;
     const sub = await getSubmissionById(id);
-    if (sub && adm === 'Admin' && uservice.isTrueAdmin(parseInt(headers.userid))) {
+    if (sub && adm === 'Penilai' && uservice.isTrueAdmin(parseInt(headers.userid))) {
         Object.assign(sub, params);
         await sub.update({dateApproved: new Date(), isActive: false, isSubmitted: false});
         await db.Act.update(

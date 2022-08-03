@@ -73,8 +73,8 @@ function updateSchema(req, res, next) {
     const schema = Joi.object({
         name: Joi.string().required(),
         username: Joi.string().required(),
-        role: Joi.string().valid(Role.Admin, Role.User).required(),
-        password: Joi.string().min(6).required(),
+        role: Joi.string().valid("Admin", "User", "Penilai").required(),
+        password: Joi.string().min(6).allow(null,''),
         level: Joi.string().required()
     });
     validateRequest(req, next, schema);

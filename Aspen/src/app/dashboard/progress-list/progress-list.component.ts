@@ -18,7 +18,7 @@ export class ProgressListComponent implements OnInit {
     private authService: AuthenticationService) {
     this.authService.user.subscribe(usr => this.user = usr);
     if (this.user) {
-      this.isAdmin = this.user.role === 'Admin';
+      this.isAdmin = this.user.role !== 'User';
     }
   }
   

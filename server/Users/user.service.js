@@ -120,7 +120,7 @@ async function getUser(id) {
 
 async function isTrueAdmin(userId) {
     const user = await db.User.findByPk(userId);
-    return user.role === 'Admin';
+    return user.role === 'Penilai';
 }
 
 function omitHash(user) { 

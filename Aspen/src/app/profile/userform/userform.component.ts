@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class UserformComponent implements OnInit {
   formInput : FormGroup;
   user: User = <User>{};
-  roles = ["", "User", "Admin"];
+  roles = ["", "User", "Penilai","Admin"];
   id;
 
   constructor(private userService: UserService,
@@ -28,10 +28,10 @@ export class UserformComponent implements OnInit {
         name: ['', Validators.required, Validators.minLength(5), Validators.maxLength(60)],
         role: ['', Validators.required],
         level: [''],
-        baseAngkre:['', Validators.required, Validators.min(60), Validators.minLength(2), Validators.maxLength(2)],
+        baseAngkre:['', Validators.required, Validators.min(60), Validators.maxLength(3)],
         password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)],
         repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)]
-      },{ validator : MustMatch('password', 'repassword')})
+      },{ validator : MustMatch('password', 'repassword')});
     }
   //error message
   get ErrorMessageUsername() : string{
@@ -83,11 +83,11 @@ export class UserformComponent implements OnInit {
         this.user = result as User;
         console.log(result);
         this.formInput.patchValue({
-          username:this.user.username,
+          username: this.user.username,
           name: this.user.name,
           role: this.user.role,
           level: this.user.level,
-          baseAngkre: this.user.baseAngkre
+          baseAngkre: this.user.baseAngkre,
         });
       }, error => console.error(error));
     }

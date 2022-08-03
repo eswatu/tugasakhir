@@ -46,7 +46,7 @@ export class AssignLetterTableComponent implements OnInit {
         this.user = u;
         if (this.user) {
           this.authUserId = u.id;
-          this.isAdmin = ( u.role === "Admin") ? true : false;
+          this.isAdmin = ( u.role === "Penilai") ? true : false;
         }
         if (this.isAdmin) {
             this.displayedColumns = ['id', 'ltNumber', 'ltDate', 'ltDateStart', 'ltDateEnd', 'ltActive', 'ltNote', 'aksi', 'user'];
