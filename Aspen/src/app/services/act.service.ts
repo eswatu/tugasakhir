@@ -31,7 +31,7 @@ export class ActService extends BaseService {
     pageIndex: number, pageSize: number,
     sortColumn: string, sortOrder: 'asc' | 'desc' | '',
     filterColumn: string, filterQuery: string,
-    filterStatus: string, filterSDate: string, filterEDate:string): Observable<ApiResultWork> {
+    filterStatus: string, filterSDate: string, filterEDate:string, filterId:string): Observable<ApiResultWork> {
     var params = new HttpParams()
       .set("pageIndex", pageIndex.toString())
       .set("pageSize", pageSize.toString())
@@ -39,7 +39,8 @@ export class ActService extends BaseService {
       .set("sortOrder", sortOrder)
       .set("filterStatus", filterStatus)
       .set("filterSDate", filterSDate)
-      .set("filterEDate",filterEDate);
+      .set("filterEDate",filterEDate)
+      .set("filterId",filterId);
     if (filterQuery) { 
       params = params
         .set("filterColumn", filterColumn)

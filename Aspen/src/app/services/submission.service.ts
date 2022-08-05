@@ -50,4 +50,25 @@ export class SubmissionService extends BaseService {
       super(http, baseUrl);
       this.url = baseUrl + 'api/subm/';
      }
+     getDataS<ApiResultWork>(
+      pageIndex: number, pageSize: number,
+      sortColumn: string, sortOrder: 'asc' | 'desc' | '',
+      filterColumn: string, filterQuery: string,
+      filterStatus: string, filterSDate: string, filterEDate:string, filterId:string): Observable<ApiResultWork> {
+      var params = new HttpParams()
+        .set("pageIndex", pageIndex.toString())
+        .set("pageSize", pageSize.toString())
+        .set("sortColumn", sortColumn)
+        .set("sortOrder", sortOrder)
+        .set("filterStatus", filterStatus)
+        .set("filterSDate", filterSDate)
+        .set("filterEDate",filterEDate)
+        .set("filterId",filterId);
+      if (filterQuery) { 
+        params = params
+          .set("filterColumn", filterColumn)
+          .set("filterQuery", filterQuery);
+      }
+      return this.http.get<ApiResultWork>(this.url, {params});
+    }
 }

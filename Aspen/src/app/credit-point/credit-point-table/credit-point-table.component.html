@@ -35,6 +35,13 @@
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
 
+    <mat-form-field appearance="fill" *ngIf="isAdmin" >
+      <mat-label>Filter User</mat-label>
+      <mat-select name="userfilter" [formControl]="userfilt" (selectionChange)="loadData(null)">
+        <mat-option [value]="0">Semua Pegawai</mat-option>
+          <mat-option *ngFor="let us of userList" [value]="us.id">{{us.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </mat-drawer>
   <!-- Untuk form utama -->
   <div *ngIf="jobs">

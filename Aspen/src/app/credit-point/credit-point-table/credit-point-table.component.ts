@@ -1,18 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from "@angular/material/sort";
-import { ApiResultWork } from '@env/services/base.service';
+import { ApiResult, ApiResultWork } from '@env/services/base.service';
 import { ActService } from '@env/services/act.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreditPointFormComponent } from '../credit-point-form/credit-point-form.component';
 import { act } from '@env/model/acts';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
 import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 import Swal from 'sweetalert2';
-import { AuthenticationService } from '@env/services';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AuthenticationService, UserService } from '@env/services';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { User } from '@env/model';
 
 @Component({
   selector: 'credit-point-table',
@@ -26,16 +27,22 @@ export class CreditPointTableComponent implements OnInit {
   filtColumn = new FormControl('');
   filterStatus = new FormControl('all');
   filterQ = new FormControl();
+  userfilt = new FormControl();
 
   dateFilter = new FormGroup({
     startDate: new FormControl(''),
     endDate: new FormControl('')
   });
 
+  sdate: string = null;
+  edate: string = null;
+
   filterTextChanged: Subject<string> = new Subject<string>();
 
   public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
   public jobs: MatTableDataSource<act>;
+  userList: User[];
+  filterId : string;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -45,21 +52,20 @@ export class CreditPointTableComponent implements OnInit {
   defaultFilterColumn: string = 'actNote';
   filterQuery: string = null;
   fstatus: string = null;
-  sdate: string = null;
-  edate: string = null;
 
-  @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static:true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isAdmin;
   user;
    constructor(
     private actService: ActService,
     private authService: AuthenticationService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private userService: UserService) {
       this.authService.user.subscribe(x => {
         this.user = x;
         if (this.user) {
-          this.isAdmin = ( x.role === "Admin") ? true : false ;
+          this.isAdmin = ( x.role === "Penilai") ? true : false ;
         }
         if (this.isAdmin){
         this.displayedColumns.push('user');
@@ -72,17 +78,25 @@ export class CreditPointTableComponent implements OnInit {
     this.paginator._intl.itemsPerPageLabel = "item per halaman";
   }
   loadData(query: string = null) {
+    this.userService.getData<ApiResult<User>>(0,9999,"name", "asc",null,null).subscribe(result => {
+      this.userList = result.data;
+    });    
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
+
     if (query) { 
       this.filterQuery = query;
       this.defaultFilterColumn = this.filtColumn.value;
     }
-
     if (this.dateFilter.value) {
       this.sdate = this.formatDate(this.dateFilter.value['startDate']);
       this.edate = this.formatDate(this.dateFilter.value['endDate']);
+    }
+    if (this.isAdmin) {
+      this.filterId = this.userfilt.value;
+    } else {
+      this.filterId = this.user.id;
     }
     // let item = this.dateFilter.value['startDate'];
     // console.log(item['_i'])
@@ -91,6 +105,7 @@ export class CreditPointTableComponent implements OnInit {
   
   getData(event: PageEvent) { 
     this.jobs = null;
+
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
@@ -99,13 +114,13 @@ export class CreditPointTableComponent implements OnInit {
     var filterS = (this.filterStatus.value) ?? null;
     var filterSDate = (this.sdate) ?? null;
     var filterEDate = (this.edate) ?? null;
-
+    var fId = this.filterId ?? null;
     //use service
     this.actService.getDataS<ApiResultWork<act>>(
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQry,
-      filterS, filterSDate, filterEDate).subscribe(result => {
+      filterS, filterSDate, filterEDate, fId).subscribe(result => {
         result.data.forEach(d => {
           if (d.isProposed == false || !d.isCalculated == false) {
             this.actService.getFileInfo(d.id).subscribe(r => {

@@ -80,11 +80,17 @@ async function paginateACTNew(model, pageIndex, pageSize,
     const take = parseInt(pageSize) || 10;
     const skip = page  * take;
     let options = {};
-    let filter = { UserId: uid};
+    let filter;
+    if (uid == 0) {
+        filter =  { UserId: {[Op.ne]: uid} };
+    } else {
+        filter =  { UserId: uid };
+    }
     if (sortOrder.length < 1) { 
         sortOrder = "ASC";
     }
     if (sortOrder.toUpperCase() == 'ASC') {
+
         options = { order: [[sortColumn, 'ASC']] }
     } else if (sortOrder.toUpperCase() == 'DESC') {
         options = { order: [[sortColumn, 'DESC']] }
@@ -109,7 +115,7 @@ async function paginateACTNew(model, pageIndex, pageSize,
                 } else if (filterColumn.includes(".")){
                     const splitedcolumn = filterColumn.split('.');
                     filter['$'+splitedcolumn[0]+'.'+splitedcolumn[1] + '$'] = {[Op.substring] : filterQuery };
-                    console.log(filter);
+                    //console.log(filter);
                 } else {
                     filter[filterColumn] = {[Op.substring] : filterQuery };
                 }

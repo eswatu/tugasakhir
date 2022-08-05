@@ -37,7 +37,7 @@ async function getAll(rq) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.User; 
-    if (role === "Admin") {
+    if (role === "Admin" || role === "Penilai") {
         return await pagination.userpaging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
     }
 }
@@ -120,7 +120,10 @@ async function getUser(id) {
 
 async function isTrueAdmin(userId) {
     const user = await db.User.findByPk(userId);
-    return user.role === 'Penilai';
+    console.log(
+        'isi user' + user
+    );
+    return user.role !== "User";
 }
 
 function omitHash(user) { 

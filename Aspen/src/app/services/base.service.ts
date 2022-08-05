@@ -46,4 +46,5 @@ export interface ApiResultWork<T> {
     filterStatus: string;
     filterDateStart: string;
     filterDateEnd: string;
+    filterId: string;
 }
