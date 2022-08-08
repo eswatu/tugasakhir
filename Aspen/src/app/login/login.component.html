@@ -19,8 +19,8 @@
         <div class="form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
-                <input type="password" matInput formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                <mat-icon matSuffix>key</mat-icon>
+                <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <mat-icon matSuffix (click)="password()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 <mat-hint>Password login</mat-hint>
             </mat-form-field>
             <mat-error>{{ErrorMessagePassword}}</mat-error>

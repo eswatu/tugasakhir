@@ -79,7 +79,9 @@ export class CreditPointTableComponent implements OnInit {
   }
   loadData(query: string = null) {
     this.userService.getData<ApiResult<User>>(0,9999,"name", "asc",null,null).subscribe(result => {
-      this.userList = result.data;
+      if (result) {
+        this.userList = result.data;
+      }
     });    
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;

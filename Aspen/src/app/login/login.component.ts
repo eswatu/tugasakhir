@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
-
   constructor(
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
@@ -45,8 +44,15 @@ get ErrorMessagePassword() : string{
 }
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
+// variable - default false
+hide: boolean = true;
 
+// click event function toggle
+password() {
+    this.hide = !this.hide;
+}
   onSubmit() {
+    
       this.submitted = true;
 
       // stop here if form is invalid

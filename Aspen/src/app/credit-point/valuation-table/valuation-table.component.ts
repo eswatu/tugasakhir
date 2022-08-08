@@ -57,8 +57,10 @@ export class ValuationTableComponent implements OnInit {
     private userService: UserService,
     public dialog: MatDialog) {
       this.authService.user.subscribe(u => {
-        this.isAdmin = ( u.role === "Penilai") ? true : false;
-        this.user = u;
+        if (u){
+          this.isAdmin = ( u.role === "Penilai") ? true : false;
+          this.user = u;
+        }
       })
      }
 

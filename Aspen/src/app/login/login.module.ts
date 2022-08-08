@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { LoginComponent } from './login.component';
 
 
 @NgModule({
   declarations: [
-    LoginPageComponent
+    LoginComponent
   ],
   imports: [
     CommonModule,
