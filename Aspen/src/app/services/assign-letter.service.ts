@@ -29,7 +29,7 @@ export class AssignLetterService extends BaseService{
     let myurl = this.url + id;
     return this.http.get<assignLetter>(myurl);
   }
-  put<assignLetter>(item: any): Observable<assignLetter> {
+  put<assignLetter>(item: any): Observable<any> {
     let myurl = this.url + item.id;
     return this.http.put<assignLetter>(myurl, item);
   }

@@ -133,17 +133,15 @@ setButir(id:number) {
           dialogConfig.minWidth = 400;
           dialogConfig.minHeight = 400;
 
-          if (!this.act) {
-            this.act = <act>{};
-          }
+          // if (!this.act) {
+          //   this.act = <act>{};
+          // }
           this.act.Butir = butirOut;
           this.act.butirId = butirOut.id;
           this.act.actMain = (butirOut.Aktivita.kodeAkt === 'G') ? false : true;
           dialogConfig.data = { act: this.act };
 
-          console.log("isi dari act form keluar: ");
-          console.log(this.act);
-          const dialogRef2 = this.dialog.open(CreditPointFormComponent, dialogConfig);
+          const dialogRef = this.dialog.open(CreditPointFormComponent, dialogConfig);
           this.dialogRef.close();
       }
   }

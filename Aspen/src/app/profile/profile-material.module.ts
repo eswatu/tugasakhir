@@ -13,12 +13,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from "@angular/material/table";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
+import { MatIconModule } from "@angular/material/icon";
 
 
 
 
 
 const modules = [
+  MatIconModule,
   MatSelectModule,
   MatProgressSpinnerModule,
   MatTableModule,
@@ -33,7 +35,6 @@ const modules = [
   MatDialogModule,
   MatSortModule,
   MatPaginatorModule
-      
 ]
 
 @NgModule({

@@ -24,7 +24,7 @@ export class ContractFormComponent implements OnInit {
     private dialogRef: MatDialogRef<ContractFormComponent>,
     public fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
-      this.uservice.user.subscribe(x => this.userid = x.id);
+      this.uservice.user.subscribe((x) => this.userid = x.id);
 
       if (data) {
           this.id = data.id;
@@ -44,6 +44,7 @@ export class ContractFormComponent implements OnInit {
     this.loadData();
   }
   loadData(){
+    this.contract = <contract>{};
     if (this.id) {
       this.ctrService.get<contract>(this.id).subscribe(res => {
           this.contract = res;
@@ -52,16 +53,13 @@ export class ContractFormComponent implements OnInit {
     }
   }
   
-  getFormValue(){
+  onSubmit(){
     this.contract.contractName = this.formInput.get('contractName').value;
     this.contract.contractDate = this.formInput.get('contractDate').value;
     this.contract.contractYear = this.formInput.get('contractYear').value;
     this.contract.contractValue = this.formInput.get('contractValue').value;
     this.contract.contractNote = this.formInput.get('contractNote').value;
     this.contract.isActive = this.formInput.get('isActive').value;
-  }
-  onSubmit(){
-    this.getFormValue();
     if (this.id) {
       this.contract.id = this.id;
       this.ctrService.put<contract>(this.contract).subscribe(res => {

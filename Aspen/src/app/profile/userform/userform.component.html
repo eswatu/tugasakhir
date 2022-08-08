@@ -1,4 +1,5 @@
 <form [formGroup]="formInput" (ngSubmit)="onSubmit()">
+    <div *ngIf="id" style="color:red;">Password secara otomatis berubah ke username</div>
     <mat-form-field fxLayout="column">
         <mat-label>Username</mat-label>
         <input formControlName="username" id="username" matInput placeholder="Username untuk login" [readonly]="id">
@@ -31,21 +32,22 @@
 
     <mat-form-field fxLayout="column">
         <mat-label>Password</mat-label>
-        <input matInput type='password' formControlName="password" id="password" >
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" id="password" >
+        <mat-icon matSuffix (click)="password()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-hint>huruf dan atau angka tanpa titik atau tanda baca lain, 4-30 karakter</mat-hint>
         <mat-error>{{ErrorMessagePassword}}</mat-error>
     </mat-form-field>
 
     <mat-form-field fxLayout="column">
         <mat-label>Ulangi Password</mat-label>
-        <input matInput type='password' formControlName="repassword" id="repassword">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="repassword" id="repassword">
+        <mat-icon matSuffix (click)="repassword()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-hint>Isian sama dengan kolom password, 4-30 karakter</mat-hint>
     </mat-form-field>
 
     <div fxLayoutGap="12px">
         <button type="submit" mat-raised-button color="primary" fxFlex="20"
         class="btn btn-success" [disabled]="formInput.invalid" [hidden]="formInput.invalid">Simpan</button>
-        <button type="cancel" mat-raised-button fxFlex="10" color="warn" (click)='closeDialog()'>Batal</button>
     </div>
 </form>
 <!-- Form debug info panel -->

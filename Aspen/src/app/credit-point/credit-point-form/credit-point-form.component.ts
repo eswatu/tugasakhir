@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { act } from '@env/model/acts';
+import { act, assignLetter } from '@env/model/acts';
+import { ApiResult } from '@env/services';
 import { ActService } from '@env/services/act.service';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import Swal from 'sweetalert2';
@@ -20,8 +21,8 @@ export class CreditPointFormComponent {
   //ini untuk st terpilih
   surattugas;
 
-  id; //untuk mode edit dari tabel
-  job : act; //untuk mode create dari butir
+  //untuk mode edit dari tabel
+  job : act = <act>{}; //untuk mode create dari butir
   jenjang: string;
   actMain;
   
@@ -34,7 +35,7 @@ export class CreditPointFormComponent {
       //init data
         if(data) {
           if (data.id) {
-            this.id = data.id;
+            this.job.id = data.id;
           } else if (data.act) {
             this.job = data.act;
           }
@@ -77,32 +78,43 @@ ngOnInit() {
 
 getAssignLetterList(){
   //ambil daftar surat tugas yang aktif
-  this.assignLetterService.getData(0,20,"ltDate","asc","ltActive", "true")
-  .subscribe( result => {
+  this.assignLetterService.getData<ApiResult<assignLetter>>(0,25,"ltDate","asc","ltActive", "true")
+  .subscribe(result => {
+    result.data.forEach(d => {
+        this.assignLetterService.getFileInfo(d.id).subscribe(r => {
+          if (r) {
+            d.hasFile = true;
+          } else {
+            d.hasFile = false;
+            result.data.splice(result.data.indexOf(d), 1);
+          }
+        });
+      
+    });
     this.surattugas = result['data'];
   });
 }    
 
 loadData(){
-  if (this.id) {
-    //edit mode
-    this.actService.get<act>(this.id).subscribe(result => {
-      this.job = result;
-      this.formInput.patchValue(this.job.Butir);
-      this.setJenjang(this.job.Butir.levelReq);
-      this.formInput.patchValue({
-        actDate: result.actDate,
-        butirVolume: result.butirVolume,
-        actNote: result.actNote,
-        AssignLetterId: result.AssignLetterId,
-        levelReq: this.jenjang
-        });
-        if (result.actMain) {
-          this.actMain = true;
-        } else {
-          this.actMain = false;
-        }
-      }, error => console.error(error));
+  if (this.job.id) {
+      //edit mode
+      this.actService.get<act>(this.job.id).subscribe(result => {
+        this.formInput.patchValue(this.job?.Butir ?? result.Butir);
+        this.job = result;
+          this.setJenjang(this.job.Butir.levelReq);
+          this.formInput.patchValue({
+            actDate: result.actDate,
+            butirVolume: result.butirVolume,
+            actNote: result.actNote,
+            AssignLetterId: result.AssignLetterId,
+            levelReq: this.jenjang
+            });
+            if (result.actMain) {
+              this.actMain = true;
+            } else {
+              this.actMain = false;
+            }
+        }, error => console.error(error));
     //eo edit
     } else {
       //input baru
@@ -113,13 +125,13 @@ loadData(){
   }
 }
 
-changeButir(){
+changeButir(main: boolean){
   const dialogConfig = new MatDialogConfig();
   dialogConfig.autoFocus = true;
   dialogConfig.restoreFocus; true;
   dialogConfig.minWidth = 400;
   dialogConfig.minHeight = 400;
-  const utama = this.actMain == true ? 1 : 0;
+  const utama = main == true ? 1 : 0;
   this.createJob();
   if (this.job) {
     dialogConfig.data = {act: this.job, jenis: utama};
@@ -130,8 +142,6 @@ changeButir(){
 //create job
 createJob() {
   this.job.butirVolume = this.formInput.get('butirVolume').value;
-  //replace ya
-  this.job.userId = 1;
   this.job.actDate = this.formInput.get('actDate').value;
   this.job.actNote = this.formInput.get('actNote').value;
   this.job.AssignLetterId = this.formInput.get('AssignLetterId').value;
@@ -140,8 +150,7 @@ createJob() {
   onSubmit(){
     this.createJob();
     //edit mode
-    if (this.id) {
-      this.job.id = this.id;
+    if (this.job.id) {
       this.actService.put<act>(this.job).subscribe(
         result => {
           Swal.fire(result);
@@ -166,7 +175,7 @@ createJob() {
       confirmButtonText: 'Yes, Hapus!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.actService.delete(this.id).subscribe(r => Swal.fire({title:r, icon:'success'}));
+        this.actService.delete(this.job.id).subscribe(r => Swal.fire({title:r, icon:'success'}));
         this.closeDialog();
       }
     })
@@ -177,6 +186,7 @@ createJob() {
   }
   //untuk jenjang dari int ke string
   setJenjang(level:number){
+    this.jenjang = '';
     switch (level) {
       case 1:
         this.jenjang =  'Terampil';

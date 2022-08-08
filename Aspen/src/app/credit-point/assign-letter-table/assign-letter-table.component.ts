@@ -18,9 +18,9 @@ import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dia
 export class AssignLetterTableComponent implements OnInit {
   rules = ["Warna merah menunjukkan bahwa berkas surat tugas belum diunggah",
                 "File yang diterima berukuran maksimal 2 mb dengan format pdf atau image (jpg, jpeg, png)",
-                "Surat tugas dengan properti <b>Aktif</b> bisa digunakan untuk referensi butir Pekerjaan",
+                "Surat tugas dengan properti 'Aktif' bisa digunakan untuk referensi butir Pekerjaan",
                 "Surat Tugas hanya bisa diubah oleh si pembuat, dan dapat digunakan oleh pegawai lain",
-                "Tidak terdapat menu hapus, gunakan menu <b>Ubah</b> untuk mengubah properti surat tugas",
+                "Tidak terdapat menu hapus, gunakan menu 'Ubah' untuk mengubah properti surat tugas",
                 "Mengunggah file di surat tugas yang sudah ada akan menggantikan file asli/menimpa, bukan menambahkan"];
   public displayedColumns;
   public asgnLtrs: MatTableDataSource<assignLetter>;

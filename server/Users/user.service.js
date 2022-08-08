@@ -80,6 +80,7 @@ async function update(id, params) {
 
     return omitHash(user.get())
 }
+
 async function _delete(id) {
     const user = await getUser(id);
     await user.destroy();
@@ -97,16 +98,6 @@ async function changepassword(body) {
         }
     } else {
         return 'invalid user';
-    }
-}
-async function resetPassword(body){
-    const user = await db.User.scope('withPasswordHash').findOne({ where: { id: body.id } });
-    if (user) {
-        const npwd = bcrypt.hash(user.username, 10);
-        db.User.update({passwordHash : npwd}, {where: {id: user.id}});
-        return "sukses reset";
-    } else {
-        return "gagal reset";
     }
 }
 

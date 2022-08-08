@@ -15,6 +15,9 @@ export class UserformComponent implements OnInit {
   user: User = <User>{};
   roles = ["", "User", "Penilai","Admin"];
   id;
+  // variable - default false
+hide: boolean = true;
+rehide: boolean = true;
 
   constructor(private userService: UserService,
     public dialogRef: MatDialogRef<UserformComponent>,
@@ -27,10 +30,10 @@ export class UserformComponent implements OnInit {
         username: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(6), Validators.maxLength(20)]],
         name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
         role: ['', Validators.required],
-        level: [''],
+        level: [1],
         baseAngkre:['', [Validators.required, Validators.min(60), Validators.maxLength(3)]],
-        password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)],
-        repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)]
+        password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(4), Validators.maxLength(30)]],
+        repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(4), Validators.maxLength(30)]]
       },{ validator : MustMatch('password', 'repassword')});
     }
   //error message
@@ -87,6 +90,8 @@ export class UserformComponent implements OnInit {
           role: this.user.role,
           level: this.user.level,
           baseAngkre: this.user.baseAngkre,
+          password: this.user.username,
+          repassword: this.user.username
         });
       }, error => console.error(error));
     }
@@ -102,7 +107,7 @@ export class UserformComponent implements OnInit {
     if (this.id) {
       this.user.id = this.id;
       this.userService.put<User>(this.user).subscribe(res => {
-        Swal.fire(res.name);
+       console.log(res);
       }, error => console.error(error));
     } else {
       this.userService.post<User>(this.user).subscribe(() =>
@@ -110,5 +115,10 @@ export class UserformComponent implements OnInit {
     }
     this.closeDialog();
   }
-
+  password() {
+    this.hide = !this.hide;
+}
+repassword() {
+  this.rehide = !this.rehide;
+}
 }

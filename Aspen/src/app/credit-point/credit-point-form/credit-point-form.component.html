@@ -41,9 +41,17 @@
             <mat-hint class="btext">Otomatis</mat-hint>
         </mat-form-field>
     
-        <button mat-raised-button color="primary"
-        class="btn btn-success" (click)="changeButir()">Ubah Butir</button>
-            
+        <!-- <button mat-raised-button color="primary"
+        class="btn btn-success" [matMenuTriggerFor]="menu">Ubah Butir</button>
+    <mat-menu #menu="matMenu" >
+        <button mat-menu-item (click)="changeButir(true)">
+            Pekerjaan Utama
+        </button>
+        <button mat-menu-item (click)="changeButir(false)">
+            Pekerjaan Tambahan/Penunjang
+        </button>
+        </mat-menu>  -->
+
         <mat-form-field appearance="outline" fxLayout="column">
             <mat-label>Jumlah Kegiatan</mat-label>
             <input type="number" matInput formControlName="butirVolume" id="butirVolume" placeholder="Jumlah hasil Pekerjaan yang dilaporkan">
@@ -71,11 +79,11 @@
     <div fxLayoutGap="12px">
         <button type="submit" mat-raised-button color="primary" 
         [disabled]="formInput.invalid" fxFlex="20"
-        class="btn btn-success" (click)="onSubmit()" *ngIf="!id">Buat Laporan</button>
-        <button type="submit" mat-raised-button color="primary" *ngIf="id"
+        class="btn btn-success" (click)="onSubmit()" *ngIf="!job.id">Buat Laporan</button>
+        <button type="submit" mat-raised-button color="primary" *ngIf="job.id"
         [disabled]="formInput.invalid" fxFlex="20"
         class="btn btn-success" (click)="onSubmit()">Ubah Data</button>
-        <button type="cancel" mat-raised-button fxFlex="10" color="accent"(click)='closeDialog()' >Batal</button>
-        <button mat-raised-button fxFlex="30" end color="warn" (click)='hapusPekerjaan()' *ngIf="id">Hapus Pekerjaan</button>
+        <button type="button" mat-raised-button fxFlex="10" color="accent"(click)='closeDialog()' >Batal</button>
+        <button mat-raised-button fxFlex="30" end color="warn" (click)='hapusPekerjaan()' *ngIf="job.id">Hapus Pekerjaan</button>
     </div>
 </div>

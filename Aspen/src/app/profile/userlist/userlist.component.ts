@@ -31,7 +31,11 @@ export class UserlistComponent implements OnInit {
   constructor(private userService: UserService,
               private authService: AuthenticationService,
               public dialog: MatDialog) {
-                this.authService.user.subscribe(user => this.isAdmin = (user.role === 'Admin') ? true : false);
+                this.authService.user.subscribe(user => {
+                  if (user) {
+                    this.isAdmin = (user.role === 'Admin') ? true : false;
+                  }
+                });
                 this.displayedColumns = ["index", "username", "name", "role", "level",'baseAngkre', 'aksi'];
               }
 

@@ -15,6 +15,9 @@
                 <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
                     Upload
                 </button>
+                <div style="color:red">
+                    Setelah mengunggah gambar, anda perlu logout untuk melihat hasil perubahan
+                    </div>
         </div>
     </div>
     <div *ngIf="message" class="message">

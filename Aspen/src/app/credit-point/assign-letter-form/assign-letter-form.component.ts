@@ -56,6 +56,7 @@ get ErrorMessageltDatePeriod() : string{
 }
 
   ngOnInit() {
+    this.asgnLetter = <assignLetter>{};
     this.loadData();
   }
   loadData(){
@@ -88,25 +89,36 @@ get ErrorMessageltDatePeriod() : string{
     return String(m + '/' + d + '/' +y);
   }
   onSubmit(){
+    this.asgnLetter.ltNumber = this.formInput.get('ltNumber').value;
+    this.asgnLetter.ltDate = this.formInput.get('ltDate').value;
+    this.asgnLetter.ltNote = this.formInput.get('ltNote').value;
+    this.asgnLetter.ltDateStart = new Date(this.formInput.get('ltDateStart').value);
+    this.asgnLetter.ltDateEnd = new Date(this.formInput.get('ltDateEnd').value);
+    this.asgnLetter.ltActive = this.formInput.get('ltActive').value;
     
-    let al = <assignLetter>{};
-      al.ltNumber = this.formInput.get('ltNumber').value;
-      al.ltDate = this.formInput.get('ltDate').value;
-      al.ltNote = this.formInput.get('ltNote').value;
-      al.ltDateStart = new Date(this.formInput.get('ltDateStart').value);
-      al.ltDateEnd = new Date(this.formInput.get('ltDateEnd').value);
-      al.ltActive = this.formInput.get('ltActive').value;
-    
-    this.als.post<assignLetter>(al).subscribe(
-      result => {
-      if (result) {
-        Swal.fire(result.message);
-        this.closeDialog();
-      }
-    }, error => {
-      console.error(error);
-      Swal.fire(error.error.message);
-    });
+    if (this.idAL) {
+      this.asgnLetter.id = this.idAL;
+      this.als.put<assignLetter>(this.asgnLetter).subscribe(result => {
+        if (result) {
+          this.closeDialog();
+        }
+      }, error => {
+        console.error(error);
+        Swal.fire(error.message);
+      });
+
+    } else {
+      this.als.post<assignLetter>(this.asgnLetter).subscribe(
+        result => {
+        if (result) {
+          Swal.fire(result.message);
+          this.closeDialog();
+        }
+      }, error => {
+        console.error(error);
+        Swal.fire(error.error.message);
+      });
+    }
   }
 
   closeDialog(){
