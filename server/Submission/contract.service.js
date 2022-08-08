@@ -159,7 +159,7 @@ async function toggleContract(id) {
     }
 }
 async function getYears(req){
-    if (req.headers.userrole === 'Penilai' && uservice.isTrueAdmin(parseInt(req.headers.userid))) {
+    if ((req.headers.userrole === 'Penilai' || req.headers.userrole === 'Admin')  && uservice.isTrueAdmin(parseInt(req.headers.userid))) {
         const ctrs = await db.Contract.findAll({include: [{model: db.User, attributes:['Id','name']}]});
         return ctrs;
     } else if (req.headers.userrole === 'User'){

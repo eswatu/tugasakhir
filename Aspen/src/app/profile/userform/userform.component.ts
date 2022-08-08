@@ -63,7 +63,6 @@ export class UserformComponent implements OnInit {
           c.hasError('pattern') ? 'Password harus 8-15 karakter dan hanya huruf, angka, dan underscore':'';
   }
   
-
     //getter untuk form
     get username(){
       return this.formInput.get('username');
@@ -110,7 +109,6 @@ export class UserformComponent implements OnInit {
       Swal.fire('berhasil membuat baru'), error => console.error(error));
     }
     this.closeDialog();
-
   }
 
 }
