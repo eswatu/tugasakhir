@@ -10,7 +10,8 @@
         <h3>dengan jenis file: .pdf, .jpeg, .jpg, .png</h3>
         <div>           
             <label for="notes">Catatan:</label>
-            <input type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
+            <textarea type="text" [formControl]="notes" id="notes" appearance="fill" fxFlex>
+            </textarea>
         </div>
         <br>
         <input type="file" single (change)="selectFile($event)" accept=".pdf, .jpeg, .png, .Jpg" maxFileSize="">

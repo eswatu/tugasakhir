@@ -30,7 +30,7 @@ export class AssignLetterFormComponent implements OnInit {
         this.idAL = data.id;
       }
       this.formInput = fb.group({
-        ltNumber: ['', Validators.required, Validators.maxLength(40)],
+        ltNumber: ['', [Validators.required, Validators.maxLength(40)]],
         ltDate: [new Date(), Validators.required],
         ltDateStart: ['', Validators.required],
         ltDateEnd: ['', Validators.required],

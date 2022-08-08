@@ -25,10 +25,10 @@ export class UserformComponent implements OnInit {
       }
       this.formInput = this.fb.group({
         username: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(6), Validators.maxLength(20)]],
-        name: ['', Validators.required, Validators.minLength(5), Validators.maxLength(60)],
+        name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
         role: ['', Validators.required],
         level: [''],
-        baseAngkre:['', Validators.required, Validators.min(60), Validators.maxLength(3)],
+        baseAngkre:['', [Validators.required, Validators.min(60), Validators.maxLength(3)]],
         password: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)],
         repassword: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")], Validators.minLength(4), Validators.maxLength(30)]
       },{ validator : MustMatch('password', 'repassword')});

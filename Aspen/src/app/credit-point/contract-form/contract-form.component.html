@@ -31,7 +31,8 @@
     
     <mat-form-field fxLayout="column">
         <mat-label>Catatan</mat-label>
-        <input matInput formControlName="contractNote" id="contractNote" placeholder="Catatan Kontrak. Contoh: Dimulai semester 2, max 100 karakter" >
+        <textarea matInput formControlName="contractNote" id="contractNote" placeholder="Catatan Kontrak. Contoh: Dimulai semester 2, max 100 karakter" >
+        </textarea>
         <mat-hint align="end">{{input?.value?.length || 0}}/100</mat-hint>
     </mat-form-field>
     

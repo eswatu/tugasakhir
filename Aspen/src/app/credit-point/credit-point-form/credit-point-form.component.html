@@ -62,7 +62,8 @@
     
         <mat-form-field fxLayout="column">
             <mat-label>Catatan</mat-label>
-            <input matInput formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan. Contoh: Pekerjaan kemarin" >
+            <textarea matInput formControlName="actNote" id="actNote" placeholder="Catatan Kegiatan. Contoh: Pekerjaan kemarin" >
+            </textarea>
             <mat-hint align="end">{{input?.length?.value || 0}} / 100</mat-hint>
         </mat-form-field>
     

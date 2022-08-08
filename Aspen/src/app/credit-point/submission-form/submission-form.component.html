@@ -17,7 +17,8 @@
 
     <mat-form-field fxLayout="column">
         <mat-label>Catatan</mat-label>
-        <input formControlName="subNote" id="subNote" matInput placeholder="Catatan Pengajuan">
+        <textarea formControlName="subNote" id="subNote" matInput placeholder="Catatan Pengajuan">
+        </textarea>
         <mat-hint align="end">{{input?.value?.length || 0}} / 100</mat-hint>
     </mat-form-field>
 

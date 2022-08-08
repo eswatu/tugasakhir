@@ -30,13 +30,13 @@ export class ContractFormComponent implements OnInit {
           this.id = data.id;
       }
       this.formInput = fb.group({
-        contractName: ['', Validators.required, Validators.maxLength(40)],
+        contractName: ['', [Validators.required, Validators.maxLength(40)]],
         contractDate: [new Date(),Validators.required],
+        contractValue: ['',[Validators.required, Validators.min(1), Validators.maxLength(3)]],
         contractYear: [2022,[Validators.required, Validators.min(2022),
                         Validators.minLength(4), Validators.maxLength(4)],[this.isDupeYear()]],
-        contractValue: ['',[Validators.required, Validators.min(1), Validators.maxLength(3)]],
-        contractNote: ['', Validators.maxLength(100)],
-        isActive: [true,Validators.required]
+        contractNote: ['', Validators.maxLength(150)],
+        isActive: [true]
       }, {updateOn: 'blur'} );
     }
 
@@ -46,39 +46,34 @@ export class ContractFormComponent implements OnInit {
   loadData(){
     if (this.id) {
       this.ctrService.get<contract>(this.id).subscribe(res => {
-        this.contract = res;
-        this.formInput.patchValue(res);
+          this.contract = res;
+          this.formInput.patchValue(res);
       }, error => console.error(error));
     }
   }
   
-  getFormValue(): contract{
-    let ctc = <contract>{};
-
-    ctc.contractName = this.formInput.get('contractName').value;
-    ctc.contractDate = this.formInput.get('contractDate').value;
-    ctc.contractYear = this.formInput.get('contractYear').value;
-    ctc.contractValue = this.formInput.get('contractValue').value;
-    ctc.contractNote = this.formInput.get('contractNote').value;
-    ctc.isActive = this.formInput.get('isActive').value;
-    return ctc;
+  getFormValue(){
+    this.contract.contractName = this.formInput.get('contractName').value;
+    this.contract.contractDate = this.formInput.get('contractDate').value;
+    this.contract.contractYear = this.formInput.get('contractYear').value;
+    this.contract.contractValue = this.formInput.get('contractValue').value;
+    this.contract.contractNote = this.formInput.get('contractNote').value;
+    this.contract.isActive = this.formInput.get('isActive').value;
   }
   onSubmit(){
+    this.getFormValue();
     if (this.id) {
-      this.contract = this.getFormValue();
       this.contract.id = this.id;
       this.ctrService.put<contract>(this.contract).subscribe(res => {
         Swal.fire(res.message);
       }, error => console.error(error));
-      this.closeDialog();
     } else {
-    let ctrct = this.getFormValue();
-    this.ctrService.post<contract>(ctrct).subscribe(result => {
+    this.ctrService.post<contract>(this.contract).subscribe(result => {
       Swal.fire(result);
     }, error => console.error(error));
-    this.closeDialog();
-    }
-    }
+  }
+  this.closeDialog();
+  }
 
   closeDialog(){
     this.dialogRef.close();

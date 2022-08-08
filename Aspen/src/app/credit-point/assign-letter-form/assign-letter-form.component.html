@@ -1,5 +1,5 @@
 <form [formGroup]="formInput" (ngSubmit)="onSubmit()">
-    <mat-form-field fxLayout="column">
+    <mat-form-field fxLayout="column" appearance="fill">
         <mat-label>Nomor Surat</mat-label>
         <input formControlName="ltNumber" id="ltNumber" matInput placeholder="Nomor Surat Misalnya: ST-xx/yy/zzz">
         <mat-hint align="end">{{input?.length?.value || 0}} / 40</mat-hint>
@@ -29,9 +29,10 @@
     
     <mat-slide-toggle formControlName="ltActive" ngDefaultControl>Aktif?</mat-slide-toggle>
 
-    <mat-form-field fxLayout="column">
+    <mat-form-field fxLayout="column" appearance="fill">
         <mat-label>Catatan</mat-label>
-        <input matInput formControlName="ltNote" id="ltNote" placeholder="Catatan Surat Tugas. Contoh: Untuk Jenjang x/y/z saja" >
+        <textarea matInput formControlName="ltNote" id="ltNote" placeholder="Catatan Surat Tugas. Contoh: Untuk Jenjang x/y/z saja" >
+            </textarea>
         <mat-hint align="end">{{input?.length?.value || 0}} / 100</mat-hint>
     </mat-form-field>
 
