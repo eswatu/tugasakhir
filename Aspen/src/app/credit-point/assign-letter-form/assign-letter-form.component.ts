@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { assignLetter } from '@env/model/acts';
 import { AssignLetterService } from '@env/services/assign-letter.service';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./assign-letter-form.component.css']
 })
 export class AssignLetterFormComponent implements OnInit {
-  formInput: FormGroup;
+  formInput: UntypedFormGroup;
   idAL;
   asgnLetter: assignLetter;
   shared: boolean = false;
@@ -24,7 +24,7 @@ export class AssignLetterFormComponent implements OnInit {
 
   constructor(private als: AssignLetterService,
     private dialogRef: MatDialogRef<AssignLetterFormComponent>,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
       if (data) {
         this.idAL = data.id;
@@ -40,16 +40,16 @@ export class AssignLetterFormComponent implements OnInit {
  }
  //error message
  get ErrorMessageltNumber() : string{
-  const c: FormControl = (this.formInput.get('ltNumber') as FormControl);
+  const c: UntypedFormControl = (this.formInput.get('ltNumber') as UntypedFormControl);
   return c.hasError('required') ? 'Nomor Surat Harus diisi': '';
 }
 get ErrorMessageltDate() : string{
-  const c: FormControl = (this.formInput.get('ltDate') as FormControl);
+  const c: UntypedFormControl = (this.formInput.get('ltDate') as UntypedFormControl);
   return c.hasError('required') ? 'Tanggal Surat Tugas Harus diisi': '';
 }
 get ErrorMessageltDatePeriod() : string{
-  const c: FormControl = (this.formInput.get('ltDateStart') as FormControl);
-  const d: FormControl = (this.formInput.get('ltDateEnd') as FormControl);
+  const c: UntypedFormControl = (this.formInput.get('ltDateStart') as UntypedFormControl);
+  const d: UntypedFormControl = (this.formInput.get('ltDateEnd') as UntypedFormControl);
 
   return c.hasError('required') ? 'Tanggal Mulai Surat Tugas Harus diisi': 
           d.hasError('required') ? 'Tanggal Selesai Surat Tugas Harus diisi': '';

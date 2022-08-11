@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { chpwd, User } from '@env/model/user';
@@ -21,9 +21,9 @@ export class UserdetailComponent implements OnInit {
   toggleButtonValue : string; 
   userId;
   userInfo: User;
-  form : FormGroup;
-  formPwd: FormGroup;
-  formAvatar: FormControl;
+  form : UntypedFormGroup;
+  formPwd: UntypedFormGroup;
+  formAvatar: UntypedFormControl;
   pictureImage;
   urlImage;
   
@@ -39,7 +39,7 @@ export class UserdetailComponent implements OnInit {
     private userService: UserService,
     private authService: AuthenticationService,
     private sanitizer: DomSanitizer,
-    private fb: FormBuilder) {
+    private fb: UntypedFormBuilder) {
       this.authService.user.subscribe(x => {
         this.userInfo = x;
         if (this.userInfo) {
@@ -50,7 +50,7 @@ export class UserdetailComponent implements OnInit {
 
   ngOnInit(){
     
-    this.formAvatar = new FormControl();
+    this.formAvatar = new UntypedFormControl();
     //untuk form tampilan
     this.form = this.fb.group({
       username: [''],

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act, assignLetter } from '@env/model/acts';
 import { ApiResult } from '@env/services';
@@ -16,7 +16,7 @@ import { ButirTreeComponent } from '../butir-tree/butir-tree.component';
 
 export class CreditPointFormComponent {
   //stepper
-  formInput : FormGroup;
+  formInput : UntypedFormGroup;
 
   //ini untuk st terpilih
   surattugas;
@@ -41,33 +41,33 @@ export class CreditPointFormComponent {
           }
          }
       //init form
-    this.formInput = new FormGroup({
-          AssignLetterId: new FormControl('', Validators.required),
+    this.formInput = new UntypedFormGroup({
+          AssignLetterId: new UntypedFormControl('', Validators.required),
           //otomatis
-          namaButir: new FormControl(''),
-          tkButir: new FormControl(''),
-          levelReq: new FormControl(''),
-          jmlPoin: new FormControl(''),
-          hasilKerja: new FormControl(''),
-          userId: new FormControl(''),
+          namaButir: new UntypedFormControl(''),
+          tkButir: new UntypedFormControl(''),
+          levelReq: new UntypedFormControl(''),
+          jmlPoin: new UntypedFormControl(''),
+          hasilKerja: new UntypedFormControl(''),
+          userId: new UntypedFormControl(''),
 
-          actDate: new FormControl({value: new Date()},Validators.required),
-          butirVolume: new FormControl('', [Validators.required, Validators.min(1)]),
-          actNote: new FormControl('', Validators.maxLength(100))
+          actDate: new UntypedFormControl({value: new Date()},Validators.required),
+          butirVolume: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+          actNote: new UntypedFormControl('', Validators.maxLength(100))
       });
      }
 
   //error message
   get ErrorMessageAssignLetter() : string{
-    const c: FormControl = (this.formInput.get('AssignLetterId') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('AssignLetterId') as UntypedFormControl);
     return c.hasError('required') ? 'Silakan pilih dari daftar surat, atau buat baru di tab Surat Tugas': '';
   } 
   get ErrorMessageActDate() : string{
-    const c: FormControl = (this.formInput.get('actDate') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('actDate') as UntypedFormControl);
     return c.hasError('required') ? 'Tanggal pelaksanaan harus diisi': '';
   }    
   get ErrorMessageButirVolume() : string{
-    const c: FormControl = (this.formInput.get('butirVolume') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('butirVolume') as UntypedFormControl);
     return c.hasError('required') ? 'Tanggal pelaksanaan harus diisi':
             c.hasError('min') ? 'Jumlah Pekerjaan minimal ' + c.errors.min.min: '';
   }   

@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit , Output, EventEmitter} from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act } from '@env/model';
 import { submission } from '@env/model/submission';
@@ -34,7 +34,7 @@ export class SubmissionComponentComponent implements OnInit {
 
   private dialogRef = null;
   private dialogData;
-  subNote = new FormControl('');
+  subNote = new UntypedFormControl('');
 
   constructor(private actService: ActService,
     private subMService: SubmissionService,

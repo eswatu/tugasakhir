@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -24,14 +24,14 @@ import { User } from '@env/model';
 export class CreditPointTableComponent implements OnInit {
   activeSubmission;
 
-  filtColumn = new FormControl('');
-  filterStatus = new FormControl('all');
-  filterQ = new FormControl();
-  userfilt = new FormControl();
+  filtColumn = new UntypedFormControl('');
+  filterStatus = new UntypedFormControl('all');
+  filterQ = new UntypedFormControl();
+  userfilt = new UntypedFormControl();
 
-  dateFilter = new FormGroup({
-    startDate: new FormControl(''),
-    endDate: new FormControl('')
+  dateFilter = new UntypedFormGroup({
+    startDate: new UntypedFormControl(''),
+    endDate: new UntypedFormControl('')
   });
 
   sdate: string = null;

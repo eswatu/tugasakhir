@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, FormGroupDirective, MaxValidator, MinValidator, NgForm, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, MaxValidator, MinValidator, NgForm, ValidationErrors, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { contract } from '@env/model';
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./contract-form.component.css']
 })
 export class ContractFormComponent implements OnInit {
-  formInput: FormGroup;
+  formInput: UntypedFormGroup;
   id;
   contract;
   userid;
@@ -22,7 +22,7 @@ export class ContractFormComponent implements OnInit {
   constructor(private uservice: AuthenticationService,
     private ctrService: ContractService,
     private dialogRef: MatDialogRef<ContractFormComponent>,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
       this.uservice.user.subscribe((x) => this.userid = x.id);
 
@@ -91,18 +91,18 @@ export class ContractFormComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   //error message
   get ErrorMessageCY() : string{
-    const cy: FormControl = (this.formInput.get('contractYear') as FormControl);
+    const cy: UntypedFormControl = (this.formInput.get('contractYear') as UntypedFormControl);
     return cy.hasError('required') ? 'Tahun Tidak boleh kosong':
     cy.hasError('min') ? 'Tahun Tidak boleh kurang dari ' + cy.errors.min.min :
     cy.hasError('isDupeYear') ? 'Tidak boleh mengubah ke tahun kontrak yang sudah ada!' : '';
     }
     get ErrorMessageCV() : string{
-      const c: FormControl = (this.formInput.get('contractValue') as FormControl);
+      const c: UntypedFormControl = (this.formInput.get('contractValue') as UntypedFormControl);
       return c.hasError('required') ? 'Target Harus diisi':
       c.hasError('min') ? 'Tahun Tidak boleh kurang dari ' + c.errors.min.min : '';
     }
     get ErrorMessageCN() : string{
-      const c: FormControl = (this.formInput.get('contractName') as FormControl);
+      const c: UntypedFormControl = (this.formInput.get('contractName') as UntypedFormControl);
       return c.hasError('required') ? 'Nama Kontrak tidak boleh kosong': '';
     }
 
@@ -110,7 +110,7 @@ export class ContractFormComponent implements OnInit {
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }

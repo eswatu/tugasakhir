@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { submission } from '@env/model/submission';
 import { SubmissionService } from '@env/services/submission.service';
@@ -14,10 +14,10 @@ export class SubmissionFormComponent implements OnInit {
   id;
   submission : submission;
 
-  formInput: FormGroup;
+  formInput: UntypedFormGroup;
   constructor(private subService: SubmissionService,
     private dialogRef: MatDialogRef<SubmissionFormComponent>,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
       //init data dari tabel
       if (data) {this.id = data;}
@@ -30,11 +30,11 @@ export class SubmissionFormComponent implements OnInit {
      }
   //error message
   get ErrorMessageSubName() : string{
-    const c: FormControl = (this.formInput.get('subName') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('subName') as UntypedFormControl);
     return c.hasError('required') ? 'Nomor/Nama Pengajuan tidak boleh kosong': '';
   }
   get ErrorMessageSubDate() : string{
-    const c: FormControl = (this.formInput.get('subDate') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('subDate') as UntypedFormControl);
     return c.hasError('required') ? 'Tanggal Pengajuan tidak boleh kosong': '';
   } 
 

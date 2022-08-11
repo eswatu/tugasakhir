@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@env/services';
 import { first } from 'rxjs';
@@ -11,12 +11,12 @@ import { first } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   loading = false;
   submitted = false;
   error = '';
   constructor(
-      private formBuilder: FormBuilder,
+      private formBuilder: UntypedFormBuilder,
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService
@@ -35,11 +35,11 @@ export class LoginComponent implements OnInit {
   }
 //error message
 get ErrorMessageUsername() : string{
-    const c: FormControl = (this.loginForm.get('username') as FormControl);
+    const c: UntypedFormControl = (this.loginForm.get('username') as UntypedFormControl);
     return c.hasError('required') ? 'Username tidak boleh kosong': '';
 }
 get ErrorMessagePassword() : string{
-    const c: FormControl = (this.loginForm.get('password') as FormControl);
+    const c: UntypedFormControl = (this.loginForm.get('password') as UntypedFormControl);
     return c.hasError('required') ? 'Password tidak boleh kosong': '';
 }
   // convenience getter for easy access to form fields

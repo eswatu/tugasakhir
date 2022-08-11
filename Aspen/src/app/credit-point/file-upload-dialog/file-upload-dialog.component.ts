@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { fileInfo } from '@env/model/fileType';
 import { AssignLetterService } from '@env/services/assign-letter.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActService } from '@env/services/act.service';
 import Swal from 'sweetalert2';
 
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./file-upload-dialog.component.css']
 })
 export class FileUploadDialogComponent implements OnInit {
-  notes: FormControl;
+  notes: UntypedFormControl;
   currentFile? : File;
   progress = 0;
   selectedFiles?: FileList;
@@ -35,7 +35,7 @@ export class FileUploadDialogComponent implements OnInit {
         this.mode = data.mode;
         this.isEditabel = data.iseditable;
       }
-      this.notes = new FormControl('');
+      this.notes = new UntypedFormControl('');
      }
   ngOnInit(): void {
     if (this.id){

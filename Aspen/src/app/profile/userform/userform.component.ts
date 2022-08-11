@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from '@env/model';
 import { MustMatch, UserService } from '@env/services';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./userform.component.css']
 })
 export class UserformComponent implements OnInit {
-  formInput : FormGroup;
+  formInput : UntypedFormGroup;
   user: User = <User>{};
   roles = ["", "User", "Penilai","Admin"];
   id;
@@ -21,7 +21,7 @@ rehide: boolean = true;
 
   constructor(private userService: UserService,
     public dialogRef: MatDialogRef<UserformComponent>,
-    public fb: FormBuilder,
+    public fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
       if (data) {
         this.id = data.id;
@@ -38,30 +38,30 @@ rehide: boolean = true;
     }
   //error message
   get ErrorMessageUsername() : string{
-    const c: FormControl = (this.formInput.get('username') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('username') as UntypedFormControl);
     return c.hasError('required') ? 'Username tidak boleh kosong':
           c.hasError('pattern') ? 'Username harus 8-15 karakter dan hanya huruf, angka, dan underscore':'';
   }
   get ErrorMessageName() : string{
-    const c: FormControl = (this.formInput.get('name') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('name') as UntypedFormControl);
     return c.hasError('required') ? 'Nama Pengguna tidak boleh kosong':'';
   }
   get ErrorMessageRole() : string{
-    const c: FormControl = (this.formInput.get('role') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('role') as UntypedFormControl);
     return c.hasError('required') ? 'Kewenangan tidak boleh kosong, silakan masukkan "User" atau "Admin"':'';
   }
   get ErrorMessageBaseAngkre() : string{
-    const c: FormControl = (this.formInput.get('baseAngkre') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('baseAngkre') as UntypedFormControl);
     return c.hasError('required') ? 'Angka Kredit Awal tidak boleh kosong':
           c.hasError('min') ? 'Angka Kredit Awal minimal 60':'';
   }
   get ErrorMessagePassword() : string{
-    const c: FormControl = (this.formInput.get('password') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('password') as UntypedFormControl);
     return c.hasError('required') ? 'Password tidak boleh kosong':
           c.hasError('pattern') ? 'Password harus 8-15 karakter dan hanya huruf, angka, dan underscore':'';
   }
   get ErrorMessageRepassword() : string{
-    const c: FormControl = (this.formInput.get('repassword') as FormControl);
+    const c: UntypedFormControl = (this.formInput.get('repassword') as UntypedFormControl);
     return c.hasError('required') ? 'Password (Ulang) tidak boleh kosong':
           c.hasError('pattern') ? 'Password harus 8-15 karakter dan hanya huruf, angka, dan underscore':'';
   }
