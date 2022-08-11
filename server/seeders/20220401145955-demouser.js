@@ -20,25 +20,25 @@ module.exports = {
       updatedAt: new Date(),
       baseAngkre : 60
     },{
-      name: "Pegawai 2",
+      name: "Martina Dwi P",
       username: "pegawai2",
       passwordHash: await bcrypt.hash("pegawai2", 10) ,
-      role: "User",
+      role: "Penilai",
       level: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
-      baseAngkre : 80
+      baseAngkre : 100
     },{
-      name: "Pegawai 3",
+      name: "Nathania K S",
       username: "pegawai3",
       passwordHash: await bcrypt.hash("pegawai3", 10) ,
       role: "User",
       level: 2,
       createdAt: new Date(),
       updatedAt: new Date(),
-      baseAngkre : 100
+      baseAngkre : 80
     },{
-      name: "Pegawai 4",
+      name: "Akbar",
       username: "pegawai4",
       passwordHash: await bcrypt.hash("pegawai4", 10) ,
       role: "User",
@@ -47,7 +47,7 @@ module.exports = {
       updatedAt: new Date(),
       baseAngkre : 60
     },{
-      name: "Pegawai 5",
+      name: "Fadlan",
       username: "pegawai5",
       passwordHash: await bcrypt.hash("pegawai5", 10) ,
       role: "User",
@@ -56,7 +56,10 @@ module.exports = {
       updatedAt: new Date(),
       baseAngkre : 80
     }]);
-        
+  //insert surat tugas
+  await queryInterface.bulkInsert('AssignLetter',[{
+    
+  }]);
     //insert sub unsur
   await queryInterface.bulkInsert('SubUnsur', [
     {
