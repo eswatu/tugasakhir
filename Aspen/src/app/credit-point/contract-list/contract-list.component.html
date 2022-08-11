@@ -15,12 +15,12 @@
     
       <!-- Nomor Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1%;">Nomor</th>
+        <th mat-header-cell *matHeaderCellDef style="width: 1%;">Nomor</th>
         <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
       </ng-container>
     
       <!-- Nomor kontrak Column -->
-      <ng-container matColumnDef="nama">
+      <ng-container matColumnDef="contractName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header >Nomor Kontrak</th>
         <td mat-cell *matCellDef="let contract" style="padding-left:5px; padding-right:5px">
           {{contract.contractName}}
@@ -28,33 +28,33 @@
       </ng-container>
     
       <!-- Tanggal Kontrak Column -->
-      <ng-container matColumnDef="tanggal">
+      <ng-container matColumnDef="contractDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Kontrak</th>
         <td mat-cell *matCellDef="let contract" style="text-align:center;">{{contract.contractDate | date:'dd-MM-yyyy'}} </td>
       </ng-container>
     
       <!-- Tahun Kontrak-->
-      <ng-container matColumnDef="tahun">
+      <ng-container matColumnDef="contractYear">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tahun Kontrak</th>
         <td mat-cell *matCellDef="let contract" class="tcenter" style="padding-right:5px"> {{contract.contractYear}}</td>
       </ng-container>
     
       <!-- Kolom Target kontrak-->
-      <ng-container matColumnDef="target">
+      <ng-container matColumnDef="contractValue">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Target</th>
         <td mat-cell *matCellDef="let contract" class="tcenter" style="padding-right:5px">{{contract.contractValue}}
         </td>
       </ng-container>
 
       <!-- Kolom catatan -->
-      <ng-container matColumnDef="aktif">
+      <ng-container matColumnDef="isActive">
           <th mat-header-cell *matHeaderCellDef mat-sort-header >Aktif?</th>
           <td mat-cell *matCellDef="let contract" class="tcenter">{{contract.isActive ? 'Ya' : 'Tidak'}}
         </td>
     </ng-container>
     
     <!-- Catatan kontrak-->
-    <ng-container matColumnDef="catatan">
+    <ng-container matColumnDef="contractNote">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Catatan Target</th>
         <td mat-cell *matCellDef="let contract" style="padding-right:5px">{{contract.contractNote}}
         </td>
@@ -63,8 +63,7 @@
         <!-- Kolom tindakan -->
         <ng-container matColumnDef="aksi" >
           <th mat-header-cell *matHeaderCellDef style="width:180px;">Opsi</th>
-          <td mat-cell *matCellDef="let contract" fxLayoutGap="8px" fxLayoutAlign="start stretch"
-            style="padding-right:5px; padding-left:5px;" >
+          <td mat-cell *matCellDef="let contract" fxLayoutGap="8px" style="padding-right:5px; padding-left:5px;" >
             <button mat-raised-button (click)="openForm(contract.id)" matTooltip="Klik untuk mengubah target" color="accent">
               <mat-icon>edit</mat-icon>
             </button>

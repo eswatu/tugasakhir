@@ -29,12 +29,19 @@ async function getAll(q) {
     var filterColumn = req.filterColumn;
     var filterQuery = req.filterQuery;
     var model = db.Submission;
+    var fStatus = req.filterStatus;
+    var fsDate = req.filterSDate;
+    var feDate = req.filterEDate;
+    var fId = req.filterId;
     
     if (role === "Penilai" && uservice.isTrueAdmin(uid)) {
-        return await pagination.paging(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery);
+        return await pagination.paginateSubNew(model, pageIndex, pageSize,
+            sortColumn, sortOrder, filterColumn, filterQuery, fId,
+            fStatus, fsDate, feDate);
     } else {
         return await pagination.paginate(model, pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery, uid);
     }
+
 }
 
 async function getById(id) {

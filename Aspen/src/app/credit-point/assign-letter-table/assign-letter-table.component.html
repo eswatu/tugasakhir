@@ -2,7 +2,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="commands text-right" *ngIf="asgnLtrs" class="tomboltambah">
+<div *ngIf="asgnLtrs" class="tomboltambah">
   <button mat-raised-button color="primary" (click)="openForm(null)"
   matTooltip="Tambah Surat Tugas Baru">
       Tambah Baru
@@ -15,7 +15,7 @@
 
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1% !important;">Nomor</th>
+    <th mat-header-cell *matHeaderCellDef style="width: 1% !important;">Nomor</th>
     <td mat-cell *matCellDef="let al" class="tcenter">{{al.id}}</td>
   </ng-container>
 

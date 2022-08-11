@@ -1,5 +1,10 @@
-<button mat-flat-button color="primary" (click)="openForm()" class="tomboltambah">Buat Pengajuan</button>
-<div fxLayout="row" *ngIf="submissions">
+<div class="tomboltambah">
+    <button mat-flat-button color="primary" (click)="openForm()" class="tomboltambah">Buat Pengajuan</button>
+</div>
+<div *ngIf="!submissions">
+    <h2 align="center">Belum ada data!</h2>
+</div>
+<div fxLayout="row" *ngIf="submissions" class="tomboltambah">
     <ul fxLayoutGap="10px">
         <li *ngFor="let item of submissions;">
             <div fxLayout="row">

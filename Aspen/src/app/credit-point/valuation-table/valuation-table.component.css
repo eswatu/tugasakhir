@@ -27,3 +27,5 @@ td, th {
 .tright {
     text-align: right;
 }
+app-sidenav { display: flex; }
+mat-drawer-container { flex: 1 1 auto; }

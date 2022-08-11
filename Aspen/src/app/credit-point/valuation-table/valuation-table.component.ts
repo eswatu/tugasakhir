@@ -33,7 +33,7 @@ export class ValuationTableComponent implements OnInit {
   
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  public displayedColumns = ['nomor','subName','subDate','subOwner','subNote','subScore'];
+  public displayedColumns = ['nomor','subName','subDate','User.name','subNote','subScore'];
   public aspenSubmissions: MatTableDataSource<submission>;
 
   userList: User[];
@@ -71,7 +71,7 @@ export class ValuationTableComponent implements OnInit {
   loadData(query: string = null) {
     //userservice
     this.userService.getData<ApiResult<User>>(0,999,"name","asc",null,null).subscribe(res => {
-      this.userList = res.data;
+      this.userList = res.data.filter((obj)=> {return obj.id != this.user.id});
     });
 
     var pageEvent = new PageEvent();

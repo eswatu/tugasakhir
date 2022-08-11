@@ -39,7 +39,7 @@ export class CreditPointTableComponent implements OnInit {
 
   filterTextChanged: Subject<string> = new Subject<string>();
 
-  public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi'];
+  public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi', 'User.name'];
   public jobs: MatTableDataSource<act>;
   userList: User[];
   filterId : string;
@@ -67,9 +67,7 @@ export class CreditPointTableComponent implements OnInit {
         if (this.user) {
           this.isAdmin = ( x.role === "Penilai") ? true : false ;
         }
-        if (this.isAdmin){
-        this.displayedColumns.push('user');
-        }
+
       });
   }
 

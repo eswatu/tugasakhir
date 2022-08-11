@@ -15,7 +15,7 @@ td , th {
     max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
-    border-right: 1px solid;
+    border-right: 2px solid;
 }
 .mat-paginator {
     display: flex;
@@ -31,9 +31,7 @@ td , th {
 .numeric {
     text-align: right;
 }
-.action {
-    max-width: fit-content;
-}
+
 #tblajukan {
     background-color:rgb(62, 199, 11);
 }
@@ -46,3 +44,5 @@ td , th {
 .selesai {
     background-color:rgb(71, 181, 255)
 }
+app-sidenav { display: flex; }
+mat-drawer-container { flex: 1 1 auto; }

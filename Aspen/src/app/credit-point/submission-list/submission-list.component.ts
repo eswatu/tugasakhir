@@ -2,10 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SortDirection, MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { submission } from '@env/model/submission';
 import { AuthenticationService } from '@env/services';
-import { ApiResult } from '@env/services/base.service';
+import { ApiResultWork } from '@env/services/base.service';
 import { SubmissionService } from '@env/services/submission.service';
 import { SubmissionFormComponent } from '../submission-form/submission-form.component';
 
@@ -60,16 +59,19 @@ export class SubmissionListComponent implements OnInit {
       this.getData(pageEvent);
     }
     getData(event: PageEvent) {
+      this.submissions = null;
+
       let sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
       let sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
       let filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
       let filterQuery = (this.filterQuery) ? this.filterQuery : null;
   
       //use service
-      this.subService.getData<ApiResult<submission>>(
+      this.subService.getDataS<ApiResultWork<submission>>(
         event.pageIndex, event.pageSize,
         sortColumn, sortOrder,
-        filterColumn, filterQuery).subscribe(result => {
+        filterColumn, filterQuery,
+        "all",null, null, this.user.id).subscribe(result => {
           this.paginator.length = result.data.length;
           this.paginator.pageIndex = result.pageIndex;
           this.paginator.pageSize = result.pageSize;

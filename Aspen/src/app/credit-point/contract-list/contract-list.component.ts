@@ -30,7 +30,7 @@ export class ContractListComponent implements OnInit {
 
   constructor(private contractService: ContractService,
     public dialog: MatDialog) {
-      this.displayedColumns = ['id', 'nama','tanggal','tahun', 'target','aktif', 'catatan', 'aksi'];
+      this.displayedColumns = ['id', 'contractName','contractDate','contractYear', 'contractValue','isActive', 'contractNote', 'aksi'];
     }
 
   ngOnInit(): void {

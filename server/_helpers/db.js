@@ -54,5 +54,5 @@ async function initialize() {
     db.Contract.belongsTo(db.User, {foreignKey: "UserId"})
 
     //sync model dengan database
-    await sequelize.sync({alter: false});
+    await sequelize.sync({alter: false}, {logging: console.log});
 }
