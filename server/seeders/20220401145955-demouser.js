@@ -22,16 +22,16 @@ module.exports = {
     },{
       name: "Martina Dwi P",
       username: "pegawai2",
-      passwordHash: await bcrypt.hash("pegawai2", 10) ,
+      passwordHash: await bcrypt.hash("martina", 10) ,
       role: "Penilai",
       level: 1,
       createdAt: new Date(),
       updatedAt: new Date(),
       baseAngkre : 100
     },{
-      name: "Nathania K S",
+      name: "Muslimah",
       username: "pegawai3",
-      passwordHash: await bcrypt.hash("pegawai3", 10) ,
+      passwordHash: await bcrypt.hash("mbakmus", 10) ,
       role: "User",
       level: 2,
       createdAt: new Date(),
@@ -40,7 +40,7 @@ module.exports = {
     },{
       name: "Akbar",
       username: "pegawai4",
-      passwordHash: await bcrypt.hash("pegawai4", 10) ,
+      passwordHash: await bcrypt.hash("akbar123", 10) ,
       role: "User",
       level: 4,
       createdAt: new Date(),
