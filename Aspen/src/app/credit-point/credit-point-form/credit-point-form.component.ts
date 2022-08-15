@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act, assignLetter } from '@env/model/acts';
-import { ApiResult } from '@env/services';
+import { ApiResult, AuthenticationService } from '@env/services';
 import { ActService } from '@env/services/act.service';
 import { AssignLetterService } from '@env/services/assign-letter.service';
 import Swal from 'sweetalert2';
@@ -20,18 +20,20 @@ export class CreditPointFormComponent {
 
   //ini untuk st terpilih
   surattugas;
-
+  user;
   //untuk mode edit dari tabel
   job : act = <act>{}; //untuk mode create dari butir
   jenjang: string;
   actMain;
   
   constructor(
+    private authService: AuthenticationService,
     private actService: ActService,
     private assignLetterService: AssignLetterService,
     public dialog: MatDialog,
     private dialogRef : MatDialogRef<CreditPointFormComponent>,
      @Inject(MAT_DIALOG_DATA) data){
+      this.authService.user.subscribe(u => this.user = u);
       //init data
         if(data) {
           if (data.id) {
@@ -146,6 +148,7 @@ createJob() {
   this.job.actNote = this.formInput.get('actNote').value;
   this.job.AssignLetterId = this.formInput.get('AssignLetterId').value;
   this.job.actMain = this.actMain;
+  this.job.userId = this.user.id;
 }
   onSubmit(){
     this.createJob();

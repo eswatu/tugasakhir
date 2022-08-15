@@ -46,7 +46,7 @@ export class ButirTreeComponent implements OnInit {
     defaultLevel;
     defaultJenis;
     //nomor id act
-    act: act;
+    act: act = <act>{};
 
   constructor(
     private authService: AuthenticationService,

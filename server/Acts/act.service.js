@@ -55,7 +55,8 @@ async function getByDate(ds, de) {
 async function createAct(req) {
     const params = req.body;
     const uid = parseInt(req.headers.userid);
-    //console.log(new Date(params.actDate));
+    console.log(uid);
+
     // validate
     if (await db.Act.findOne({
         where: {
