@@ -235,8 +235,10 @@ async function calcPerUser(targetYear, userId) {
                 if (acts[ac].actMain) {
                     if (acts[ac].isCalculated) {
                         mainrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                        console.log("realised: "+ mainrealized);
                     } else {
                         mainunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                        console.log("unreal:"+ mainunrealized);
                     }
                 } else {
                     //perhitungan tugas tambahan
