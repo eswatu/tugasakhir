@@ -36,6 +36,7 @@ export class ProgressBlockComponent implements OnInit, OnChanges {
     //loadprogress
     this.actService.getProgress(this.contract.contractYear, this.user.Id).subscribe(res => {
       this.user = res.user;
+      console.log(res);
       this.pencapaian = res.mainRealized + res.sideRealized;
       this.utama = res.maintotal;
       this.penunjang = res.sidetotal;
