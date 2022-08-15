@@ -177,7 +177,6 @@ async function getActBySubId(sid) {
 
 async function calcPerUser(targetYear, userId) {
     const user = await db.User.findByPk(userId);
-
     const level = parseInt(user.level);
     const sd = new Date(targetYear,0,1);
     // `${targetYear}-01-01`;

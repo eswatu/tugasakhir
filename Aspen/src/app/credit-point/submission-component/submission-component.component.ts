@@ -3,6 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { act } from '@env/model';
 import { submission } from '@env/model/submission';
+import { AuthenticationService } from '@env/services';
 import { ActService } from '@env/services/act.service';
 import { SubmissionService } from '@env/services/submission.service';
 import Swal from 'sweetalert2';
@@ -31,6 +32,7 @@ export class SubmissionComponentComponent implements OnInit {
   allAssignLetter;
   totalValue;
   approveValue = 0;
+  level;
 
   private dialogRef = null;
   private dialogData;
@@ -39,7 +41,9 @@ export class SubmissionComponentComponent implements OnInit {
   constructor(private actService: ActService,
     private subMService: SubmissionService,
     private injector: Injector,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private authService: AuthenticationService) {
+      this.authService.user.subscribe(u => this.level = parseInt(u.level));
       this.dialogRef = this.injector.get(MatDialogRef, null);
       this.dialogData = this.injector.get(MAT_DIALOG_DATA, null);
 
@@ -62,6 +66,7 @@ export class SubmissionComponentComponent implements OnInit {
           result.forEach(item => item['approved'] = false);
           this.defaultActs = result;
           this.allAct = this.groupItemBy(result, 'AssignmentLetter.ltNumber');
+          console.log(this.allAct);
           this.allAssignLetter = this.getTitle(this.allAct);
           this.totalValue = 0;
           this.allAssignLetter.forEach((item) => {
@@ -74,7 +79,32 @@ getPoinPerAssignLetter(nama: string){
   const item = this.allAct[nama];
   let score = 0;
   item.forEach((cp) => {
-    score+= this.getPoinCredit(cp.Butir.jmlPoin, cp.butirVolume);
+    let modifier = 0;
+    
+    switch (cp.Butir.levelReq) {
+        case 1:
+        modifier = (this.level == 1 ) ? 1 : (this.level == 2 ) ? 0.8 : 0 ;     
+            break;
+        case 2:
+            modifier = (this.level == 2 ) ? 1 : 0.8;
+            break;
+        case 3:
+            modifier = (this.level < 3) ? 1 : 0.8;
+            break;
+        case 4:
+            modifier = (this.level == 1) ? 0 : (this.level == 2) ? 0.8 : 1;
+            break;
+        case 6:
+            modifier = (this.level == 1) ? 0.8 : 1;
+            break;
+        case 7:
+            modifier = 1;
+            break;  
+        default:
+            break;
+    }
+
+    score+= this.getPoinCredit(cp.Butir.jmlPoin, cp.butirVolume) * modifier;
   })
   return score;
 }

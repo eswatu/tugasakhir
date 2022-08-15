@@ -170,6 +170,12 @@ async function calcSubScore(id){
             return item["ButirId"];
         });
         let total = 0;
+
+        let mainrealized = 0;
+        let mainunrealized = 0;
+        let sideunrealized = 0;
+        let siderealized = 0;
+        
         for (let ac in acts) {
             const butir = await db.Butir.findByPk(acts[ac].ButirId);
             //cek apakah sudah dihitung atau belum, diajukan atau belum.
@@ -206,7 +212,25 @@ async function calcSubScore(id){
                         default:
                             break;
                     }
-                total += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                //total += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                //perhitungan tugas utama
+                if (acts[ac].actMain) {
+                    if (acts[ac].isCalculated) {
+                        mainrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                        console.log("realised: "+ mainrealized);
+                    } else {
+                        mainunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                        console.log("unreal:"+ mainunrealized);
+                    }
+                } else {
+                    //perhitungan tugas tambahan
+                    if (acts[ac].isCalculated) {
+                        siderealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    } else {
+                        sideunrealized += acts[ac].butirVolume * parseFloat(butir.jmlPoin) * modifier;
+                    }
+                }
+                total = mainrealized + siderealized + mainunrealized + sideunrealized;
             } else {
                 const gap = (level == 1) ? 20  : (level == 2 ) ? 50 : 100;
                 //console.log("isi gap " + butir.jmlPoin.trim().substring(0,2));
