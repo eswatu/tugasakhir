@@ -1,74 +1,73 @@
-<div fxLayout="row" fxLayoutAlign="center">
-    <br>
-    <div fxLayout="column">
-        <div>
-            <img [src]="pictureImage" style="width: 300px;height: 400px;"/>
-        </div>
-        <mat-toolbar *ngIf="currentFile" class="progress-bar">
-            <mat-progress-bar color="accent" [value]="progress"></mat-progress-bar>
-            <span class="progress">{{ progress }}%</span>
-        </mat-toolbar>
-        <div *ngIf="isEditing">
-                <input single type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
-                <br>
-                <mat-hint>File berupa gambar, ukuran maksimal 2MB</mat-hint>
-                <button mat-flat-button color="primary" [disabled]="!selectedFiles" (click)="upload()">
-                    Upload
-                </button>
-                <div style="color:red">
-                    Setelah mengunggah gambar, anda perlu logout untuk melihat hasil perubahan
-                    </div>
-        </div>
-    </div>
-    <div *ngIf="message" class="message">
-        {{ message }}
-    </div>
-    <div fxLayout="column" *ngIf="!isEditing">
+<div class="container">
+
+    <div class="grid-item"  #leftcol>
+      <p-image [src]="pictureImage" width="300" height="400">
+        <ng-template pTemplate="indicator">
+          Indicator Content
+        </ng-template>
+      </p-image>
+      <div *ngIf="isEditing">
+            <p-progressBar [value]="progress"></p-progressBar>
+            <span class="progress">{{progress}} %</span>
+            <input single type="file" (change)="selectFile($event)" accept=".png, .jpg, .jpeg"/>
+            <br>
+            <label>File berupa gambar, ukuran maksimal 2MB</label>
+            <button p-button [disabled]="!selectedFiles" (click)="upload()">
+              Unggah
+            </button>
+            <div style="color:red">
+              Setelah mengunggah gambar, anda perlu logout untuk melihat hasil perubahan
+            </div>
+          </div>
+          <div *ngIf="message" class="message">
+            {{ message }}
+          </div>
+      </div>
+    <div class="grid-item" id="rightcol" *ngIf="!isEditing" >
         <form [formGroup]="form">
-            <mat-form-field fxLayout="column" appearance="fill">
-                <input formControlName="username" id="username" matInput>
-                <mat-hint>Username</mat-hint>
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-hint>Nama</mat-hint>
-                <input formControlName="name" id="name" matInput>
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-hint>Jenjang</mat-hint>
-                <input formControlName="level" id="level" matInput>
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-hint>Kewenangan</mat-hint>
-                <input formControlName="role" id="role" matInput>
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-hint>Angka Kredit</mat-hint>
-                <input formControlName="baseAngkre" id="baseAngkre" matInput>
-            </mat-form-field>
+          <span class="p-float-label">
+            <input id="username" type="text" pInputText formControlName="username">
+            <label for="username">Username</label>
+          </span>
+          <span class="p-float-label">
+            <input type="text" id="name" formControlName="name" pInputText>
+            <label for="name">Nama</label>
+          </span>
+          <span class="p-float-label">
+            <input type="text" id="level" formControlName="level" pInputText>
+            <label for="level">Jenjang</label>
+          </span>
+          <span class="p-float-label">
+            <input type="text" id="role" pInputText formControlName="role">
+            <label for="role">Kewenangan</label>
+          </span>
+          <span class="p-float-label">
+            <input type="text" pInputText id="baseAngkre" formControlName="baseAngkre">
+            <label for="baseAngkre">Angka Kredit</label>
+          </span>
         </form>
-    </div>
-    <div fxLayout="column" *ngIf="isEditing">
-        <h2>Ubah Password</h2>
-        <form [formGroup]="formPwd" >
-            <mat-form-field fxLayout="row" appearance="fill">
-                <mat-label>Password Lama</mat-label>
-                <input formControlName="oldpwd" id="oldpwd" matInput type="password">
-                <mat-hint>password lama</mat-hint>
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-label>Password Baru</mat-label>
-                <input formControlName="newPwd" id="newPwd" matInput type="password">
-            </mat-form-field>
-            <mat-form-field fxLayout="row">
-                <mat-label>Ulangi Password Baru</mat-label>
-                <input formControlName="renewPwd" id="renewPwd" matInput type="password">
+        <div *ngIf="isEditing">
+            <h2>Ubah Password</h2>
+            <form [formGroup]="formPwd" >
+              <span class="p-float-label">
+                <input type="text" id="oldpwd" formControlName="oldpwd" pInputText>
+                <label for="oldpwd">Password Lama</label>
+              </span>
+              <span class="p-float-label">
+                <input type="text" id="newPwd" formControlName="newPwd" pInputText>
+                <label for="newPwd">Password Baru</label>
+              </span>
+              <span class="p-float-label">
+                <input type="text" id="renewPwd" formControlName="renewPwd" pInputText>
+                <label for="renewPwd">Ulangi Password baru</label>
                 <div *ngIf="formPwd.controls.renewPwd.errors?.mustMatch">Passwords must match</div>
-            </mat-form-field>
-            <button mat-flat-button type="submit" (click)="changePassword()" color="primary" [disabled]="!formPwd.valid">Change Password</button>
-        </form>
+              </span>
+              <p-button type="submit" (click)="changePassword()" [disabled]="!formPwd.valid">Ubah Password</p-button>
+            </form>
+          </div>
+          <div >
+              <p-toggleButton (click)="toggleEdit()" onLabel="Selesai" offLabel="Ubah Password" [(ngModel)]="togglestatus"></p-toggleButton>
+          </div>
     </div>
 </div>
 <br>
-<div fxLayout="row" fxLayoutAlign="center">
-    <mat-button-toggle mat-raised-button (click)="toggleEdit()">{{ toggleButtonValue}}</mat-button-toggle>
-</div>

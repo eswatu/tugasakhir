@@ -20,7 +20,6 @@ hide: boolean = true;
 rehide: boolean = true;
 
   constructor(private userService: UserService,
-    public dialogRef: MatDialogRef<UserformComponent>,
     public fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data) {
       if (data) {
@@ -65,15 +64,13 @@ rehide: boolean = true;
     return c.hasError('required') ? 'Password (Ulang) tidak boleh kosong':
           c.hasError('pattern') ? 'Password harus 8-15 karakter dan hanya huruf, angka, dan underscore':'';
   }
-  
+
     //getter untuk form
     get username(){
       return this.formInput.get('username');
     }
-    
-    closeDialog(){
-      this.dialogRef.close(); 
-    }
+
+
     ngOnInit(): void {
     this.loadUser();
   }
@@ -101,7 +98,7 @@ rehide: boolean = true;
     this.user.name = this.formInput.get('name').value;
     this.user.role = this.formInput.get('role').value;
     this.user.baseAngkre = this.formInput.get('baseAngkre').value;
-    this.user.level = this.user.baseAngkre < 100 ? '1' : this.user.baseAngkre >= 100 && this.user.baseAngkre < 150 ? '2' : '3'; 
+    this.user.level = this.user.baseAngkre < 100 ? '1' : this.user.baseAngkre >= 100 && this.user.baseAngkre < 150 ? '2' : '3';
     this.user.password = this.formInput.get('password').value;
     console.log(this.user);
     if (this.id) {
@@ -113,7 +110,6 @@ rehide: boolean = true;
       this.userService.post<User>(this.user).subscribe(() =>
       Swal.fire('berhasil membuat baru'), error => console.error(error));
     }
-    this.closeDialog();
   }
   password() {
     this.hide = !this.hide;

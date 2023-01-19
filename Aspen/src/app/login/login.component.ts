@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService
-  ) { 
+  ) {
       // redirect to home if already logged in
-      if (this.authenticationService.userValue) { 
+      if (this.authenticationService.userValue) {
           this.router.navigate(['/']);
       }
   }
@@ -36,11 +36,11 @@ export class LoginComponent implements OnInit {
 //error message
 get ErrorMessageUsername() : string{
     const c: UntypedFormControl = (this.loginForm.get('username') as UntypedFormControl);
-    return c.hasError('required') ? 'Username tidak boleh kosong': '';
+    return c.untouched ? 'Username' :  c.hasError('required') ? 'Username tidak boleh kosong': '';
 }
 get ErrorMessagePassword() : string{
     const c: UntypedFormControl = (this.loginForm.get('password') as UntypedFormControl);
-    return c.hasError('required') ? 'Password tidak boleh kosong': '';
+    return c.untouched ? "Password" : c.hasError('required') ? 'Password tidak boleh kosong': '';
 }
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
@@ -51,8 +51,8 @@ hide: boolean = true;
 password() {
     this.hide = !this.hide;
 }
-  onSubmit() {
-    
+onSubmit() {
+
       this.submitted = true;
 
       // stop here if form is invalid

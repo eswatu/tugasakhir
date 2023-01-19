@@ -1,5 +1,5 @@
-<div *ngIf="!users" fxLayoutAlign="center center">
-    <mat-spinner></mat-spinner>
+<div *ngIf="!users">
+    <p-progressSpinner></p-progressSpinner>
 </div>
 <div class="commands text-right" *ngIf="users" class="tomboltambah">
   <button mat-raised-button color="primary" (click)="openForm(null)">
@@ -7,60 +7,49 @@
   </button>
 </div>
 
-<table mat-table [dataSource]="users" class="mat-elevation-z8" [hidden]="!users"
-    matSort (matSortChange)="loadData()"
-    matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder">
-
+<p-table [value]="users" [hidden]="!users"
+    [paginator]="true" [(first)]="defaultPageSize" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Menampilkan {defaultPageSize} sampai todal dari total "
+    [rowsPerPageOptions]="[5,10,20,50]" sortMode="multiple">
+    <!-- matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder"> -->
   <!-- Id Column -->
-  <ng-container matColumnDef="index">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 1% !important;">Nomor</th>
-    <td mat-cell *matCellDef="let i = index" class="tcenter">{{i + 1}}</td>
-  </ng-container>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Indeks</th>
+      <th pSortableColumn="username">
+        Username
+        <p-sortIcon field="username"></p-sortIcon>
+      </th>
+      <th pSortableColumn="name">
+        Nama
+        <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="role">
+        Kewenangan
+        <p-sortIcon field="role"></p-sortIcon>
+      </th>
+      <th pSortableColumn="level">
+        Jenjang
+        <p-sortIcon field="level"></p-sortIcon>
+      </th>
+      <th pSortableColumn="baseAngkre">
+        Poin Kredit
+        <p-sortIcon field="baseAngkre"></p-sortIcon>
+      </th>
+      <th>Aksi</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td>{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.role}}</td>
+      <td>{{user.level}}</td>
+      <td>{{user.baseAngkre}}</td>
+    </tr>
+  </ng-template>
 
-  <!-- Username -->
-  <ng-container matColumnDef="username">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-    <td mat-cell *matCellDef="let usr" >{{usr.username}}</td>
-  </ng-container>
-
-  <!-- Nama Pegawai -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nama Pegawai</th>
-    <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.name }} </td>
-  </ng-container>
-
-  <!-- Kewenangan -->
-  <ng-container matColumnDef="role">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Kewenangan</th>
-    <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.role}}</td>
-  </ng-container>
-
-  <!-- Jenjang -->
-  <ng-container matColumnDef="level">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Jenjang</th>
-    <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.baseAngkre | jenjang }}</td>
-  </ng-container>
-    <!-- Jenjang -->
-    <ng-container matColumnDef="baseAngkre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kredit Poin</th>
-      <td mat-cell *matCellDef="let usr" class="tcenter">{{usr.baseAngkre }}</td>
-    </ng-container>
-
-    <!-- Kolom tindakan -->
-    <ng-container matColumnDef="aksi">
-      <th mat-header-cell *matHeaderCellDef>Opsi</th>
-      <td mat-cell *matCellDef="let usr" style="text-align:center" fxLayoutAlign="start stretch">
-        <button mat-raised-button (click)="openForm(usr.id)" >Ubah Data</button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<!-- Pagination directive -->
-<mat-paginator [hidden]="!users"
-    (page)="getData($event)"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons></mat-paginator>
+  <ng-template let-item pTemplate="paginatordropdownitem">{{item.value}} - per page</ng-template>
+</p-table>
 <h3>Note: ketika mengubah data, password akan tereset menjadi username</h3>

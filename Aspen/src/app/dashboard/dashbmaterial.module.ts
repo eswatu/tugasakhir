@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -9,7 +8,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
-
+import {DropdownModule} from 'primeng/dropdown';
 
 
 
@@ -22,8 +21,8 @@ const modules = [
   MatExpansionModule,
   MatButtonModule,
   MatIconModule,
-  FlexLayoutModule,
-  MatDividerModule
+  MatDividerModule,
+  DropdownModule
   ];
 
 @NgModule({

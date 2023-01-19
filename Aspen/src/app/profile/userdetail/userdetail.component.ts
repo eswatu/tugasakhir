@@ -7,7 +7,7 @@ import { chpwd, User } from '@env/model/user';
 import { AuthenticationService } from '@env/services';
 import { MustMatch } from '@env/services/mustmatch';
 import { UserService } from '@env/services/user-service.service';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class UserdetailComponent implements OnInit {
 
   isEditing:boolean = false;
-  toggleButtonValue : string; 
+  togglestatus: Boolean = false;
   userId;
   userInfo: User;
   form : UntypedFormGroup;
@@ -26,14 +26,14 @@ export class UserdetailComponent implements OnInit {
   formAvatar: UntypedFormControl;
   pictureImage;
   urlImage;
-  
+
   //ava upload
   selectedFiles?: FileList;
   currentFile?: File;
   progress = 0;
   message = '';
   fileInfos?: Observable<any>;
-  
+
   constructor(
     private router: Router,
     private userService: UserService,
@@ -49,7 +49,7 @@ export class UserdetailComponent implements OnInit {
     }
 
   ngOnInit(){
-    
+
     this.formAvatar = new UntypedFormControl();
     //untuk form tampilan
     this.form = this.fb.group({
@@ -69,7 +69,7 @@ export class UserdetailComponent implements OnInit {
     this.form.patchValue(this.userInfo);
     //load data
     this.loadData();
-    this.toggleButtonValue = 'Edit Profil';
+
   }
 
   loadData(){
@@ -87,7 +87,6 @@ export class UserdetailComponent implements OnInit {
 
   toggleEdit(){
     this.isEditing = !this.isEditing;
-    this.toggleButtonValue = this.isEditing ? 'Stop Edit' : 'Edit Profil';
   }
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
@@ -133,7 +132,7 @@ export class UserdetailComponent implements OnInit {
       console.log(result);
       Swal.fire(result);
     }, error => console.error(error));
-    
+
   }
 get jenjang(){
   switch (parseInt(this.userInfo.level)) {

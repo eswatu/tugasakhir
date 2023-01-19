@@ -1,9 +1,6 @@
-<mat-form-field>
-    <mat-label>Pilih Tahun</mat-label>
-    <mat-select (selectionChange)="onChangeSelect($event)">
-        <mat-option  *ngFor="let item of mainData | keyvalue" [value]="item.key">{{item.key}}</mat-option>
-    </mat-select>
-</mat-form-field>
+<form>
+  <p-dropdown optionLabel="Pilih Tahun" [options]="mainData" [(ngModel)]="currentYear"></p-dropdown>
+</form>
 <div *ngIf="isAdmin">
     <div *ngFor="let item of currentData">
         <mat-expansion-panel hideToggle>
@@ -13,7 +10,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <progress-block [contract]="item" [user]="item.User"></progress-block>
-        </mat-expansion-panel>    
+        </mat-expansion-panel>
     </div>
 </div>
 

@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { SortDirection, MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { SortDirection } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { User } from '@env/model';
 import { ApiResult, AuthenticationService, UserService } from '@env/services';
-import { UserformComponent } from '../userform/userform.component';
 
 @Component({
   selector: 'userlist',
@@ -13,49 +10,47 @@ import { UserformComponent } from '../userform/userform.component';
   styleUrls: ['./userlist.component.css']
 })
 export class UserlistComponent implements OnInit {
-  public displayedColumns;
-  public users: MatTableDataSource<User>;
+  public users: User[];
 
   isAdmin: boolean;
-  
+
   defaultPageIndex: number = 0;
   defaultPageSize: number = 5;
   public defaultSortColumn: string = "id";
-  public defaultSortOrder: SortDirection = "asc";
+  public defaultSortOrder :SortDirection = "asc";
 
   defaultFilterColumn: string = null;
   filterQuery: string = null;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  pagesize;
+  pagelength;
+  pageindex;
   constructor(private userService: UserService,
-              private authService: AuthenticationService,
-              public dialog: MatDialog) {
+              private authService: AuthenticationService) {
                 this.authService.user.subscribe(user => {
                   if (user) {
                     this.isAdmin = (user.role === 'Admin') ? true : false;
                   }
                 });
-                this.displayedColumns = ["index", "username", "name", "role", "level",'baseAngkre', 'aksi'];
               }
-
   ngOnInit(): void {
     this.loadData(null);
+    this.pagesize = 10;
+    this.pageindex = 0;
   }
   loadData(q :string = null) {
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
-    if (q) { 
+    if (q) {
       this.filterQuery = q;
     }
     this.getData(pageEvent);
   }
-  
-  getData(event: PageEvent) { 
+
+  getData(event: PageEvent) {
     this.users = null;
-    var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
-    var sortOrder = (this.sort) ? this.sort.direction : this.defaultSortOrder;
+     var sortColumn =  this.defaultSortColumn;
+     var sortOrder = this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
@@ -64,22 +59,14 @@ export class UserlistComponent implements OnInit {
       event.pageIndex, event.pageSize,
       sortColumn, sortOrder,
       filterColumn, filterQuery).subscribe(result => {
-        this.paginator.length = result.totalCount;
-        this.paginator.pageIndex = result.pageIndex;
-        this.paginator.pageSize = result.pageSize;
-        this.users = new MatTableDataSource<User>(result.data);
+        this.pagelength = result.totalCount;
+        this.pageindex = result.pageIndex;
+         this.pagesize = result.pageSize;
+         this.users = result.data;
+         console.log(this.users);
       }, error => console.error(error));
   }
   openForm(id:number){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.restoreFocus; true;
-    dialogConfig.minWidth = 400;
-    dialogConfig.minHeight = 400;
-    if (id) {
-      dialogConfig.data = {id: id} ;
-    }
-      const dialogRef = this.dialog.open(UserformComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe(()=> this.loadData(null));    
+
   }
 }

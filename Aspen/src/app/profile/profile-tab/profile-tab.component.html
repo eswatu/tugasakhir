@@ -1,12 +1,8 @@
-<mat-tab-group mat-stretch-tabs>
-    <mat-tab label="Profil">
-        <ng-template matTabContent>
-            <userdetail></userdetail>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Daftar Pengguna" *ngIf="isAdmin">
-        <ng-template matTabContent>
-            <userlist></userlist>
-        </ng-template>
-    </mat-tab>
-</mat-tab-group>
+<p-tabView >
+  <p-tabPanel header="Profil" >
+    <userdetail></userdetail>
+  </p-tabPanel>
+  <p-tabPanel header="Daftar Pengguna">
+    <userlist></userlist>
+  </p-tabPanel>
+  </p-tabView>

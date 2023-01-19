@@ -11,7 +11,7 @@ export class ProgressListComponent implements OnInit {
   user;
   isAdmin;
   mainData;
-  currentYear;
+  currentYear: number;
   currentData;
   contractNameList;
   constructor(private ctrService: ContractService,
@@ -21,11 +21,11 @@ export class ProgressListComponent implements OnInit {
       this.isAdmin = this.user.role !== 'User';
     }
   }
-  
+
   ngOnInit(): void {
     this.loadData();
   }
-  
+
   loadData(){
     this.ctrService.getYearList().subscribe(result => {
       this.mainData = result.reduce((group, userId) => {
@@ -39,7 +39,7 @@ export class ProgressListComponent implements OnInit {
       console.log('isi dari currentData', this.currentData);
       console.log('isi dari mainData', this.mainData);
     }, error => console.error(error));
-    
+
   }
 
   onChangeSelect(ev){

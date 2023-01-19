@@ -58,19 +58,19 @@
     <button mat-menu-item (click)="openForm(null,0)">
       Pekerjaan Tambahan/Penunjang
     </button>
-  </mat-menu> 
+  </mat-menu>
   </div>
   <br />
-    <table mat-table [dataSource]="jobs" class="mat-elevation-z16" [hidden]="!jobs"
+    <p-table mat-table [dataSource]="jobs" class="mat-elevation-z16" [hidden]="!jobs"
         matSort (matSortChange)="loadData()"
         matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder" >
-    
+
       <!-- Id Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef style="width: 1%;">Nomor</th>
         <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
       </ng-container>
-    
+
       <!-- Kegiatan Column -->
       <ng-container matColumnDef="Butir.namaButir">
         <th mat-header-cell *matHeaderCellDef mat-sort-header >Nama Kegiatan</th>
@@ -78,33 +78,33 @@
           {{job.Butir.namaButir}}
         </td>
       </ng-container>
-    
+
       <!-- Lat Column -->
       <ng-container matColumnDef="actDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tanggal Kegiatan</th>
         <td mat-cell *matCellDef="let job" style="text-align:center;">{{job.actDate | date:'dd-MM-yyyy'}} </td>
       </ng-container>
-    
+
       <!-- Kolom nilai kredit-->
       <ng-container matColumnDef="Butir.jmlPoin">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nilai Kredit</th>
         <td mat-cell *matCellDef="let job" class="numeric" style="padding-right:5px"> {{job.Butir.jmlPoin}} </td>
       </ng-container>
-    
+
       <!-- Kolom jumlah kegiatan -->
       <ng-container matColumnDef="butirVolume">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Volume Kegiatan</th>
         <td mat-cell *matCellDef="let job" class="numeric" style="padding-right:5px">{{job.butirVolume}}
         </td>
       </ng-container>
-    
+
         <!-- Kolom catatan -->
         <ng-container matColumnDef="actNote">
           <th mat-header-cell *matHeaderCellDef mat-sort-header >Catatan</th>
           <td mat-cell *matCellDef="let job" style="text-align:left;">{{job.actNote ?? '-'}}
           </td>
         </ng-container>
-        
+
         <!-- Kolom tindakan -->
         <ng-container matColumnDef="aksi" >
           <th mat-header-cell *matHeaderCellDef >Opsi</th>
@@ -130,14 +130,14 @@
         <!-- Khusus admin lihat si pembuat Column -->
         <ng-container matColumnDef="User.name" *ngIf="isAdmin">
           <th mat-header-cell *matHeaderCellDef >User</th>
-          <td mat-cell *matCellDef="let job">{{job.User.name}} 
+          <td mat-cell *matCellDef="let job">{{job.User.name}}
           </td>
         </ng-container>
-    
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color:rgb(234, 234, 234);"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"
       [ngClass]="{ 'nofile' : !row.hasFile ,'normal': row.isProposed, 'selesai': row.isCalculated}"></tr>
-    </table>
+    </p-table>
     <!-- Pagination directive -->
     <mat-paginator [hidden]="!jobs"
     (page)="getData($event)"

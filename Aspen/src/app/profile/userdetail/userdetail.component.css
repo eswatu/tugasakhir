@@ -1,9 +1,19 @@
-.progress-bar {
-    padding: 0;
-  }
-  .progress {
-    width: 50px;
-  }
+.container {
+  display: grid;
+  width: 100%;
+  column-gap: 20px;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1fr;
+}
+.grid-item {
+  border: 2px black;
+}
+#leftcol {
+  justify-self: end;
+}
+#rightcol {
+  justify-self: start;
+}
   #fileInput {
     position: absolute;
     cursor: pointer;
@@ -12,17 +22,6 @@
     height: 100%;
     left: 0px;
     top: 0px;
-  }
-  .mat-toolbar-single-row {
-    height: auto !important;
-    background: transparent;
-    padding: 0;
-  }
-  .mat-toolbar-single-row button {
-    width: 100px;
-  }
-  .mat-form-field {
-    width: 100%;
   }
   .message {
     background-color: #ddd;

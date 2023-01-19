@@ -1,27 +1,12 @@
-<mat-tab-group mat-stretch-tabs [backgroundColor]="background" >
-    <mat-tab label="Pekerjaan" *ngIf="!isAdmin" >
-        <ng-template matTabContent>
-            <credit-point-table></credit-point-table>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Surat Tugas" *ngIf="!isAdmin">
-        <ng-template matTabContent>
-            <assign-letter-table></assign-letter-table>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Penilaian" *ngIf="isPenilai">
-        <ng-template matTabContent>
-            <valuation-table></valuation-table>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Pengajuan" *ngIf="!isAdmin">
-        <ng-template matTabContent>
-            <submission-list ></submission-list>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Kontrak Kinerja">
-        <ng-template matTabContent>
-            <contract-list ></contract-list>
-        </ng-template>
-    </mat-tab>
-</mat-tab-group>
+<p-tabView>
+  <p-tabPanel header="Pekerjaan">
+    <credit-point-table></credit-point-table>
+  </p-tabPanel>
+  <p-tabPanel header="Surat Tugas">
+    <assign-letter-table></assign-letter-table>
+  </p-tabPanel>
+  <p-tabPanel header="Penilaian">
+    <submission-list></submission-list>
+  </p-tabPanel>
+</p-tabView>
+

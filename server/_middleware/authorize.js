@@ -1,4 +1,4 @@
-const jwt = require('express-jwt');
+const { expressjwt:jwt } = require('express-jwt');
 const { secret } = require('../config.json');
 const db = require('../_helpers/db');
 
@@ -21,7 +21,7 @@ function authorize(roles = []) {
                 // user's role is not authorized
                 return res.status(401).json({ message: 'Unauthorized' });
             }
-//auth sukses
+        //auth sukses
             next();
         }
     ];

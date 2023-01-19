@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './help-dialog.component.html',
   styleUrls: ['./help-dialog.component.css']
 })
-export class HelpDialogComponent implements OnInit {
+class HelpDialogComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     private dialogRef: MatDialogRef<HelpDialogComponent>) { }
