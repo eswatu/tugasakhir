@@ -1,3 +1,5 @@
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -26,6 +28,12 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { TabViewModule } from "primeng/tabview";
 import { TableModule } from "primeng/table";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
+import { SidebarModule } from "primeng/sidebar";
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { SplitButtonModule } from "primeng/splitbutton";
 
 const modules = [
   MatSidenavModule,
@@ -54,7 +62,15 @@ const modules = [
   MatSortModule,
   MatTreeModule,
   TabViewModule,
-  TableModule
+  TableModule,
+  ProgressSpinnerModule,
+  SidebarModule,
+  SelectButtonModule,
+  ButtonModule,
+  InputTextModule,
+  CalendarModule,
+  DropdownModule,
+  SplitButtonModule
   ];
 
 

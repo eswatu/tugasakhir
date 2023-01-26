@@ -10,14 +10,7 @@ th{
 td, th {
     border-right: 1px solid;
 }
-.mat-paginator {
-    display: flex;
-    justify-content: center;
-}
-.mat-cell {
-    padding-left: 5px;
-    padding-right: 5px;
-}
+
 .tleft {
     text-align: left;
 }

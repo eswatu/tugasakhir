@@ -1,3 +1,4 @@
+import { MenuItem } from 'primeng/api';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -23,7 +24,9 @@ import { User } from '@env/model';
 
 export class CreditPointTableComponent implements OnInit {
   activeSubmission;
-
+  filterStat = ["all", "inJob", "done"];
+  pilihanKerjaan: MenuItem[] = [{ label: "Unsur Utama" }, { label: "Unsur Penunjang" }]
+  sidebar: boolean = false;
   filtColumn = new UntypedFormControl('');
   filterStatus = new UntypedFormControl('all');
   filterQ = new UntypedFormControl();
@@ -40,7 +43,7 @@ export class CreditPointTableComponent implements OnInit {
   filterTextChanged: Subject<string> = new Subject<string>();
 
   public displayedColumns: string[] = ['id', 'Butir.namaButir', 'actDate', 'Butir.jmlPoin','butirVolume', 'actNote', 'aksi', 'User.name'];
-  public jobs: MatTableDataSource<act>;
+  public jobs: act[];
   userList: User[];
   filterId : string;
 
@@ -75,17 +78,20 @@ export class CreditPointTableComponent implements OnInit {
     this.loadData(null);
     this.paginator._intl.itemsPerPageLabel = "item per halaman";
   }
+  openSidePanel() {
+    this.sidebar = !this.sidebar;
+  }
   loadData(query: string = null) {
     this.userService.getData<ApiResult<User>>(0,9999,"name", "asc",null,null).subscribe(result => {
       if (result) {
         this.userList = result.data;
       }
-    });    
+    });
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
 
-    if (query) { 
+    if (query) {
       this.filterQuery = query;
       this.defaultFilterColumn = this.filtColumn.value;
     }
@@ -102,8 +108,8 @@ export class CreditPointTableComponent implements OnInit {
     // console.log(item['_i'])
     this.getData(pageEvent);
   }
-  
-  getData(event: PageEvent) { 
+
+  getData(event: PageEvent) {
     this.jobs = null;
 
     var sortColumn = (this.sort) ? this.sort.active : this.defaultSortColumn;
@@ -136,11 +142,11 @@ export class CreditPointTableComponent implements OnInit {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.jobs = new MatTableDataSource<act>(result.data);
+        this.jobs = result.data;
 
       }, error => console.error(error));
   }
-  
+
   openForm(job:act, jenis: number){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
@@ -156,7 +162,7 @@ export class CreditPointTableComponent implements OnInit {
       this.dialog.open(ButirTreeComponent, dialogConfig);
     }
   }
-  
+
   propose(id:number) {
     Swal.fire({
       title: 'Yakin Mengajukan?',
@@ -216,8 +222,8 @@ export class CreditPointTableComponent implements OnInit {
     }
     this.filterTextChanged.next(filterText);
    }
-  
-   //helper 
+
+   //helper
   formatDate(md: any) {
     if (md){
       return [

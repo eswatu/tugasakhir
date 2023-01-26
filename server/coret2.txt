@@ -1,2 +1,7 @@
 seed:
 npx sequelize-cli db:seed:all
+
+gcloud sql connect asistenpenyuluh --user=root
+
+.\cloud_sql_proxy.exe -instances=taxassist:asia-southeast2:asistenpenyuluh=tcp:3306
+mysql -u root -p --host 127.0.0.1 --port 3306

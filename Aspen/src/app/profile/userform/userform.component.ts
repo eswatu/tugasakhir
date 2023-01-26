@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from '@env/model';
 import { MustMatch, UserService } from '@env/services';
 import Swal from 'sweetalert2';
+import { DynamicDialogRef, DynamicDialogConfig } from "primeng/dynamicdialog";
 
 @Component({
   selector: 'userform',
@@ -21,10 +21,10 @@ rehide: boolean = true;
 
   constructor(private userService: UserService,
     public fb: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) data) {
-      if (data) {
-        this.id = data.id;
-      }
+    public ref: DynamicDialogRef, public conf: DynamicDialogConfig) {
+      // if (data) {
+      //   this.id = data.id;
+      // }
       this.formInput = this.fb.group({
         username: ['', [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$"), Validators.minLength(6), Validators.maxLength(20)]],
         name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],

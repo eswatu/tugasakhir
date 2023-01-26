@@ -1,11 +1,10 @@
 {
     "database" : {
-        "host": "localhost",
-        "user": "root",
+        "host": "127.0.0.1",
+        "user": "aspen",
         "port": 3306,
-        "password": "Nathania2019",
-        "database": "aspen",
-        "dialectOptions": {"useUTC":false},
+        "password": "kpp407",
+        "database": "Aspen",
         "timezone":"+07:00"
     },
     "secret":"123455a0sa210s3a21wqa4f6sad547j9ythj5g"

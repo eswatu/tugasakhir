@@ -17,10 +17,6 @@ td , th {
     overflow: hidden;
     border-right: 2px solid;
 }
-.mat-paginator {
-    display: flex;
-    justify-content: center;
-}
 
 .keterangan {
     min-width: 10%;
@@ -44,5 +40,3 @@ td , th {
 .selesai {
     background-color:rgb(71, 181, 255)
 }
-app-sidenav { display: flex; }
-mat-drawer-container { flex: 1 1 auto; }

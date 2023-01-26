@@ -1,69 +1,41 @@
-<div *ngIf="!jobs" fxLayoutAlign="center center">
-  <mat-spinner></mat-spinner>
+<div *ngIf="!jobs" center>
+  <p-progressSpinner></p-progressSpinner>
 </div>
 
-<mat-drawer-container hasBackdrop="true" autosize>
-  <mat-drawer #drawer mode="push" style="min-width:200px; max-width:300px;">
+  <p-sidebar [(visible)]="sidebar" position="left">
     <!-- untuk sidenav -->
     <h3>Kolom Pencarian</h3>
-    <mat-button-toggle-group [formControl]="filtColumn" (change)="loadData(null)">
-      <mat-button-toggle value="Butir.namaButir">Nama Butir</mat-button-toggle>
-      <mat-button-toggle value="actNote">Catatan</mat-button-toggle>
-    </mat-button-toggle-group>
+    <p-selectButton [formControl]="filtColumn" (change)="loadData(null)">
+      <!-- <p-button value="Butir.namaButir">Nama Butir</p-button>
+      <p-button value="actNote">Catatan</p-button> -->
+    </p-selectButton>
     <br />
-    <mat-form-field appearance="fill">
-      <mat-label>Masukkan kata yang dicari</mat-label>
-      <input matInput (keyup)="onFilterTextChanged($event.target.value)" [formControl]="filterQ" placeholder="Cth: nilai" >
-    </mat-form-field>
-    <br />
+
+    <span class="p-float-label">
+      <input type="text" pInputText (keyup)="onFilterTextChanged($any($event.target).value)" [formControl]="filterQ" placeholder="Cth: nilai" >
+      <label for="inputkey">Masukkan kata yang dicari</label>
+    </span>
     <h3>Status</h3>
-    <mat-button-toggle-group [formControl]="filterStatus" (change)="loadData(null)">
-      <mat-button-toggle value="all">Semua</mat-button-toggle>
-      <mat-button-toggle value="inJob">Dalam Pengerjaan</mat-button-toggle>
-      <mat-button-toggle value="done">Selesai</mat-button-toggle>
-    </mat-button-toggle-group>
+    <p-selectButton [formControl]="filterStatus" (change)="loadData(null)" [options]="filterStat">
+    </p-selectButton>
     <br />
+    <p-calendar [(ngModel)]="dateFilter" dateFormat="dd.mm.yyyy" selectionMode="range">
+      <p-dropdown [options]="userList" (selectionChange)="loadData(null)"></p-dropdown>
+    </p-calendar>
+  </p-sidebar>
 
-    <mat-form-field appearance="fill" [formGroup]="dateFilter" (change)="loadData(null)">
-      <mat-label>Filter Tanggal (Awal s.d Akhir)</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Tanggal Mulai" formControlName="startDate" >
-        <input matEndDate placeholder="Tanggal Selesai" formControlName="endDate" >
-      </mat-date-range-input>
-      <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" *ngIf="isAdmin" >
-      <mat-label>Filter User</mat-label>
-      <mat-select name="userfilter" [formControl]="userfilt" (selectionChange)="loadData(null)">
-        <mat-option [value]="0">Semua Pegawai</mat-option>
-          <mat-option *ngFor="let us of userList" [value]="us.id">{{us.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-drawer>
   <!-- Untuk form utama -->
   <div *ngIf="jobs" class="tomboltambah">
-  <button mat-raised-button (click)="drawer.toggle()">
+  <p-button (click)="openSidePanel()">
     Filter
-  </button>
-  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" matTooltip="Tambah Laporan Penugasan">
+  </p-button>
+  <button pButton>
     Tambah Laporan
   </button>
-  <mat-menu #menu="matMenu" >
-    <button mat-menu-item (click)="openForm(null,1)">
-      Pekerjaan Utama
-    </button>
-    <button mat-menu-item (click)="openForm(null,0)">
-      Pekerjaan Tambahan/Penunjang
-    </button>
-  </mat-menu>
+  <p-splitButton [model]="pilihanKerjaan"></p-splitButton>
   </div>
   <br />
-    <p-table mat-table [dataSource]="jobs" class="mat-elevation-z16" [hidden]="!jobs"
-        matSort (matSortChange)="loadData()"
-        matSortActive="{{defaultSortColumn}}" [matSortDirection]="defaultSortOrder" >
+    <p-table [value]="jobs" [hidden]="!jobs">
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
@@ -164,5 +136,5 @@
       </tr>
     </table>
   </div>
-</mat-drawer-container>
+
 

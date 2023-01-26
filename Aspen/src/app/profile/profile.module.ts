@@ -10,6 +10,7 @@ import { UserformComponent } from './userform/userform.component';
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { JenjangPipe } from '../_helpers/jenjang.pipe';
 import { ButtonModule } from "primeng/button";
+import { DynamicDialogModule } from "primeng/dynamicdialog";
 
 
 @NgModule({
@@ -28,7 +29,11 @@ import { ButtonModule } from "primeng/button";
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module,
-    ButtonModule
+    ButtonModule,
+    DynamicDialogModule
+  ],
+  entryComponents: [
+    UserformComponent
   ]
 })
 export class ProfileModule { }

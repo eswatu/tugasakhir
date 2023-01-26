@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { User } from '@env/model';
 import { ApiResult, AuthenticationService, UserService } from '@env/services';
+import { DialogService } from "primeng/dynamicdialog";
+import { UserformComponent } from '../userform/userform.component';
 
 @Component({
   selector: 'userlist',
   templateUrl: './userlist.component.html',
-  styleUrls: ['./userlist.component.css']
+  styleUrls: ['./userlist.component.css'],
+  providers: [DialogService]
 })
 export class UserlistComponent implements OnInit {
   public users: User[];
@@ -25,7 +28,8 @@ export class UserlistComponent implements OnInit {
   pagelength;
   pageindex;
   constructor(private userService: UserService,
-              private authService: AuthenticationService) {
+    private authService: AuthenticationService,
+    public dialogService: DialogService) {
                 this.authService.user.subscribe(user => {
                   if (user) {
                     this.isAdmin = (user.role === 'Admin') ? true : false;
@@ -66,7 +70,10 @@ export class UserlistComponent implements OnInit {
          console.log(this.users);
       }, error => console.error(error));
   }
-  openForm(id:number){
-
+  openForm(){
+    const ref = this.dialogService.open(UserformComponent, {
+      header: 'Entry Data User Baru',
+      width: '70%'
+    })
   }
 }

@@ -16,8 +16,10 @@ module.exports = {
     isTrueAdmin
 };
 
-async function authenticate({ username, password }) { 
-    const user = await db.User.scope('withPasswordHash').findOne({ where: { username } });
+async function authenticate({ username, password }) {
+    
+    const user = await db.User.scope('withPasswordHash').findOne(
+        {logging : console.log, where: { username } });
     if (!user || !(await bcrypt.compare(password, user.passwordHash))) { 
         throw 'Username atau password tidak sesuai';
     }

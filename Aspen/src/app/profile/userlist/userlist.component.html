@@ -2,9 +2,7 @@
     <p-progressSpinner></p-progressSpinner>
 </div>
 <div class="commands text-right" *ngIf="users" class="tomboltambah">
-  <button mat-raised-button color="primary" (click)="openForm(null)">
-      Tambah Baru
-  </button>
+  <button (click)="openForm()" type="button" pButton label="Input Pengguna baru"></button>
 </div>
 
 <p-table [value]="users" [hidden]="!users"
